@@ -100,9 +100,46 @@ EZWH (EaSy WareHouse) is a software application to support the management of a w
 
 | ID        | Description  |
 | ------------- |:-------------:| 
-|  FR1     |  |
-|  FR2     |   |
-| FRx..  | | 
+| FR1     | Check availability |
+| FR1.1     | Issue order  |
+| FR2  | Manage products |
+| FR2.1 | Add product |
+| FR2.2 | Delete product |
+| FR2.3 | Search product |
+| FR2.4 | Modify product description |
+| FR2.5 | Add barcode |
+| FR3 | Manage users |
+| FR3.1 | Add user |
+| FR3.2 | Modify user |
+| FR3.3 | Delete user |
+| FR4 | Manage inventory |
+| FR4.1 | Modify quantity of product |
+| FR4.2 | Modify position of product |
+| FR4.3 | Check report of product |
+| FR4.3 | List items |
+| FR4.4 | List statuses of orders |
+| FR5 | Manage orders |
+| FR5.1 | COnfirm order |
+| FR5.2 | Delete order |
+| FR5.3 | Modify quantity of order |
+| FR5.4 | Notify item is in pick-up area |
+| FR5.5 | List orders |
+| FR6 | Manage Shipments |
+| FR6.1 | Add shipment |
+| FR6.2 | Edit shipment |
+| FR6.3 | Delete shipment |
+| FR6.4 | List shipments |
+| FR7 | Manage suppliers |
+| FR7.1 | Add supplier |
+| FR7.2 | Modify supplier information |
+| FR7.3 | Delete supplier |
+| FR7.4 | List suppliers |
+| FR8 | Quality check |
+| FR8.1 | Add report |
+| FR8.2 | Modify report |
+| FR8.3 | Delete report |
+| FR8.4 | Add attachments |
+
 
 ## Non Functional Requirements
 
