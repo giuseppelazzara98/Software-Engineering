@@ -1,5 +1,4 @@
-
- #Requirements Document 
+#Requirements Document 
 
 Date: 22 march 2022
 
@@ -89,6 +88,23 @@ EZWH (EaSy WareHouse) is a software application to support the management of a w
 
 \<stories will be formalized later as scenarios in use cases>
 
+**Persona 1**: Stock manager,35 yo, female, first year of work as a manager.
+<br>Story: The manager has to solve a problem with an order because she makes a mistake with a duplicated order issue for the same material
+
+**Persona 2**: Responsible for the supplier of a company, male, 43.y.o. with 17 years of experience.
+<br>Story: The responsible have an offer for the company and contact it to propose the offer and possibly sign a commercial agreement. 
+
+**Persona 3**: New employee for the company, male 37y.o., 10 years of experience in another company.
+<br>Story: The new employee just signed the contract and have to add his information on the app to became officially a new employee for the company.
+
+**Persona 4**: Responsible for the orders, female 28 o.y. with 1 year of experience.
+<br>Story: The company made a mistake for an order and the responsible have to modify the order with the add of new items. 
+
+**Persona 5**: Shipping clerk, male 32y.o. with 2 year of experience.
+<br>Story: The clerk have to signal that the shipment is on the pick-up area
+
+**Persona 6**: Quality Office employee, male 35 y.o., 5 years of experience on this work.
+<br>Story: The employee it's very skilled and recognize a very thin problem that can be compromise the possible use of the materials. He signal the problem and resend the order to the supplier.
 
 # Functional and non functional requirements
 
@@ -215,7 +231,3 @@ EZWH (EaSy WareHouse) is a software application to support the management of a w
 # Deployment Diagram 
 
 \<describe here deployment diagram >
-
-
-
-
