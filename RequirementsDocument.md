@@ -49,8 +49,16 @@ EZWH (EaSy WareHouse) is a software application to support the management of a w
 
 
 | Stakeholder name  | Description | 
-| ----------------- |:-----------:|
-|   Stakeholder x..     |             | 
+| ----------------- |:-----------|
+| Supplier | Entity that provides items |
+| Investors | Entity that finances the project|
+| Government | Entity that make laws for privacy |
+| Warehouse manager | Person responsible to check availability and issue new orders to suppliers|
+| Shipment department | Entity that receives packages from suppliers, return defective items to suppliers and prepare items for the rest of the company |
+| Inventory manager | Person who manages space in warehouse and records where items are stored |
+| Administrator | Person who manages databases and network system |
+| Quality office| Entity that checks if items received from suppliers are good enough |
+| Cloud services | Entities where the software is deployed on for remote access |
 
 # Context Diagram and interfaces
 
