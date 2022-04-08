@@ -163,10 +163,15 @@ EZWH (EaSy WareHouse) is a software application to support the management of a w
 
 | ID        | Type (efficiency, reliability, ..)           | Description  | Refers to |
 | ------------- |:-------------:| :-----:| -----:|
-|  NFR1     |   |  | |
-|  NFR2     | |  | |
-|  NFR3     | | | |
-| NFRx .. | | | | 
+|  NFR1     | Usability  | Any non-technical person should be able to use the system without training | All |
+|  NFR2     | Performance | System should response quickly to actions: < 2 seconds | All |
+|  NFR3     | Privacy | Management of data for employees, suppliers, products(orders and shipments) must be complient to state laws | All |
+| NFR4 | Space | System can be employed on a server with at least 64 GB of RAM | All |
+| NFR5 | Security | The system shoul not be hacked | All |
+| NFR6 | Reliability | The system should have at least 99.9% uptime | All |
+| NFR7 | Capacity | The system should be used by up to 150 simultaneous users | All |
+| NFR8 | Space | The system database should have at least 2 TB of storage | All |
+| NFR9 | Reliability | The system should check data integrity and do a backup every 30 minutes. System can recover from these backups in case of failures | All | 
 
 
 # Use case diagram and use cases
