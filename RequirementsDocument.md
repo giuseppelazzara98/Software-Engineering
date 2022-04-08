@@ -36,9 +36,13 @@ Version: 0.0
 				- [Scenario 1.3](#scenario-13)
 				- [Scenario 1.4](#scenario-14)
 		- [Use case 2, UC2 - Login on the EzWh application](#use-case-2-uc2---login-on-the-ezwh-application)
-				- [Scenario 1.1](#scenario-11-1)
-				- [Scenario 1.2](#scenario-12-1)
-				- [Scenario 1.3](#scenario-13-1)
+				- [Scenario 2.1](#scenario-21)
+				- [Scenario 2.2](#scenario-22)
+				- [Scenario 2.3](#scenario-23)
+		- [Use case 3, UC3 - Make an order for a supplier](#use-case-3-uc3---make-an-order-for-a-supplier)
+				- [Scenario 3.1](#scenario-31)
+				- [Scenario 3.2](#scenario-32)
+				- [Scenario 3.2](#scenario-32-1)
 		- [Use case x, UCx](#use-case-x-ucx)
 - [Glossary](#glossary)
 - [System Design](#system-design)
@@ -271,11 +275,11 @@ App' Server doesn't work
 |  Nominal Scenario     | The user enters email and password. Afer have the acces to the app  |
 |  Variants     | Email and/or password is incorrect |
 |  Exceptions     | The server of the app doesn't work correctly |
-##### Scenario 1.1 
+##### Scenario 2.1 
 
 The user is correctly logged to the app
 
-| Scenario 1.1 | |
+| Scenario 2.1 | |
 | ------------- |:-------------:| 
 |  Precondition     | The user insert email and password  |
 |  Post condition     | The user is logged |
@@ -284,11 +288,11 @@ The user is correctly logged to the app
 |  2     | The app verify the data  |
 | 3    |  The user is successfully logged in |
 
-##### Scenario 1.2 
+##### Scenario 2.2 
 
 The user doesn't access to the app: insert wrong data
 
-| Scenario 1.2 | |
+| Scenario 2.2 | |
 | ------------- |:-------------:| 
 |  Precondition     | The user insert email and password  |
 |  Post condition     | The user is not logged |
@@ -298,11 +302,11 @@ The user doesn't access to the app: insert wrong data
 | 3    |  The app notify that the username and/or password is incorrect |
 |4	|	Log - in aborted|
 
-##### Scenario 1.3
+##### Scenario 2.3
 
 The user doesn't access to the app: the server doesn't work
 
-| Scenario 1.3 | |
+| Scenario 2.3 | |
 | ------------- |:-------------:| 
 |  Precondition     | The user insert email and password  |
 |  Post condition     | the user is not logged |
@@ -310,6 +314,65 @@ The user doesn't access to the app: the server doesn't work
 |  1     | The user insert: email and password  |  
 |  2     | The app verify the data  |
 | 3    |  The app retrive the message that the server is down |
+
+USE case 3 
+### Use case 3, UC3 - Make an order for a supplier 
+| Actors Involved        | Stock manager, Supplier |
+| ------------- |:-------------:| 
+|  Precondition     | The Stock manager must be logged on the app and have the list of item to order |
+|  Post condition     | The order is sended to the supplier|
+|  Nominal Scenario     | The Stock manager add the name and quantity for the items to order, select the supplier and send the order |
+|  Variants     | The order has to be modified|
+|  Exceptions     | The Stock manager make a duplicated order  |
+
+##### Scenario 3.1
+
+The stock manager make an order and it is successfully submited to the supplier.
+
+| Scenario 3.1 | |
+| ------------- |:-------------:| 
+|  Precondition     | The stock manager insert item name relative id and quantity   |
+|  Post condition     | The order is submitted to the supplier |
+| Step#        | Description  |
+|  1     | The stock manager insert item name and ID  |  
+|  2     | The stock manager insert item quantity |
+| 3    |  The stock manager select the supplier  |
+|	4	|	The stock manager submit the order 	|
+| 	5	|	The app notify that the order is sended to the supplier	|
+
+##### Scenario 3.2
+
+The stock manager make an order and it is successfully submited to the supplier.
+After have to modify the order 
+
+| Scenario 3.2 | |
+| ------------- |:-------------:| 
+|  Precondition     | The stock manager submit an order and after have to modify it   |
+|  Post condition     | Order succesfully modified  |
+| Step#        | Description  |
+|1	|	The stock manager select an existing order|
+|  2     | The stock manager insert item name and relative ID to modify or to add for the order   |  
+|  3     | The stock manager insert new item quantity |
+|	4	|	The stock manager submit new order 	|
+| 	5	|	The app notify that the modify to the order is sended to the supplier	|
+
+
+##### Scenario 3.2
+
+The stock manager make an order and it is NOT successfully submited to the supplier because the server doesn't work
+
+| Scenario 3.3 | |
+| ------------- |:-------------:| 
+|  Precondition     | The stock manager submit an order  |
+|  Post condition     | Order request  aborted  |
+| Step#        | Description  |
+| 1     | The stock manager insert item name and ID  |  
+|  2     | The stock manager insert item quantity |
+| 3    |  The stock manager select the supplier  |
+|	4	|	The stock manager submit the order 	|
+| 	5	|	The app notify that the order is NOT sended to the supplier	because the server is down|
+
+
 
 
 
