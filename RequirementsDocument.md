@@ -18,17 +18,31 @@ Version: 0.0
 	+ [Context Diagram](#context-diagram)
 	+ [Interfaces](#interfaces) 
 	
+- [Contents](#contents)
+- [Informal description](#informal-description)
+- [Stakeholders](#stakeholders)
+- [Context Diagram and interfaces](#context-diagram-and-interfaces)
+	- [Context Diagram](#context-diagram)
+	- [Interfaces](#interfaces)
 - [Stories and personas](#stories-and-personas)
 - [Functional and non functional requirements](#functional-and-non-functional-requirements)
-	+ [Functional Requirements](#functional-requirements)
-	+ [Non functional requirements](#non-functional-requirements)
+	- [Functional Requirements](#functional-requirements)
+	- [Non Functional Requirements](#non-functional-requirements)
 - [Use case diagram and use cases](#use-case-diagram-and-use-cases)
-	+ [Use case diagram](#use-case-diagram)
-	+ [Use cases](#use-cases)
-    	+ [Relevant scenarios](#relevant-scenarios)
+	- [Use case diagram](#use-case-diagram)
+		- [Use case 1, UC1 - Registration on the EzWh application](#use-case-1-uc1---registration-on-the-ezwh-application)
+				- [Scenario 1.1](#scenario-11)
+				- [Scenario 1.2](#scenario-12)
+				- [Scenario 1.3](#scenario-13)
+				- [Scenario 1.4](#scenario-14)
+		- [Use case 2, UC2 - Login on the EzWh application](#use-case-2-uc2---login-on-the-ezwh-application)
+				- [Scenario 1.1](#scenario-11-1)
+				- [Scenario 1.2](#scenario-12-1)
+				- [Scenario 1.3](#scenario-13-1)
+		- [Use case x, UCx](#use-case-x-ucx)
 - [Glossary](#glossary)
-- [System design](#system-design)
-- [Deployment diagram](#deployment-diagram)
+- [System Design](#system-design)
+- [Deployment Diagram](#deployment-diagram)
 
 # Informal description
 Medium companies and retailers need a simple application to manage the relationship with suppliers and the inventory of physical items stocked in a physical warehouse. 
@@ -182,40 +196,127 @@ EZWH (EaSy WareHouse) is a software application to support the management of a w
 
 
 \<next describe here each use case in the UCD>
-### Use case 1, UC1
-| Actors Involved        |  |
+### Use case 1, UC1 - Registration on the EzWh application
+| Actors Involved        | User |
 | ------------- |:-------------:| 
-|  Precondition     | \<Boolean expression, must evaluate to true before the UC can start> |
-|  Post condition     | \<Boolean expression, must evaluate to true after UC is finished> |
-|  Nominal Scenario     | \<Textual description of actions executed by the UC> |
-|  Variants     | \<other normal executions> |
-|  Exceptions     | \<exceptions, errors > |
+|  Precondition     | The User must be an employee for the company |
+|  Post condition     | The user is correctly registered to the app|
+|  Nominal Scenario     | The user enters his data and after he is officially registered on the app |
+|  Variants     | Some data is incorrect |
+|  Exceptions     | The server of the app doesn't work correctly |
 
 ##### Scenario 1.1 
 
-\<describe here scenarios instances of UC1>
-
-\<a scenario is a sequence of steps that corresponds to a particular execution of one use case>
-
-\<a scenario is a more formal description of a story>
-
-\<only relevant scenarios should be described>
+The user is correctly registered to the app
 
 | Scenario 1.1 | |
 | ------------- |:-------------:| 
-|  Precondition     | \<Boolean expression, must evaluate to true before the scenario can start> |
-|  Post condition     | \<Boolean expression, must evaluate to true after scenario is finished> |
+|  Precondition     | The user insert all own data  |
+|  Post condition     | The user is registered |
 | Step#        | Description  |
-|  1     |  |  
-|  2     |  |
-|  ...     |  |
+|  1     | The user insert: name, surname, email, password, password confirmation  |  
+|  2     |The user insert his contract ID that is used to compare the data inserted with the data of the contract  |
+| 3    | A confirmation email and a confirmation SMS are sended to the user |
+|4	| The user click on the links	|
+|5 | The registration is convalidated|
 
-##### Scenario 1.2
+##### Scenario 1.2 
 
-##### Scenario 1.x
+The user insert invalid data
 
-### Use case 2, UC2
-..
+| Scenario 1.2 | |
+| ------------- |:-------------:| 
+|  Precondition     | The user insert all own data  |
+|  Post condition     | The user is not registered |
+| Step#        | Description  |
+|  1     | The user insert: name, surname, email, password, password confirmation  |  
+|  2     |The user insert his contract ID that is used to compare the data inserted with the data of the contract  |
+| 3    | The app returns a message :"Data is invalid" |
+|4	| The registration is aborted|
+
+##### Scenario 1.3 
+
+The user insert valid data but the contract ID is not finded.
+
+| Scenario 1.3 | |
+| ------------- |:-------------:| 
+|  Precondition     | The user insert all own data  |
+|  Post condition     | The user is not registered |
+| Step#        | Description  |
+|  1     | The user insert: name, surname, email, password, password confirmation  |  
+|  2     |The user insert his contract ID that is used to compare the data inserted with the data of the contract  |
+| 3    | The app returns a message :"Contract ID is not finded" |
+|4	| The registration is aborted|
+
+##### Scenario 1.4 
+
+App' Server doesn't work
+
+| Scenario 1.4 | |
+| ------------- |:-------------:| 
+|  Precondition     | The user insert all own data  |
+|  Post condition     | The user is not registered |
+| Step#        | Description  |
+|  1     | The user insert: name, surname, email, password, password confirmation  |  
+|  2     |The user insert his contract ID that is used to compare the data inserted with the data of the contract  |
+| 3    | The app returns a message :"Server Down" |
+|4	| The registration is aborted|
+
+
+### Use case 2, UC2 - Login on the EzWh application
+| Actors Involved | User |
+| ------------- |:-------------:| 
+|  Precondition     | The User must be registered on the app |
+|  Post condition     | The user is correctly logged to the app|
+|  Nominal Scenario     | The user enters email and password. Afer have the acces to the app  |
+|  Variants     | Email and/or password is incorrect |
+|  Exceptions     | The server of the app doesn't work correctly |
+##### Scenario 1.1 
+
+The user is correctly logged to the app
+
+| Scenario 1.1 | |
+| ------------- |:-------------:| 
+|  Precondition     | The user insert email and password  |
+|  Post condition     | The user is logged |
+| Step#        | Description  |
+|  1     | The user insert: email and password  |  
+|  2     | The app verify the data  |
+| 3    |  The user is successfully logged in |
+
+##### Scenario 1.2 
+
+The user doesn't access to the app: insert wrong data
+
+| Scenario 1.2 | |
+| ------------- |:-------------:| 
+|  Precondition     | The user insert email and password  |
+|  Post condition     | The user is not logged |
+| Step#        | Description  |
+|  1     | The user insert: email and password  |  
+|  2     | The app verify the data  |
+| 3    |  The app notify that the username and/or password is incorrect |
+|4	|	Log - in aborted|
+
+##### Scenario 1.3
+
+The user doesn't access to the app: the server doesn't work
+
+| Scenario 1.3 | |
+| ------------- |:-------------:| 
+|  Precondition     | The user insert email and password  |
+|  Post condition     | the user is not logged |
+| Step#        | Description  |
+|  1     | The user insert: email and password  |  
+|  2     | The app verify the data  |
+| 3    |  The app retrive the message that the server is down |
+
+
+
+
+
+
+
 
 ### Use case x, UCx
 ..
