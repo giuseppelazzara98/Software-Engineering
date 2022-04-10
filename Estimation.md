@@ -66,7 +66,7 @@ Consider the EZWH  project as described in YOUR requirement document, assume tha
 
 ###
 Insert here Gantt chart with above activities:
-
+![Gantt_chart] (Images/estimation.png)
 # Summary
 
 Report here the results of the three estimation approaches. The  estimates may differ. Discuss here the possible reasons for the difference
