@@ -75,7 +75,6 @@ EZWH (EaSy WareHouse) is a software application to support the management of a w
 | Inventory manager | Person who manages space in warehouse and records where items are stored |
 | Administrator | Person who manages databases and network system |
 | Quality office| Entity that checks if items received from suppliers are good enough |
-| Cloud services | Entities where the software is deployed on for remote access |
 
 # Context Diagram and interfaces
 
@@ -97,7 +96,6 @@ EZWH (EaSy WareHouse) is a software application to support the management of a w
 | Inventory manager | GUI | Screen and keyboard, internet connection |
 | Shipment department | GUI | Screen and keyboard, internet connection |
 | Quality office | GUI | Screen and keyboard, internet connection |
-| Cloud service | APIs | Internet connection |
 | Supplier | email | Screen and keyboard, internet connection |
 
 # Stories and personas
@@ -154,7 +152,7 @@ EZWH (EaSy WareHouse) is a software application to support the management of a w
 | FR4.3 | List items |
 | FR4.4 | List statuses of orders |
 | FR5   | Manage orders |
-| FR5.1 | COnfirm order |
+| FR5.1 | Confirm order |
 | FR5.2 | Delete order |
 | FR5.3 | Modify quantity of order |
 | FR5.4 | Notify item is in pick-up area |
@@ -174,7 +172,11 @@ EZWH (EaSy WareHouse) is a software application to support the management of a w
 | FR8.2 | Modify report |
 | FR8.3 | Delete report |
 | FR8.4 | Add attachments |
-
+| FR9   | Manage arrivals |
+| FR9.1 | Add arrival |
+| FR8.2 | Modify arrival |
+| FR9.3 | Delete arrival |
+| FR9.4 | List arrivals |
 
 ## Non Functional Requirements
 
