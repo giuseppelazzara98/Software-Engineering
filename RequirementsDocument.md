@@ -42,8 +42,36 @@ Version: 0.0
 		- [Use case 3, UC3 - Make an order for a supplier](#use-case-3-uc3---make-an-order-for-a-supplier)
 				- [Scenario 3.1](#scenario-31)
 				- [Scenario 3.2](#scenario-32)
-				- [Scenario 3.2](#scenario-32-1)
-		- [Use case x, UCx](#use-case-x-ucx)
+				- [Scenario 3.3](#scenario-33)
+		- [Use case 4, UC4 - Quality check on product already in database](#use-case-4-uc4---quality-check-on-product-already-in-database)
+				- [Scenario 4.1](#scenario-41)
+				- [Scenario 4.2](#scenario-42)
+		- [Use case 5, UC5 - Quality check on new product](#use-case-5-uc5---quality-check-on-new-product)
+				- [Scenario 5.1](#scenario-51)
+				- [Scenario 5.2](#scenario-52)
+		- [Use case 6, UC6 - Return shipment of defective product](#use-case-6-uc6---return-shipment-of-defective-product)
+				- [Scenario 6.1](#scenario-61)
+				- [Scenario 6.2](#scenario-62)
+		- [Use case 7, UC7 - Manage products](#use-case-7-uc7---manage-products)
+				- [Scenario 7.1](#scenario-71)
+				- [Scenario 7.2](#scenario-72)
+		- [Use case 8, UC8 - Manage users and rights](#use-case-8-uc8---manage-users-and-rights)
+				- [Scenario 8.1](#scenario-81)
+				- [Scenario 8.2](#scenario-82)
+				- [Scenario 8.3](#scenario-83)
+		- [Use case 9, UC9 - Authenticate, authorize](#use-case-9-uc9---authenticate-authorize)
+				- [Scenario 9.1](#scenario-91)
+				- [Scenario 9.2](#scenario-92)
+				- [Scenario 9.3](#scenario-93)
+		- [Use case 10, UC10 - Shipment to pick-up area](#use-case-10-uc10---shipment-to-pick-up-area)
+				- [Scenario 10.1](#scenario-101)
+		- [Use case 11, UC11 - Manage inventory](#use-case-11-uc11---manage-inventory)
+				- [Scenario 11.1](#scenario-111)
+				- [Scenario 11.2](#scenario-112)
+		- [Use case 12, UC12 - New arrival](#use-case-12-uc12---new-arrival)
+				- [Scenario 12.1](#scenario-121)
+				- [Scenario 12.2](#scenario-122)
+				- [Scenario 12.3](#scenario-123)
 - [Glossary](#glossary)
 - [System Design](#system-design)
 - [Deployment Diagram](#deployment-diagram)
@@ -213,9 +241,7 @@ EZWH (EaSy WareHouse) is a software application to support the management of a w
 |  Exceptions     | The server of the app doesn't work correctly |
 
 ##### Scenario 1.1 
-
 The user is correctly registered to the app
-
 | Scenario 1.1 | |
 | ------------- |:-------------:| 
 |  Precondition     | The user insert all own data  |
@@ -228,9 +254,7 @@ The user is correctly registered to the app
 |5 | The registration is convalidated|
 
 ##### Scenario 1.2 
-
 The user insert invalid data
-
 | Scenario 1.2 | |
 | ------------- |:-------------:| 
 |  Precondition     | The user insert all own data  |
@@ -242,9 +266,7 @@ The user insert invalid data
 |4	| The registration is aborted|
 
 ##### Scenario 1.3 
-
 The user insert valid data but the contract ID is not finded.
-
 | Scenario 1.3 | |
 | ------------- |:-------------:| 
 |  Precondition     | The user insert all own data  |
@@ -256,9 +278,7 @@ The user insert valid data but the contract ID is not finded.
 |4	| The registration is aborted|
 
 ##### Scenario 1.4 
-
 App' Server doesn't work
-
 | Scenario 1.4 | |
 | ------------- |:-------------:| 
 |  Precondition     | The user insert all own data  |
@@ -278,10 +298,9 @@ App' Server doesn't work
 |  Nominal Scenario     | The user enters email and password. Afer have the acces to the app  |
 |  Variants     | Email and/or password is incorrect |
 |  Exceptions     | The server of the app doesn't work correctly |
+
 ##### Scenario 2.1 
-
 The user is correctly logged to the app
-
 | Scenario 2.1 | |
 | ------------- |:-------------:| 
 |  Precondition     | The user insert email and password  |
@@ -292,9 +311,7 @@ The user is correctly logged to the app
 | 3    |  The user is successfully logged in |
 
 ##### Scenario 2.2 
-
 The user doesn't access to the app: insert wrong data
-
 | Scenario 2.2 | |
 | ------------- |:-------------:| 
 |  Precondition     | The user insert email and password  |
@@ -306,9 +323,7 @@ The user doesn't access to the app: insert wrong data
 |4	|	Log - in aborted|
 
 ##### Scenario 2.3
-
 The user doesn't access to the app: the server doesn't work
-
 | Scenario 2.3 | |
 | ------------- |:-------------:| 
 |  Precondition     | The user insert email and password  |
@@ -329,9 +344,7 @@ USE case 3
 |  Exceptions     | The Stock manager make a duplicated order  |
 
 ##### Scenario 3.1
-
 The stock manager make an order and it is successfully submited to the supplier.
-
 | Scenario 3.1 | |
 | ------------- |:-------------:| 
 |  Precondition     | The stock manager insert item name relative id and quantity   |
@@ -344,10 +357,8 @@ The stock manager make an order and it is successfully submited to the supplier.
 | 	5	|	The app notify that the order is sended to the supplier	|
 
 ##### Scenario 3.2
-
 The stock manager make an order and it is successfully submited to the supplier.
 After have to modify the order 
-
 | Scenario 3.2 | |
 | ------------- |:-------------:| 
 |  Precondition     | The stock manager submit an order and after have to modify it   |
@@ -360,10 +371,8 @@ After have to modify the order
 | 	5	|	The app notify that the modify to the order is sended to the supplier	|
 
 
-##### Scenario 3.2
-
+##### Scenario 3.3
 The stock manager make an order and it is NOT successfully submited to the supplier because the server doesn't work
-
 | Scenario 3.3 | |
 | ------------- |:-------------:| 
 |  Precondition     | The stock manager submit an order  |
@@ -375,17 +384,333 @@ The stock manager make an order and it is NOT successfully submited to the suppl
 |	4	|	The stock manager submit the order 	|
 | 	5	|	The app notify that the order is NOT sended to the supplier	because the server is down|
 
+### Use case 4, UC4 - Quality check on product already in database
+| Actors Involved        | Quality office |
+| ------------- |:-------------:| 
+|  Precondition     | New arrival arrived <br> Product is already in database  |
+|  Post condition     | Quantity of the product is updated |
+|  Nominal Scenario     | Quality office takes some items and does a quality check. Product is stored in the warehouse |
+|  Variants     | Product does not pass all the tests. The product is returned to supplier |
+|  Exceptions     | - |
+
+##### Scenario 4.1 
+| Scenario 4.1 | Product P passes all the test for quality check |
+| ------------- |:-------------:| 
+|  Precondition     | Employee E has user account |
+|  Post condition     |  |
+| Step#        | Description  |
+|  1     | E takes product P from the arrivals|
+|  2     | E checks the product type |
+|  3     | E brings the product to the suitable test laboratory |
+|  4     | P passes all the necessary test |
+
+##### Scenario 4.2 
+| Scenario 4.2 | Product P does not pass all the test for quality check |
+| ------------- |:-------------:| 
+|  Precondition     | Employee E has user account |
+|  Post condition     | Product P is returned |
+| Step#        | Description  |
+|  1     | E takes product P from the arrivals|
+|  2     | E checks the product type |
+|  3     | E brings the product to the suitable test laboratory |
+|  4     | P does not pass all the necessary test |
+|  5     | E fills the report for return |
+
+### Use case 5, UC5 - Quality check on new product
+| Actors Involved        | Quality office |
+| ------------- |:-------------:| 
+|  Precondition     | New shipment arrived |
+|  Post condition     | Product is added to database <br> Quantity of the product is updated |
+|  Nominal Scenario     | Quality office takes some items and does a quality check. Product is added in the database and stored in the warehouse |
+|  Variants     | Product does not pass all the tests. The product is returned to supplier |
+|  Exceptions     | - |
+
+##### Scenario 5.1 
+| Scenario 5.1 | Product P passes all the test for quality check |
+| ------------- |:-------------:| 
+|  Precondition     | Employee E has user account |
+|  Post condition     |  |
+| Step#        | Description  |
+|  1     | E takes product P from the shipment |
+|  2     | E checks the product type |
+|  3     | E brings the product to the suitable test laboratory |
+|  4     | P passes all the necessary test |
+|  5     | E add report for inventory manager to add P into database and to find a suitable location |
+
+##### Scenario 5.2 
+| Scenario 5.2 | Product P does not pass all the tests for quality check |
+| ------------- |:-------------:| 
+|  Precondition     | Employee E has user account |
+|  Post condition     | Product P is returned |
+| Step#        | Description  |
+|  1     | E takes product P from the shipment |
+|  2     | E checks the product type |
+|  3     | E brings the product to the suitable test laboratory |
+|  4     | P does not pass all the necessary tests |
+|  5     | E fills the report for return |
+
+### Use case 6, UC6 - Return shipment of defective product
+| Actors Involved        | Shipment department |
+| ------------- |:-------------:| 
+|  Precondition     | Product P is defective <br> |
+|  Post condition     | Product is returned to supplier |
+|  Nominal Scenario     | Shipment department take all products P and prepare them for shipping. Shipment department prints label with address of supplier and contact the delivery agency. |
+|  Variants     | Address is wrong. Label is corrected. |
+|  Exceptions     | <exceptions, errors > |
+
+##### Scenario 6.1 
+| Scenario 6.1 | Product P is returned to supplier S |
+| ------------- |:-------------:| 
+|  Precondition     | Employee E has user account <br> Product P has report for being defective <br> Supplier S has correct address|
+|  Post condition     |  |
+| Step#        | Description  |
+|  1     | E takes all products P |
+|  2     | E prints shipment label |
+|  3     | E contacts delivery agency for pick-up and confirm a date |
+
+##### Scenario 6.2 
+| Scenario 6.2 | Product P is returned to supplier S with a change in address |
+| ------------- |:-------------:| 
+|  Precondition     | Employee E has user account <br> Product P has report for being defective <br> Supplier S has wrong address|
+|  Post condition     |  |
+| Step#        | Description  |
+|  1     | E takes all products P |
+|  2     | E prints shipment label |
+|  3     | E contacts delivery agency for pick-up and confirm a date |
+|  4     | Supplier S has changed the address for returns |
+|  5     | E prints the correct address |
+
+### Use case 7, UC7 - Manage products
+| Actors Involved        | Administrator,  Manager |
+| ------------- |:-------------:|
+|  Precondition |  |
+|  Post condition |  |
+|  Nominal Scenario |  Manager creates a new product  |
+|  Variants     | product  exists already, Manager modifies its fields |
+| | product  is assigned to an occupied location, issue warning |
+| | product  is assigned to an existing barcode , issue warning |
+
+##### Scenario 7.1
+| Scenario 7.1 | Add/Create product |
+| ------------- |:-------------:|
+|  Precondition     | manager exists and logs in |
+|  Post condition     | product has an assigned location |
+| Step#        | Description  |
+|  1    | manager add new product description |
+|  2    | manager enters location of product |
+|  4    | manager inserts new product notes |
+|  5    |      manager add new bar code       |
+|  6    | manager confirms the entered data |
+
+##### Scenario 7.2
+| Scenario 7.2 |  Modify product location |
+| ------------- |:-------------:|
+|  Precondition     | Employee of warehouse who is responsible arrangements exists and is logs in |
+|  | Product exists |
+|  | One location is available |
+|  Post condition     | location |
+| Step#        | Description  |
+|  1    | Employee searches product via bar code |
+|  2    | Employee selects product record |
+|  3    | Employee selects a new product location |
+
+### Use case 8, UC8 - Manage users and rights
+| Actors Involved        | Administrator |
+| ------------- |:-------------:|
+|  Precondition | Administrator logs in |
+|  Post condition |  |
+|  Nominal Scenario |  The administrator define new users and rights for access  |
+|  Variants     | The administrator modifies fields or access rights of an existing user |
+
+##### Scenario 8.1
+| Scenario 8.1|  Create user and define rights |
+| ------------- |:-------------:|
+|  Precondition     | The administrator exists and is logs in |
+|  Post condition     | Account is created |
+| Step#        | Description  |
+|  1    | The administrator defines the credentials of the new account |
+|  2    | The administrator defines the role of the the new account |
+|  3    | The administrator selects the access rights for the new account |
 
 
+##### Scenario 8.2
+| Scenario 8.2|  Delete user |
+| ------------- |:-------------:|
+|  Precondition     | The administrator exists and is logs in |
+|  | Account exists |
+|  Post condition     | Account deleted |
+| Step#        | Description  |
+|  1    |  The administrator selects account  |
+|  2    | account deleted from the system |
+
+##### Scenario 8.3
+| Scenario 8.3|  Modify user rights |
+| ------------- |:-------------:|
+|  Precondition     | The administrator exists and is logs in |
+|  | Account exists |
+|  Post condition     | rights  of account modified |
+| Step#        | Description  |
+|  1    |  The administrator selects account  |
+|  2    | The administrator selects the access rights for account |
+|  3    | The administrator confirms the inserted data |
+
+### Use case 9, UC9 - Authenticate, authorize
+| Actors Involved        | Administrator, Manager, employees |
+| ------------- |:-------------:|
+|  Precondition     |                                                       |
+|  Post condition     |                                 |
+|  Nominal Scenario     | Login: user enters credentials, system checks credentials, user is authenticated   |
+|  Variants     | Login, credentials wrong, user not authenticated,User enters Wrong credential |
+|  | Logout |
 
 
+##### Scenario 9.1
+| Scenario 9.1|  Login |
+| ------------- |:-------------:|
+|  Precondition     | Account for User exists |
+|  Post condition     | User logged in |
+| Step#        | Description  |
+|  1    |  User inserts username |
+|  2    |  User inserts password |
+|  3    | User logged in,  system shows the functionalities offered by the access of user |
 
 
+##### Scenario 9.2
+| Scenario 9.2|  Logout |
+| ------------- |:-------------:|
+|  Precondition     | User logs in |
+|  Post condition     | User logged-out |
+| Step#        | Description  |
+|  1    | User logs out |
+|  2    |  The system shows the login/sign in page |
 
 
+##### Scenario 9.3
+| Scenario 9.3|  User enters Wrong credential|
+| ------------- |:-------------:|
+|  Precondition     | User logs in |
+|  Post condition     | user gains access to the software  |
+| Step#        | Description  |
+| 1     | user clicks on the “use username and password” button|
+| 2     | user enters username and password in the login page of the software|
+| 3     | The software check username and password and displays an error message for the wrong password|
+| 4     | user clicks on “I forgot my password”’|
+| 5     | The software displays a message which asks to check the new email sent to the user |
+| 6     | user retrieves the password from the email|
+| 7     | user enters username and password in login page|
+| 8     | Software checks the username and password|
+| 9     | Authentication is done
 
-### Use case x, UCx
-..
+### Use case 10, UC10 - Shipment to pick-up area
+| Actors Involved        | Shipment department |
+| ------------- |:-------------:| 
+|  Precondition     | Order from OU is arrived |
+|  Post condition     | Product quantity is updated |
+|  Nominal Scenario     | Warehouse receives an order from an OU inside the company. The shipment department accepts the order, checks the products needed, prepares them and brings them to pick-up area. Notification is sent to the OU. |
+|  Variants     | Product is out-of-stock <br> |
+|  Exceptions     | Server down: order is not received |
+
+##### Scenario 10.1 
+| Scenario 10.1 | Product P is shipped to pick-up area |
+| ------------- |:-------------:| 
+|  Precondition     | User U is logged in <br> Product P is in stock and in enough quantity |
+|  Post condition     | Product quantity is updated |
+| Step#        | Description  |
+|  1     | U confirms reception of order |
+|  2     | U checks availability of product P |
+|  2     | U confirms quantity of P is enough |
+|  3     | U prepares package with product |
+|  4     | U brings package to pick-up area |
+|  5     | U confirms delivery to pick-up area |
+|  6     | Notification is sent to OU |
+
+| Scenario 10.2 | Product P is out-of-stock |
+| ------------- |:-------------:| 
+|  Precondition     | User U is logged in <br> Product P is in stock and in enough quantity |
+|  Post condition     | Product quantity is updated |
+| Step#        | Description  |
+|  1     | U confirms reception of order |
+|  2     | U checks availability of product P |
+|  3     | P quantity is not enough for the order |
+|  4     | U notify quantity is not enough |
+|  5     | U delete order |
+
+### Use case 11, UC11 - Manage inventory
+| Actors Involved        | Stock manager |
+| ------------- |:-------------:| 
+|  Precondition     | Stock manager is logged in <br> Product P exists|
+|  Post condition     | Product quantity or position is updated |
+|  Nominal Scenario     | Stock manager changes the position or quantity of a product |
+|  Variants     | - |
+|  Exceptions     | Server down: changes are not saved |
+
+##### Scenario 11.1 
+
+| Scenario 11.1 | Product P is moved in another place |
+| ------------- |:-------------:| 
+|  Precondition     |  |
+|  Post condition     | Product location is updated |
+| Step#        | Description  |
+|  1     | Stock manager insert product ID |
+|  2     | Stock manager modifies the location of the product |
+|  3     | Stock manager saves moditication |
+
+##### Scenario 11.2 
+A product P is moved because there is not enough space for all the items
+| Scenario 11.1 | Product P is moved in another place and quantity is updated |
+| ------------- |:-------------:| 
+|  Precondition     |  |
+|  Post condition     | Product location and quantity are updated |
+| Step#        | Description  |
+|  1     | Stock manager insert product ID |
+|  2     | Stock manager modifies the location of the product |
+|  3     | Stock manager modifies the quantity of the product |
+|  4     | Stock manager saves moditication |
+
+### Use case 12, UC12 - New arrival 
+| Actors Involved        | Shipment department |
+| ------------- |:-------------:| 
+|  Precondition     | Shipment department employee is logged in <br> New arrival has come |
+|  Post condition     | New arrival items are added to database |
+|  Nominal Scenario     |  Shipment department employee take the package from the delivery, then he adds the list of items in the database. Then the arrival is to be checked by the quality office |
+|  Variants     | Shipment department employee adds item that he did not see before |
+|  Exceptions     | Server down: arrival is not saved |
+##### Scenario 12.1 
+| Scenario 12.1 | Arrival A is added to database |
+| ------------- |:-------------:| 
+|  Precondition     |  |
+|  Post condition     | Arrival A is added to database |
+| Step#        | Description  |
+|  1     | Shipment department employee takes the package from the delivery |
+|  2     | Shipment department employee creates a new arrival |
+|  3     | Shipment department employee adds all items in the package |
+|  4    | Shipment department employee set the status "not checked" for the arrival and saves |
+|  5    | Shipment department employee sends a notification to quality office |
+##### Scenario 12.2
+| Scenario 12.2 | Edit arrival A |
+| ------------- |:-------------:| 
+|  Precondition     |  |
+|  Post condition     | Arrival A is added to database |
+| Step#        | Description  |
+|  1     | Shipment department employee takes the package from the delivery |
+|  2     | Shipment department employee creates a new arrival |
+|  3     | Shipment department employee adds all items in the package |
+|  4    | Shipment department employee set the status "not checked" for the arrival |
+|  5    | Shipment department employee sends a notification to quality office |
+|  6    | Shipment department employee sees a another product in the package|
+|  7    | Shipment department employee edits the arrival and adds the product |
+|  8    | Shipment department employee saves the changes |
+##### Scenario 12.3
+| Scenario 12.3 | Arrival A not added |
+| ------------- |:-------------:| 
+|  Precondition     |  |
+|  Post condition     |  |
+| Step#        | Description  |
+|  1     | Shipment department employee takes the package from the delivery |
+|  2     | Shipment department employee creates a new arrival |
+|  3     | Shipment department employee adds all items in the package |
+|  4    | Shipment department employee set the status "not checked" for the arrival and saves|
+|  5    | Server is down: arrival is not added |
 
 
 
