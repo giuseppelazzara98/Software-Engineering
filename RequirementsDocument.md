@@ -241,8 +241,8 @@ EZWH (EaSy WareHouse) is a software application to support the management of a w
 |  Exceptions     | The server of the app doesn't work correctly |
 
 ##### Scenario 1.1 
-The user is correctly registered to the app
-| Scenario 1.1 | |
+
+| Scenario 1.1 |The user is correctly registered to the app |
 | ------------- |:-------------:| 
 |  Precondition     | The user insert all own data  |
 |  Post condition     | The user is registered |
@@ -254,8 +254,8 @@ The user is correctly registered to the app
 |5 | The registration is convalidated|
 
 ##### Scenario 1.2 
-The user insert invalid data
-| Scenario 1.2 | |
+
+| Scenario 1.2 |The user insert invalid data |
 | ------------- |:-------------:| 
 |  Precondition     | The user insert all own data  |
 |  Post condition     | The user is not registered |
@@ -266,8 +266,8 @@ The user insert invalid data
 |4	| The registration is aborted|
 
 ##### Scenario 1.3 
-The user insert valid data but the contract ID is not finded.
-| Scenario 1.3 | |
+
+| Scenario 1.3 |The user insert valid data but the contract ID is not finded |
 | ------------- |:-------------:| 
 |  Precondition     | The user insert all own data  |
 |  Post condition     | The user is not registered |
@@ -278,8 +278,8 @@ The user insert valid data but the contract ID is not finded.
 |4	| The registration is aborted|
 
 ##### Scenario 1.4 
-App' Server doesn't work
-| Scenario 1.4 | |
+
+| Scenario 1.4 |App' Server doesn't work |
 | ------------- |:-------------:| 
 |  Precondition     | The user insert all own data  |
 |  Post condition     | The user is not registered |
