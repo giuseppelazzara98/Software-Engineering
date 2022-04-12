@@ -505,9 +505,7 @@ The stock manager make an order and it is NOT successfully submited to the suppl
 ##### Scenario 7.2
 | Scenario 7.2 |  Modify product location |
 | ------------- |:-------------:|
-|  Precondition     | Employee of warehouse who is responsible arrangements exists and is logs in |
-|  | Product exists |
-|  | One location is available |
+|  Precondition     | Employee of warehouse who is responsible arrangements exists and is logs in <br> Product exists <br> One location is available |
 |  Post condition     | location |
 | Step#        | Description  |
 |  1    | Employee searches product via bar code |
@@ -536,8 +534,7 @@ The stock manager make an order and it is NOT successfully submited to the suppl
 ##### Scenario 8.2
 | Scenario 8.2|  Delete user |
 | ------------- |:-------------:|
-|  Precondition     | The administrator exists and is logs in |
-|  | Account exists |
+|  Precondition     | The administrator exists and is logs in <br> Account exists |
 |  Post condition     | Account deleted |
 | Step#        | Description  |
 |  1    |  The administrator selects account  |
@@ -546,8 +543,7 @@ The stock manager make an order and it is NOT successfully submited to the suppl
 ##### Scenario 8.3
 | Scenario 8.3|  Modify user rights |
 | ------------- |:-------------:|
-|  Precondition     | The administrator exists and is logs in |
-|  | Account exists |
+|  Precondition     | The administrator exists and is logs in <br> Account exists|
 |  Post condition     | rights  of account modified |
 | Step#        | Description  |
 |  1    |  The administrator selects account  |
