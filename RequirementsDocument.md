@@ -273,8 +273,8 @@ The user insert valid data but the contract ID is not finded.
 |  Post condition     | The user is not registered |
 | Step#        | Description  |
 |  1     | The user insert: name, surname, email, password, password confirmation  |  
-|  2     |The user insert his contract ID that is used to compare the data inserted with the data of the contract  |
-| 3    | The app returns a message :"Contract ID is not finded" |
+|  2     |The user insert his email that is used to compare the data inserted with the data of the contract  |
+| 3    | The app returns a message :"email is not finded" |
 |4	| The registration is aborted|
 
 ##### Scenario 1.4 
