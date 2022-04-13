@@ -1,8 +1,8 @@
 #Requirements Document 
 
-Date: 22 march 2022
+Date: 13 April 2022
 
-Version: 0.0
+Version: 1.0
 
  
 | Version number | Change |
@@ -107,16 +107,9 @@ EZWH (EaSy WareHouse) is a software application to support the management of a w
 # Context Diagram and interfaces
 
 ## Context Diagram
-\<Define here Context diagram using UML use case diagram>
-
-\<actors are a subset of stakeholders>
 ![Context diagram](Images/Context_diagram.jpg)
 
 ## Interfaces
-\<describe here each interface in the context diagram>
-
-\<GUIs will be described graphically in a separate document>
-
 | Actor | Logical Interface | Physical Interface  |
 | ------------- |:-------------:| -----:|
 | Warehouse manager | GUI | Screen and keyboard or portable device, internet connection |
@@ -127,25 +120,20 @@ EZWH (EaSy WareHouse) is a software application to support the management of a w
 | Supplier | email | Screen and keyboard, internet connection |
 
 # Stories and personas
-\<A Persona is a realistic impersonation of an actor. Define here a few personas and describe in plain text how a persona interacts with the system>
 
-\<Persona is-an-instance-of actor>
-
-\<stories will be formalized later as scenarios in use cases>
-
-**Persona 1**: Stock manager,35 yo, female, first year of work as a manager.
+**Persona 1**: Stock manager,35 y.o., female, first year of work as a manager.
 <br>Story: The manager has to solve a problem with an order because she makes a mistake with a duplicated order issue for the same material
 
-**Persona 2**: Responsible for the supplier of a company, male, 43.y.o. with 17 years of experience.
+**Persona 2**: Responsible for the supplier of a company, male, 43 y.o. with 17 years of experience.
 <br>Story: The responsible have an offer for the company and contact it to propose the offer and possibly sign a commercial agreement. 
 
-**Persona 3**: New employee for the company, male 37y.o., 10 years of experience in another company.
+**Persona 3**: New employee for the company, male, 37 y.o., 10 years of experience in another company.
 <br>Story: The new employee just signed the contract and have to add his information on the app to became officially a new employee for the company.
 
-**Persona 4**: Responsible for the orders, female 28 o.y. with 1 year of experience.
+**Persona 4**: Responsible for the orders, female, 28 y.o. with 1 year of experience.
 <br>Story: The company made a mistake for an order and the responsible have to modify the order with the add of new items. 
 
-**Persona 5**: Shipping clerk, male 32y.o. with 2 year of experience.
+**Persona 5**: Shipping clerk, male 32 y.o. with 2 year of experience.
 <br>Story: The clerk have to signal that the shipment is on the pick-up area
 
 **Persona 6**: Quality Office employee, male 35 y.o., 5 years of experience on this work.
@@ -154,10 +142,6 @@ EZWH (EaSy WareHouse) is a software application to support the management of a w
 # Functional and non functional requirements
 
 ## Functional Requirements
-
-\<In the form DO SOMETHING, or VERB NOUN, describe high level capabilities of the system>
-
-\<they match to high level use cases>
 
 | ID        | Description  |
 | ------------- |:-------------:| 
@@ -208,8 +192,6 @@ EZWH (EaSy WareHouse) is a software application to support the management of a w
 
 ## Non Functional Requirements
 
-\<Describe constraints on functional requirements>
-
 | ID        | Type (efficiency, reliability, ..)           | Description  | Refers to |
 | ------------- |:-------------:| :-----:| -----:|
 |  NFR1     | Usability  | Any non-technical person should be able to use the system without training | All |
@@ -227,10 +209,8 @@ EZWH (EaSy WareHouse) is a software application to support the management of a w
 
 
 ## Use case diagram
-\<define here UML Use case diagram UCD summarizing all use cases, and their relationships>
 ![Use case diagram](Images/UseCaseDiagram.jpg)
 
-\<next describe here each use case in the UCD>
 ### Use case 1, UC1 - Registration on the EzWh application
 | Actors Involved        | User |
 | ------------- |:-------------:| 
@@ -711,17 +691,10 @@ A product P is moved because there is not enough space for all the items
 
 
 # Glossary
-
-\<use UML class diagram to define important terms, or concepts in the domain of the system, and their relationships> 
-
-\<concepts are used consistently all over the document, ex in use cases, requirements etc>
 ![Glossary](Images/Glossary.jpg)
+
 # System Design
-\<describe here system design>
-
-\<must be consistent with Context diagram>
 ![System design](Images/System_design.jpg)
-# Deployment Diagram 
 
-\<describe here deployment diagram >
+# Deployment Diagram 
 ![Deployement diagram](Images/DeploymentDiagram.jpg)
