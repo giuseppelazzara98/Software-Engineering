@@ -530,29 +530,20 @@ The stock manager make an order and it is successfully submited to the supplier.
 |  2    | The administrator selects the access rights for account |
 |  3    | The administrator confirms the inserted data |
 
-### Use case 9, UC9 - Authenticate, authorize
-| Actors Involved        | Administrator, Manager, employees |
+### Use case 9, UC9 - Logout
+| Actors Involved        | User |
 | ------------- |:-------------:|
-|  Precondition     |                                                       |
-|  Post condition     |                                 |
-|  Nominal Scenario     | Login: user enters credentials, system checks credentials, user is authenticated   |
-|  Variants     | Login, credentials wrong, user not authenticated,User enters Wrong credential |
-|  | Logout |
+|  Precondition     |  Logged in                                  |
+|  Post condition     |      Logged out                           |
+|  Nominal Scenario     | Logout: user is logged out   |
+|  Variants     |  |
+| Exceptions  |  |
+
+
 
 
 ##### Scenario 9.1
-| Scenario 9.1|  Login |
-| ------------- |:-------------:|
-|  Precondition     | Account for User exists |
-|  Post condition     | User logged in |
-| Step#        | Description  |
-|  1    |  User inserts username |
-|  2    |  User inserts password |
-|  3    | User logged in,  system shows the functionalities offered by the access of user |
-
-
-##### Scenario 9.2
-| Scenario 9.2|  Logout |
+| Scenario 9.1|  Logout |
 | ------------- |:-------------:|
 |  Precondition     | User logs in |
 |  Post condition     | User logged-out |
@@ -560,22 +551,6 @@ The stock manager make an order and it is successfully submited to the supplier.
 |  1    | User logs out |
 |  2    |  The system shows the login/sign in page |
 
-
-##### Scenario 9.3
-| Scenario 9.3|  User enters Wrong credential|
-| ------------- |:-------------:|
-|  Precondition     | User logs in |
-|  Post condition     | user gains access to the software  |
-| Step#        | Description  |
-| 1     | user clicks on the “use username and password” button|
-| 2     | user enters username and password in the login page of the software|
-| 3     | The software check username and password and displays an error message for the wrong password|
-| 4     | user clicks on “I forgot my password”’|
-| 5     | The software displays a message which asks to check the new email sent to the user |
-| 6     | user retrieves the password from the email|
-| 7     | user enters username and password in login page|
-| 8     | Software checks the username and password|
-| 9     | Authentication is done
 
 ### Use case 10, UC10 - Shipment to pick-up area
 | Actors Involved        | Shipment department |
