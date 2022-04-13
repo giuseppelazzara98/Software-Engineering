@@ -280,8 +280,8 @@ EZWH (EaSy WareHouse) is a software application to support the management of a w
 |  Exceptions     | The server of the app doesn't work correctly |
 
 ##### Scenario 2.1 
-The user is correctly logged to the app
-| Scenario 2.1 | |
+
+| Scenario 2.1 |The user is correctly logged to the app|
 | ------------- |:-------------:| 
 |  Precondition     | The user insert email and password  |
 |  Post condition     | The user is logged |
@@ -291,8 +291,8 @@ The user is correctly logged to the app
 | 3    |  The user is successfully logged in |
 
 ##### Scenario 2.2 
-The user doesn't access to the app: insert wrong data
-| Scenario 2.2 | |
+
+| Scenario 2.2 | The user doesn't access to the app: insert wrong data|
 | ------------- |:-------------:| 
 |  Precondition     | The user insert email and password  |
 |  Post condition     | The user is not logged |
@@ -303,8 +303,8 @@ The user doesn't access to the app: insert wrong data
 |4	|	Log - in aborted|
 
 ##### Scenario 2.3
-The user doesn't access to the app: the server doesn't work
-| Scenario 2.3 | |
+
+| Scenario 2.3 | The user doesn't access to the app: the server doesn't work|
 | ------------- |:-------------:| 
 |  Precondition     | The user insert email and password  |
 |  Post condition     | the user is not logged |
@@ -324,8 +324,8 @@ USE case 3
 |  Exceptions     | The Stock manager make a duplicated order  |
 
 ##### Scenario 3.1
-The stock manager make an order and it is successfully submited to the supplier.
-| Scenario 3.1 | |
+
+| Scenario 3.1 |The stock manager make an order and it is successfully submited to the supplier. |
 | ------------- |:-------------:| 
 |  Precondition     | The stock manager insert item name relative id and quantity   |
 |  Post condition     | The order is submitted to the supplier |
@@ -338,8 +338,8 @@ The stock manager make an order and it is successfully submited to the supplier.
 
 ##### Scenario 3.2
 The stock manager make an order and it is successfully submited to the supplier.
-After have to modify the order 
-| Scenario 3.2 | |
+
+| Scenario 3.2 | After have to modify the order |
 | ------------- |:-------------:| 
 |  Precondition     | The stock manager submit an order and after have to modify it   |
 |  Post condition     | Order succesfully modified  |
@@ -352,8 +352,8 @@ After have to modify the order
 
 
 ##### Scenario 3.3
-The stock manager make an order and it is NOT successfully submited to the supplier because the server doesn't work
-| Scenario 3.3 | |
+
+| Scenario 3.3 |The stock manager make an order and it is NOT successfully submited to the supplier because the server doesn't work |
 | ------------- |:-------------:| 
 |  Precondition     | The stock manager submit an order  |
 |  Post condition     | Order request  aborted  |
