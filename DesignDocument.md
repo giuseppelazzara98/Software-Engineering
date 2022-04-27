@@ -17,25 +17,27 @@ Version:
 - [Low level design](#low-level-design)
 - [Verification traceability matrix](#verification-traceability-matrix)
 - [Verification sequence diagrams](#verification-sequence-diagrams)
+  - [Sequence diagram of Scenario 1-1](#sequence-diagram-of-scenario-1-1)
+  - [Sequence diagram of Scenario 3-2](#sequence-diagram-of-scenario-3-2)
+  - [Sequence diagram of scenario 4-1](#sequence-diagram-of-scenario-4-1)
+  - [Sequence diagram of scenario 5-2-1](#sequence-diagram-of-scenario-5-2-1)
+  - [Sequence diagram of scenario 6-1](#sequence-diagram-of-scenario-6-1)
+  - [Sequence diagram of scenario 6-1](#sequence-diagram-of-scenario-6-1-1)
+  - [Sequence diagram of scenario 11-1](#sequence-diagram-of-scenario-11-1)
 
 # Instructions
 
 The design must satisfy the Official Requirements document, notably functional and non functional requirements, and be consistent with the APIs
 
 # High level design 
+The application will follow the client-server model because the application is accessed via multiple devices at once and the data must remain synchronized.
 
-<discuss architectural styles used, if any>
-<report package diagram, if needed>
-
-
-
+![High Level Design](designImages/highlevelarch.jpg)
 
 
 
 # Low level design
-
-<for each package in high level design, report class diagram. Each class should detail attributes and operations>
-
+![Low level design](designImages/lowlevel.jpg)
 
 
 
@@ -65,5 +67,24 @@ The design must satisfy the Official Requirements document, notably functional a
 
 
 # Verification sequence diagrams 
-\<select key scenarios from the requirement document. For each of them define a sequence diagram showing that the scenario can be implemented by the classes and methods in the design>
 
+## Sequence diagram of Scenario 1-1
+![Create SKU S](designImages/CREATE_SKU_.png)
+
+## Sequence diagram of Scenario 3-2
+![Restock Order of SKU S issued by supplier](designImages/restock.jpg)
+
+## Sequence diagram of scenario 4-1
+![Create user and define rights](designImages/Create%20user%20and%20define%20rights.jpg)
+
+## Sequence diagram of scenario 5-2-1
+![Record positive test result](designImages/testreport.png)
+
+## Sequence diagram of scenario 6-1
+![Return order of SKU items that failed quality test](designImages/returnOrder6_1.jpg)
+
+## Sequence diagram of scenario 6-1
+![InternalOrder completed](designImages/internalOrder.jpg)
+
+## Sequence diagram of scenario 11-1
+![Create Item](designImages/Create%20Item%20I.jpg)
