@@ -10,8 +10,11 @@ Version:
 
 # Contents
 
-- [High level design](#package-diagram)
-- [Low level design](#class-diagram)
+- [Design Document](#design-document)
+- [Contents](#contents)
+- [Instructions](#instructions)
+- [High level design](#high-level-design)
+- [Low level design](#low-level-design)
 - [Verification traceability matrix](#verification-traceability-matrix)
 - [Verification sequence diagrams](#verification-sequence-diagrams)
 
@@ -43,9 +46,15 @@ The design must satisfy the Official Requirements document, notably functional a
 
 # Verification traceability matrix
 
-\<for each functional requirement from the requirement document, list which classes concur to implement it>
-
-
+| FR | EzWarehouse | SKU | SKUItem | User| Internal Order | Restock Order | Return Order | Position | Item | Test | Test Descriptor |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 1 | | | | | | | | | |  | as |
+| 2 | | | | | | | | | |  | as |
+| 3 | | | | | | | | | |  | as |
+| 4 | | | | | | | | | |  | as |
+| 5 | | | | | | | | | |  | as |
+| 6 | | | | | | | | | |  | as |
+| 7 | | | | | | | | | |  | as |
 
 
 
