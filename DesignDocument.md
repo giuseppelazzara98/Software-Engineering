@@ -46,15 +46,15 @@ The design must satisfy the Official Requirements document, notably functional a
 
 # Verification traceability matrix
 
-| FR | EzWarehouse | SKU | SKUItem | User| Internal Order | Restock Order | Return Order | Position | Item | Test | Test Descriptor |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| 1 | | | | | | | | | |  | as |
-| 2 | | | | | | | | | |  | as |
-| 3 | | | | | | | | | |  | as |
-| 4 | | | | | | | | | |  | as |
-| 5 | | | | | | | | | |  | as |
-| 6 | | | | | | | | | |  | as |
-| 7 | | | | | | | | | |  | as |
+| FR | EzWarehouse | SKU | SKUItem | User | Internal Order | Restock Order | Return Order | Position | Item | Test | Test Descriptor | DBManager |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 1 | x | | | x | | | | | |  |  | x |
+| 2 | x | x | | | | | | | |  |  | x |
+| 3 | x | | |  | | | | x | | x | x | x |
+| 4 | x | | | x | |  | | | |  |  | x |
+| 5 | x | x | x |  | | x | x | | | x | x | x |
+| 6 | x | x | x | | x |  | | | |  |  | x |
+| 7 | x | | | | | | | | x |  |  | x |
 
 
 
