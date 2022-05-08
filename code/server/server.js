@@ -9,6 +9,8 @@ const port = 3001;
 app.use(express.json());
 const db=new DB;
 
+const IOManager = require('./modules/IOManager'); //for managing Internal Orders
+
 //SKUITEM
 app.get('/api/skuitems', async (req,res) => {
   try {
@@ -60,6 +62,38 @@ app.delete('/api/skuitems/:rfid', (req,res) => {
   }
 });
 
+// INTERNAL ORDERS
+const ioManager = new IOManager();
+
+app.get('/api/internalOrders', async (req, res) =>{
+  const list = await ioManager.getAllIO();
+  // console.log(list);
+  return res.status(200).json(list);
+});
+
+app.get('/api/internalOrdersIssued', async (req, res) =>{
+  const list = await ioManager.getAllIOIssued();
+  // console.log(list);
+  return res.status(200).json(list);
+});
+
+app.get('/api/internalOrdersAccepted', async (req, res) =>{
+  const list = await ioManager.getAllIOAccepted();
+  return res.status(200).json(list);
+});
+
+app.get('/api/internalOrders/:id', async(req, res) =>{
+  const io = await ioManager.getIO(req.params.id);
+  return res.status(200).json(io);
+});
+
+app.post('/api/internalOrders', async (req, res) => {
+  const result = await ioManager.addIO(req.body);
+  if(result===true){
+    return res.status(201).json('Success');
+  }
+  return res.status(422).json('Error');
+});
 
 
 
