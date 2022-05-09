@@ -17,7 +17,7 @@ app.get('/api/skuitems', async (req,res) => {
     const skuitems = await db.getSKUItems();
     res.status(200).json(skuitems);
   } catch (err) {
-    res.status(404).end();
+    res.status(500).end();
   }
 });
 app.get('/api/skuitems:id', async (req,res) => {
@@ -49,6 +49,19 @@ app.post('/api/skuitem', async (req,res) => {
   }
   await db.newTableName();//MODIFY THIS FUNCTION 
   db.postSkuItem(skuitem);
+  return res.status(201).end();
+});
+
+app.put('/api/skuitem:rfid', async (req,res) => {
+  if (Object.keys(req.body).length === 0) {
+    return res.status(422).json({error: `Empty body request`});
+  }
+  let skuitem = req.body.skuitem;
+  if (skuitem === undefined || skuitem.newRFID === undefined || skuitem.newAvailable === undefined|| skuitem.newDateOfStock === undefined ) {
+    return res.status(422).json({error: `Invalid user data`});//ADD CHECK FOR DATA
+  }
+
+  db.putSkuItem(skuitem);
   return res.status(201).end();
 });
 
@@ -96,6 +109,61 @@ app.post('/api/internalOrders', async (req, res) => {
   }
   return res.status(422).json('Error');
 });
+//TEST RESULT
+
+app.get('/api/skuitems/:rfid/testResults', async (req,res) => {
+  try {
+    const rfid= req.params.rfid;
+    const testResults = await db.getTestResultsByRFID(rfid);
+    res.status(200).json(testResults);
+  } catch (err) {
+    res.status(404).end();
+  }
+});
+
+app.get('/api/skuitems/:rfid/testResults/:id', async (req,res) => {
+  try {
+    const rfid= req.params.rfid;
+    const id = req.params.id;
+    const testResults = await db.getTestResultsById(rfid, id);
+    res.status(200).json(testResults);
+  } catch (err) {
+    res.status(404).end();
+  }
+});
+
+app.post('/api/skuitems/testResult', async (req,res) => {
+  if (Object.keys(req.body).length === 0) {
+    return res.status(422).json({error: `Empty body request`});
+  }
+  let testResult = req.body.testResult;
+  if (testResult === undefined || testResult.rfid === undefined || testResult.idTestDescriptor === undefined|| testResult.Date === undefined || testResult.Result === undefined ) {
+    return res.status(422).json({error: `Invalid user data`});//ADD CHECK FOR DATA
+  }
+
+  db.postTestResult(testResult);
+  return res.status(201).end();
+});
+
+
+app.put('/api/skuitems/:rfid/testResult/:id', async (req,res) => {
+  if (Object.keys(req.body).length === 0) {
+    return res.status(422).json({error: `Empty body request`});
+  }
+  let testResult = req.body.testResult;
+  let rfid=req.params.rfid;
+  let id=req.params.id;
+  if (testResult === undefined || testResult.newIdTestDescriptor === undefined || testResult.newDate === undefined|| testResult.newResult === undefined ) {
+    return res.status(422).json({error: `Invalid user data`});//ADD CHECK FOR DATA
+  }
+
+  db.putTestResult(skuitem,rfid,id);
+  return res.status(201).end();
+});
+
+
+
+
 
 // PUT
 app.put('/api/internalOrders/:id', async (req, res)=>{
