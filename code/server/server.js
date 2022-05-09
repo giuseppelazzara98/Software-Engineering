@@ -109,6 +109,8 @@ app.post('/api/internalOrders', async (req, res) => {
   }
   return res.status(422).json('Error');
 });
+
+
 //TEST RESULT
 
 app.get('/api/skuitems/:rfid/testResults', async (req,res) => {
@@ -161,8 +163,74 @@ app.put('/api/skuitems/:rfid/testResult/:id', async (req,res) => {
   return res.status(201).end();
 });
 
+app.delete('/api/skuitems/:rfid/testResult/:id', (req,res) => {
+  try {
+    const rfid= req.params.rfid;
+    const id = req.params.id;
+    db.deleteTestResult(rfid,id);
+    res.status(204).end();
+  } catch (err) {
+    res.status(503).end();
+  }
+});
 
+//ITEM
 
+app.get('/api/items', async (req,res) => {
+  try {
+    const items = await db.getItems();
+    res.status(200).json(items);
+  } catch (err) {
+    res.status(404).end();
+  }
+});
+
+app.get('/api/items/:id', async (req,res) => {
+  try {
+    const id= req.params.id;
+    const items = await db.getItemsById(id);
+    res.status(200).json(items);
+  } catch (err) {
+    res.status(404).end();
+  }
+});
+
+app.post('/api/item', async (req,res) => {
+  if (Object.keys(req.body).length === 0) {
+    return res.status(422).json({error: `Empty body request`});
+  }
+  let item = req.body.item;
+  if (item === undefined || item.id === undefined || item.description === undefined|| item.price === undefined || item.SKUId === undefined || item.supplierId===undefined) {
+    return res.status(422).json({error: `Invalid user data`});//ADD CHECK FOR DATA
+  }
+
+  db.postItem(item);
+  return res.status(201).end();
+});
+
+app.put('/api/item/:id', async (req,res) => {
+  if (Object.keys(req.body).length === 0) {
+    return res.status(422).json({error: `Empty body request`});
+  }
+  let item = req.body.item;
+  let id=req.params.id;
+  if (item === undefined || item.newDescription === undefined || item.newPrice === undefined ) {
+    return res.status(422).json({error: `Invalid user data`});//ADD CHECK FOR DATA
+  }
+
+  db.putItem(item,id);
+  return res.status(201).end();
+});
+
+app.delete('/api/items/:id', (req,res) => {
+  try {
+    const id = req.params.id;
+    db.deleteItem(id);
+    res.status(204).end();
+  } catch (err) {
+    res.status(503).end();
+  }
+});
 
 
 // PUT

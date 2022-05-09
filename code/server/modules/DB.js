@@ -187,7 +187,118 @@ getTestResultsByRFID(rfid){
     });
 }
 
-putTestResult(data,rfid,id)
+putTestResult(data,rfid,id){
+    return new Promise((resolve, reject) => {
+    const sql = 'UPDATE(idTestDescriptor,Date,Result) VALUES(?, ?, ?) WHERE rfid=? AND id=?';//WRITE SQL COMMAND
+    this.db.run(sql, [data.newIdTestDescriptor, data.newDate, data.newResult,rfid,id], (err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve(this.lastID);
+    });
+});
+}
+
+deleteTestResult(rfid,id){
+    return new Promise((resolve, reject)  => {
+        const sql = 'DELETE FROM TABLE WHERE RFID=? AND id=?';//WRITE SQL COMMAND 
+        this.db.run(sql,[rfid,id], (err) => {
+            if (err) {
+                reject(err);
+                return;
+            }
+            resolve(this.lastID);
+        });
+    });
+}
+
+//ITEM
+
+getItems(){
+    return new Promise((resolve, reject) => {
+        const sql = 'SELECT * FROM TABLENAME';//WRITE SQL COMMAND
+        this.db.all(sql, [], (err, rows) => {
+            if (err) {
+                reject(err);
+                return;
+            }
+            const items = rows.map((r) => (
+                {  
+                   id:r.id,
+                   description:r.description,
+                   price:r.price,
+                   SKUId:r.SKUId,
+                   supplierId:r.supplierId
+                }
+            ));
+            resolve(items);
+        });
+    });
+  }
+
+  getItemsById(id){
+    return new Promise((resolve, reject) => {
+        const sql = 'SELECT * FROM WHERE ID=?';//WRITE SQL COMMAND
+        this.db.all(sql, [id], (err, rows) => {
+            if (err) {
+                reject(err);
+                return;
+            }
+            const items = rows.map((r) => (
+                {  
+                    id:r.id,
+                    description:r.description,
+                    price:r.price,
+                    SKUId:r.SKUId,
+                    supplierId:r.supplierId
+                }
+            ));
+            resolve(items);
+        });
+    });
+  }
+
+  postItem(data){
+    return new Promise((resolve, reject) => {
+        const sql = 'INSERT INTO TABLENAME(id,description,price,SKUId,supplierId) VALUES(?, ?, ?, ?, ?)';//WRITE SQL COMMAND
+        this.db.run(sql, [data.id, data.description, data.price,data.SKUId, data.supplierId], (err) => {
+            if (err) {
+              reject(err);
+              return;
+            }
+            resolve(this.lastID);
+        });
+    });
+}
+
+
+putItem(data,id){
+    return new Promise((resolve, reject) => {
+    const sql = 'UPDATE(description,price) VALUES(?, ?) WHERE id=?';//WRITE SQL COMMAND
+    this.db.run(sql, [data.newDescription, data.newPrice, id], (err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve(this.lastID);
+    });
+});
+}
+
+deleteItem(id){
+    return new Promise((resolve, reject)  => {
+        const sql = 'DELETE FROM TABLE WHERE id=?';//WRITE SQL COMMAND 
+        this.db.run(sql,[id], (err) => {
+            if (err) {
+                reject(err);
+                return;
+            }
+            resolve(this.lastID);
+        });
+    });
+}
+
 
 
 
