@@ -50,6 +50,21 @@ class DB{
       });
   }
 
+  putSkuItem(data) {
+    return new Promise((resolve, reject) => {
+        const sql = 'UPDATE(RFID,SKUId,DateOfStock,) VALUES(?, ?, ?)';//WRITE SQL COMMAND
+        this.db.run(sql, [data.newRFID, data.newAvailable, data.newDateOfStock], (err) => {
+            if (err) {
+              reject(err);
+              return;
+            }
+            resolve(this.lastID);
+        });
+    });
+}
+
+
+
 
   getSKUItems() {
     return new Promise((resolve, reject) => {
@@ -112,6 +127,69 @@ getSKUItemsRFID(rfid) {
       });
   });
 }
+
+//TEST RESULT
+
+getTestResultsByRFID(rfid){
+    return new Promise((resolve, reject) => {
+        const sql = 'SELECT * FROM WHERE RFID=?';//WRITE SQL COMMAND
+        this.db.all(sql, [rfid], (err, rows) => {
+            if (err) {
+                reject(err);
+                return;
+            }
+            const testResults = rows.map((r) => (
+                {  
+                   id:r.id,
+                   idTestDescriptor:r.idTestDescriptor,
+                   Date:r.Date,
+                   Result:r.Result
+                }
+            ));
+            resolve(testResults);
+        });
+    });
+  }
+
+  getTestResultsById(rfid,id){
+    return new Promise((resolve, reject) => {
+        const sql = 'SELECT * FROM WHERE RFID=? AND ID=?';//WRITE SQL COMMAND
+        this.db.all(sql, [rfid,id], (err, rows) => {
+            if (err) {
+                reject(err);
+                return;
+            }
+            const testResults = rows.map((r) => (
+                {  
+                   id:r.id,
+                   idTestDescriptor:r.idTestDescriptor,
+                   Date:r.Date,
+                   Result:r.Result
+                }
+            ));
+            resolve(testResults);
+        });
+    });
+  }
+
+
+
+  postTestResult(data){
+    return new Promise((resolve, reject) => {
+        const sql = 'INSERT INTO TABLENAME(rfid,idTestDescriptor,Date,Result) VALUES(?, ?, ?, ?)';//WRITE SQL COMMAND
+        this.db.run(sql, [data.rfid, data.idTestDescriptor, data.Date,data.Result], (err) => {
+            if (err) {
+              reject(err);
+              return;
+            }
+            resolve(this.lastID);
+        });
+    });
+}
+
+putTestResult(data,rfid,id)
+
+
 
 }
 
