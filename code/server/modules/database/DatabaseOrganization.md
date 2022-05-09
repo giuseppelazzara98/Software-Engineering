@@ -9,3 +9,12 @@ In this file there is the list of tables stored in the server. For each table, t
 - state STRING NOT NULL
 - products STRING : it is a list of SKUIDs separated by the comma. Example: 1, 2, 3, 4, ..
 - customerID INTEGER NOT NULL
+
+## Restock Order table
+- id INTEGER PRIMARY KEY
+- issuedDate DATE NOT NULL
+- state STRING NOT NULL
+- products STRING : it is a list of SKUIDs separated by the comma. Example: 1, 2, 3, 4, ..
+- supplierID NOT NULL
+- transportDate DATE
+- skuItems STRING : : it is a list of SKUItemIDs separated by the comma. Example: 1, 2, 3, 4, ..
