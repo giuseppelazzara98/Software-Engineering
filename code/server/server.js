@@ -1,13 +1,13 @@
 'use strict';
-import './modules/DB'
-import DB from './modules/DB';
+// import './modules/DB'
+// import DB from './modules/DB';
 const express = require('express');
 // init express
 const app = new express();
 const port = 3001;
 
 app.use(express.json());
-const db=new DB;
+// const db=new DB;
 
 const IOManager = require('./modules/IOManager'); //for managing Internal Orders
 
@@ -65,6 +65,7 @@ app.delete('/api/skuitems/:rfid', (req,res) => {
 // INTERNAL ORDERS
 const ioManager = new IOManager();
 
+// GET
 app.get('/api/internalOrders', async (req, res) =>{
   const list = await ioManager.getAllIO();
   // console.log(list);
@@ -87,6 +88,7 @@ app.get('/api/internalOrders/:id', async(req, res) =>{
   return res.status(200).json(io);
 });
 
+// POST
 app.post('/api/internalOrders', async (req, res) => {
   const result = await ioManager.addIO(req.body);
   if(result===true){
@@ -95,7 +97,31 @@ app.post('/api/internalOrders', async (req, res) => {
   return res.status(422).json('Error');
 });
 
+// PUT
+app.put('/api/internalOrders/:id', async (req, res)=>{
+  // console.log("ID:" + req.params.id);
+  // console.log("Body: " + req.body.newState);
+  const result = await ioManager.updateStateIO(req.params.id, req.body);
+  if (result === 200){
+    return res.status(200).json('SUCCESS');
+  } else if(result === 404){
+    return res.status(404).json("404 Not Found");
+  } else if(result === 422){
+    return res.status(422).json('422 Unprocessable Entity');
+  } else {
+    return res.status(503).json('Service Unavailable');
+  }
+  
+});
 
+// DELETE
+app.delete('/api/internalOrders/:id', async(req, res) => {
+  const result = await ioManager.deleteIO(req.params.id);
+  if(result){
+    return res.status(204).json('SUCCESS');
+  }
+  return res.status(503).json('ERROR');
+})
 
 
 // activate the server
