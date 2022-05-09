@@ -1,4 +1,7 @@
 # Database Organization
+In this file there is the list of tables stored in the server. For each table, there are all the fields and a brief description if needed.
+
+---
 
 ## Internal Order table
 - id INTEGER PRIMARY KEY
