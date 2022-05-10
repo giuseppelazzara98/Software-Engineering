@@ -5,16 +5,16 @@ In this file there is the list of tables stored in the server. For each table, t
 
 ## Internal Order table
 - id INTEGER PRIMARY KEY
-- issueDate DATE NOT NULL
+- issueDate DATETIME NOT NULL : DateTime is used in the format YYYY/MM/DD HH:MM:SS
 - state STRING NOT NULL
 - products STRING : it is a list of SKUIDs separated by the comma. Example: 1, 2, 3, 4, ..
 - customerID INTEGER NOT NULL
 
 ## Restock Order table
 - id INTEGER PRIMARY KEY
-- issuedDate DATE NOT NULL
+- issuedDate DATETIME NOT NULL : DateTime is used in the format YYYY/MM/DD HH:MM:SS
 - state STRING NOT NULL
 - products STRING : it is a list of SKUIDs separated by the comma. Example: 1, 2, 3, 4, ..
 - supplierID NOT NULL
-- transportDate DATE
+- transportDate DATETIME : DateTime is used in the format YYYY/MM/DD HH:MM:SS
 - skuItems STRING : : it is a list of SKUItemIDs separated by the comma. Example: 1, 2, 3, 4, ..
