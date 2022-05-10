@@ -66,10 +66,8 @@ function IOManager() {
         return new Promise((resolve, reject) => {
             ioDB.get(query, [id], (err, row) => {
                 if (err) {
-                    console.log("no row");
-                    reject(false);
+                    reject(500);
                 } else {
-                    // console.log(row);
                     resolve(row);
                 }
             })
@@ -113,11 +111,10 @@ function IOManager() {
 
     this.updateStateIO = async (id, body) => {
         const newState = body.newState;
-        const exist = await this.getIO(id);
-        if (exist === false || exist === undefined){
+        const result = await this.getIO(id);
+        if (result === 500 || result === undefined){
             return new Promise((resolve, reject) => {
-                console.log(exist);
-                resolve(404);
+                reject(404);
             })
         }
         
@@ -126,7 +123,7 @@ function IOManager() {
             return new Promise((resolve, reject) => {
                 ioDB.run(query, [newState, id], (err) => {
                     if (err) {
-                        reject(false);
+                        reject(500);
                     } else {
                         resolve(200);
                     }
@@ -136,7 +133,7 @@ function IOManager() {
             const query = 'UPDATE internalOrders SET state=?, products=? WHERE id=?';
             if(body.products === undefined){
                 return new Promise((resolve, reject)=>{
-                    resolve(422);
+                    reject(422);
                 })
             }
             const products = [...body.products];
@@ -146,7 +143,7 @@ function IOManager() {
             return new Promise((resolve, reject) => {
                 ioDB.run(query, [newState, IDs, id], (err) => {
                     if (err) {
-                        reject(false);
+                        reject(500);
                     } else {
                         resolve(200);
                     }
@@ -156,21 +153,19 @@ function IOManager() {
     };
 
     this.deleteIO = async (id) => {
-        const exist = await this.getIO(id);
-        if (exist === false || exist === undefined){
+        const result = await this.getIO(id);
+        if (result === 500 || result === undefined){
             return new Promise((resolve, reject) => {
-                console.log(exist);
-                resolve(404);
+                reject(404);
             })
         }
-
         const query = 'DELETE FROM internalOrders WHERE id=?';
         return new Promise((resolve, reject) => {
             ioDB.run(query, [id], (err) => {
                 if(err){
-                    reject(false);
+                    reject(503);
                 } else{
-                    resolve(true);
+                    resolve(204);
                 }
             })
         })

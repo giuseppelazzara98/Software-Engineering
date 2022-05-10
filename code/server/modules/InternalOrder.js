@@ -1,66 +1,125 @@
 'use strict';
 const express = require('express');
+const { body, param, validationResult } = require('express-validator');
 const routerIO = express.Router();
 const IOManager = require('./IOManager')
 
 const ioManager = new IOManager();
 
 // GET
-routerIO.get('/internalOrders', async (req, res) =>{
-  const list = await ioManager.getAllIO();
-  // console.log(list);
-  return res.status(200).json(list);
+routerIO.get('/internalOrders', (req, res) => {
+    ioManager.getAllIO().then(
+        (list) => {
+            // TODO: create the product array
+            return res.status(200).json(list);
+        }
+    ).catch(
+        () => { return res.status(500).json('Internal server Error'); }
+    )
 });
 
-routerIO.get('/internalOrdersIssued', async (req, res) =>{
-  const list = await ioManager.getAllIOIssued();
-  // console.log(list);
-  return res.status(200).json(list);
+routerIO.get('/internalOrdersIssued', (req, res) => {
+    ioManager.getAllIOIssued().then(
+        (list) => {
+            // TODO: create the product array
+            return res.status(200).json(list);
+        }
+    ).catch(
+        () => { return res.status(500).json('Internal server Error'); }
+    )
 });
 
-routerIO.get('/internalOrdersAccepted', async (req, res) =>{
-  const list = await ioManager.getAllIOAccepted();
-  return res.status(200).json(list);
+routerIO.get('/internalOrdersAccepted', (req, res) => {
+    ioManager.getAllIOAccepted().then(
+        (list) => {
+            // TODO: create the product array
+            return res.status(200).json(list);
+        }
+    ).catch(
+        () => { return res.status(500).json('Internal server Error'); }
+    )
 });
 
-routerIO.get('/internalOrders/:id', async(req, res) =>{
-  const io = await ioManager.getIO(req.params.id);
-  return res.status(200).json(io);
+routerIO.get('/internalOrders/:id', param('id').isInt(), (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json('Unprocessable Entity')
+    }
+
+    ioManager.getIO(req.params.id).then(
+        (io) => {
+            if (io === undefined) {
+                return res.status(404).json('Not found');
+            }
+            // TODO: create the product array
+            return res.status(200).json(io);
+        }
+    ).catch(
+        () => { return res.status(500).json('Internal Server Error'); }
+    );
+
 });
 
 // POST
-routerIO.post('/internalOrders', async (req, res) => {
-  const result = await ioManager.addIO(req.body);
-  if(result===true){
-    return res.status(201).json('Success');
-  }
-  return res.status(422).json('Error');
-});
+routerIO.post('/internalOrders',
+    body('products').isArray(),
+    body('customerId').isInt(),
+    (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            console.log(errors);
+            return res.status(422).json('Unprocessable Entity');
+        }
+        ioManager.addIO(req.body).then(
+            () => {
+                // TODO: check issueDate
+                return res.status(201).json('Success');
+            }
+        ).catch(
+            () => {
+                return res.status(422).json('Error');
+            }
+        )
+    });
 
 // PUT
-routerIO.put('/internalOrders/:id', async (req, res)=>{
-  // console.log("ID:" + req.params.id);
-  // console.log("Body: " + req.body.newState);
-  const result = await ioManager.updateStateIO(req.params.id, req.body);
-  if (result === 200){
-    return res.status(200).json('SUCCESS');
-  } else if(result === 404){
-    return res.status(404).json("404 Not Found");
-  } else if(result === 422){
-    return res.status(422).json('422 Unprocessable Entity');
-  } else {
-    return res.status(503).json('Service Unavailable');
-  }
-  
-});
+routerIO.put('/internalOrders/:id',
+    param('id').isInt(),
+    body('newState').isIn(['ACCEPTED', 'COMPLETED', 'REFUSED', 'CANCELED', 'ISSUED']),
+    (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(422).json('Unprocessable Entity');
+        }
+
+        ioManager.updateStateIO(req.params.id, req.body).then(
+            () => {
+                return res.status(200).json('SUCCESS');
+            }
+        ).catch(
+            (err) => {
+                if(err === 404) return res.status(404).json('Not found');
+                return res.status(err).json('Service Unavailable');
+            }
+        )
+        
+
+    });
 
 // DELETE
-routerIO.delete('/internalOrders/:id', async(req, res) => {
-  const result = await ioManager.deleteIO(req.params.id);
-  if(result){
-    return res.status(204).json('SUCCESS');
-  }
-  return res.status(503).json('ERROR');
+routerIO.delete('/internalOrders/:id', param('id').isInt(), (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) return res.status(422).json('Unprocessable Entity');
+    ioManager.deleteIO(req.params.id).then(
+        (ok) => {
+            return res.status(ok).json('SUCCESS');
+        }
+    ).catch(
+        (err) => {
+            if(err === 404) return res.status(404).json('Not found');
+            return res.status(err).json('Service Unavailable');
+        }
+    );
 })
 
 module.exports = routerIO;
