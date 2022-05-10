@@ -9,8 +9,6 @@ const port = 3001;
 app.use(express.json());
 // const db=new DB;
 
-const IOManager = require('./modules/IOManager'); //for managing Internal Orders
-
 //SKUITEM
 app.get('/api/skuitems', async (req,res) => {
   try {
@@ -74,42 +72,6 @@ app.delete('/api/skuitems/:rfid', (req,res) => {
     res.status(503).end();
   }
 });
-
-// INTERNAL ORDERS
-const ioManager = new IOManager();
-
-// GET
-app.get('/api/internalOrders', async (req, res) =>{
-  const list = await ioManager.getAllIO();
-  // console.log(list);
-  return res.status(200).json(list);
-});
-
-app.get('/api/internalOrdersIssued', async (req, res) =>{
-  const list = await ioManager.getAllIOIssued();
-  // console.log(list);
-  return res.status(200).json(list);
-});
-
-app.get('/api/internalOrdersAccepted', async (req, res) =>{
-  const list = await ioManager.getAllIOAccepted();
-  return res.status(200).json(list);
-});
-
-app.get('/api/internalOrders/:id', async(req, res) =>{
-  const io = await ioManager.getIO(req.params.id);
-  return res.status(200).json(io);
-});
-
-// POST
-app.post('/api/internalOrders', async (req, res) => {
-  const result = await ioManager.addIO(req.body);
-  if(result===true){
-    return res.status(201).json('Success');
-  }
-  return res.status(422).json('Error');
-});
-
 
 //TEST RESULT
 
@@ -232,33 +194,10 @@ app.delete('/api/items/:id', (req,res) => {
   }
 });
 
-
-// PUT
-app.put('/api/internalOrders/:id', async (req, res)=>{
-  // console.log("ID:" + req.params.id);
-  // console.log("Body: " + req.body.newState);
-  const result = await ioManager.updateStateIO(req.params.id, req.body);
-  if (result === 200){
-    return res.status(200).json('SUCCESS');
-  } else if(result === 404){
-    return res.status(404).json("404 Not Found");
-  } else if(result === 422){
-    return res.status(422).json('422 Unprocessable Entity');
-  } else {
-    return res.status(503).json('Service Unavailable');
-  }
-  
-});
-
-// DELETE
-app.delete('/api/internalOrders/:id', async(req, res) => {
-  const result = await ioManager.deleteIO(req.params.id);
-  if(result){
-    return res.status(204).json('SUCCESS');
-  }
-  return res.status(503).json('ERROR');
-})
-
+const internalOrder = require('./modules/InternalOrder');
+const restockOrder = require('./modules/RestockOrder');
+app.use('/api', internalOrder);
+app.use('/api', restockOrder);
 
 // activate the server
 app.listen(port, () => {
