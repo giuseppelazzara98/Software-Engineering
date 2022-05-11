@@ -76,8 +76,8 @@ routerIO.post('/internalOrders',
                 return res.status(201).json('Success');
             }
         ).catch(
-            () => {
-                return res.status(422).json('Error');
+            (err) => {
+                return res.status(err).json('Service Unavailable');
             }
         )
     });
@@ -116,7 +116,6 @@ routerIO.delete('/internalOrders/:id', param('id').isInt(), (req, res) => {
         }
     ).catch(
         (err) => {
-            if(err === 404) return res.status(404).json('Not found');
             return res.status(err).json('Service Unavailable');
         }
     );
