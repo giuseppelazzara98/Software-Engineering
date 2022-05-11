@@ -88,7 +88,7 @@ function IOManager() {
         return new Promise((resolve, reject) => {
             ioDB.run(query_insert, [id, date, IDs, customerID], (err) => {
                 if (err) {
-                    reject(false);
+                    reject(503);
                 } else {
                     resolve(true);
                 }
@@ -152,13 +152,7 @@ function IOManager() {
         }
     };
 
-    this.deleteIO = async (id) => {
-        const result = await this.getIO(id);
-        if (result === 500 || result === undefined){
-            return new Promise((resolve, reject) => {
-                reject(404);
-            })
-        }
+    this.deleteIO = (id) => {
         const query = 'DELETE FROM internalOrders WHERE id=?';
         return new Promise((resolve, reject) => {
             ioDB.run(query, [id], (err) => {
