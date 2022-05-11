@@ -18,3 +18,12 @@ In this file there is the list of tables stored in the server. For each table, t
 - supplierID NOT NULL
 - transportDate DATETIME : DateTime is used in the format YYYY/MM/DD HH:MM:SS
 - skuItems STRING : : it is a list of SKUItemIDs separated by the comma. Example: 1, 2, 3, 4, ..
+
+## user table
+- id INTEGER PRIMARY KEY
+- username UNIQUE TEXT
+- password TEXT
+- name TEXT 
+- surname TEXT
+- type TEXT
+- 
