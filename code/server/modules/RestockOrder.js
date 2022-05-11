@@ -14,7 +14,7 @@ routerRO.get('/restockOrders', (req, res) => {
       return res.status(200).json(list);
     }
   ).catch(
-    () => { return res.status(500).json('Internal Server Error'); }
+    () => { return res.status(500).send(); }
   );
 });
 
@@ -22,25 +22,25 @@ routerRO.get('/restockOrdersIssued', (req, res) => {
   roManager.getAllROIssued().then(
     (list) => { return res.status(200).json(list); }
   ).catch(
-    () => { return res.status(500).json('Internal Server Error'); }
+    () => { return res.status(500).send(); }
   );
 });
 
 routerRO.get('/restockOrders/:id', param('id').isInt(), (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).json('Unprocessable Entity')
+    return res.status(422).send();
   }
   roManager.getRO(req.params.id).then(
     (ro) => {
       if (ro === undefined) {
-        return res.status(404).json('Not found');
+        return res.status(404).send();
       }
       // TODO: create the product array
       return res.status(200).json(ro);
     }
   ).catch(
-    () => { return res.status(500).json('Internal Server Error'); }
+    () => { return res.status(500).send(); }
   );
 
 })
@@ -48,7 +48,7 @@ routerRO.get('/restockOrders/:id', param('id').isInt(), (req, res) => {
 routerRO.get('/restockOrders/:id/returnItems', param('id').isInt(), (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).json('Unprocessable Entity');
+    return res.status(422).send();
   }
   roManager.getROReturnedItems(req.params.id).then(
     (list) => {
@@ -56,8 +56,8 @@ routerRO.get('/restockOrders/:id/returnItems', param('id').isInt(), (req, res) =
     }
   ).catch(
     (err) => {
-      if (err === 422) return res.status(422).json('Unprocessable Entity');
-      return res.status(500).json('Internal Server Error');
+      if (err === 422) return res.status(422).send();
+      return res.status(500).send();
     }
   );
 })
@@ -70,17 +70,17 @@ routerRO.post('/restockOrder',
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).json('Unprocessable Entity');
+      return res.status(422).send();
     }
 
     roManager.addRO(req.body).then(
       () => {
         // TODO: check issueDate
-        return res.status(201).json('Success');
+        return res.status(201).send();
       }
     ).catch(
       (err) => {
-        return res.status(err).json('Service Unavailable');
+        return res.status(err).send();
       }
     )
   });
@@ -91,16 +91,16 @@ routerRO.put('/restockOrder/:id', param('id').isInt(),
   (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).json('Unprocessable Entity');
+      return res.status(422).send();
     }
 
     roManager.updateStateRO(req.params.id, req.body.newState).then(
       () => {
-        return res.status(200).json('Success');
+        return res.status(200).send();
       }
     ).catch(
       (err) => {
-        return res.status(err).json(err === 503 ? 'Service Unavailable' : 'Not Found')
+        return res.status(err).send();
       }
     );
   })
@@ -110,22 +110,22 @@ routerRO.put('/restockOrder/:id/skuItems', param('id').isInt(),
   (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).json('Unprocessable Entity');
+      return res.status(422).send();
     }
 
     roManager.addSkuItems(req.params.id, req.body.skuItems).then(
       () => {
-        return res.status(200).json('Success');
+        return res.status(200).send();
       }
     ).catch(
       (err) => {
         if (err === 422) {
           console.log('asd');
-          return res.status(422).json('Unprocessable Entity');
+          return res.status(422).send();
         } else if (err === 404) {
-          return res.status(404).json('Not found');
+          return res.status(404).send();
         } else {
-          return res.status(503).json('Service Unavailable');
+          return res.status(503).send();
         }
       }
     );
@@ -138,21 +138,21 @@ routerRO.put('/restockOrder/:id/transportNote', param('id').isInt(),
     const errors = validationResult(req);
     if(!errors.isEmpty()){
       console.log(errors);
-      return res.status(422).json('Unprocessable Entity');
+      return res.status(422).send();
     }
     
     roManager.addTransportNote(req.params.id ,req.body.transportNote.deliveryDate).then(
       () => {
-        return res.status(200).json('Success');
+        return res.status(200).send();
       }
     ).catch(
       (err) => {
         if (err === 422) {
-          return res.status(422).json('Unprocessable Entity');
+          return res.status(422).send();
         } else if (err === 404) {
-          return res.status(404).json('Not found');
+          return res.status(404).send();
         } else {
-          return res.status(503).json('Service Unavailable');
+          return res.status(503).send();
         }
       }
     );
@@ -163,15 +163,15 @@ routerRO.put('/restockOrder/:id/transportNote', param('id').isInt(),
 routerRO.delete('/restockOrder/:id', param('id').isInt(), (req, res) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()){
-    return res.status(422).status('Unprocessable Entity');
+    return res.status(422).send();
   }
   roManager.deleteRO(req.params.id).then(
     (ok) => {
-      return res.status(ok).json('Success');
+      return res.status(ok).send();
     }
   ).catch(
     (err) => {
-      return res.status(err).json('Service Unavailable');
+      return res.status(err).send();
     }
   );
 })
