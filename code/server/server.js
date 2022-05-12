@@ -227,8 +227,10 @@ app.delete("/api/items/:id", (req, res) => {
 
 const internalOrder = require("./modules/InternalOrder");
 const restockOrder = require("./modules/RestockOrder");
+const testDescriptors = require("./modules/TestDescriptor");
 app.use("/api", internalOrder);
 app.use("/api", restockOrder);
+app.use("/api", testDescriptors);
 
 // USER
 
