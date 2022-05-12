@@ -14,7 +14,7 @@ routerRO.get('/restockOrders', (req, res) => {
       return res.status(200).json(list);
     }
   ).catch(
-    () => { return res.status(500).send(); }
+    () => { return res.status(500).end(); }
   );
 });
 
@@ -22,25 +22,25 @@ routerRO.get('/restockOrdersIssued', (req, res) => {
   restockOrders_dao.getAllROIssued().then(
     (list) => { return res.status(200).json(list); }
   ).catch(
-    () => { return res.status(500).send(); }
+    () => { return res.status(500).end(); }
   );
 });
 
 routerRO.get('/restockOrders/:id', param('id').isInt(), (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).send();
+    return res.status(422).end();
   }
   restockOrders_dao.getRO(req.params.id).then(
     (ro) => {
       if (ro === undefined) {
-        return res.status(404).send();
+        return res.status(404).end();
       }
       // TODO: create the product array
       return res.status(200).json(ro);
     }
   ).catch(
-    () => { return res.status(500).send(); }
+    () => { return res.status(500).end(); }
   );
 
 })
@@ -48,7 +48,7 @@ routerRO.get('/restockOrders/:id', param('id').isInt(), (req, res) => {
 routerRO.get('/restockOrders/:id/returnItems', param('id').isInt(), (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).send();
+    return res.status(422).end();
   }
   restockOrders_dao.getROReturnedItems(req.params.id).then(
     (list) => {
@@ -56,8 +56,8 @@ routerRO.get('/restockOrders/:id/returnItems', param('id').isInt(), (req, res) =
     }
   ).catch(
     (err) => {
-      if (err === 422) return res.status(422).send();
-      return res.status(500).send();
+      if (err === 422) return res.status(422).end();
+      return res.status(500).end();
     }
   );
 })
@@ -70,17 +70,17 @@ routerRO.post('/restockOrder',
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).send();
+      return res.status(422).end();
     }
 
     restockOrders_dao.addRO(req.body).then(
       () => {
         // TODO: check issueDate
-        return res.status(201).send();
+        return res.status(201).end();
       }
     ).catch(
       (err) => {
-        return res.status(err).send();
+        return res.status(err).end();
       }
     )
   });
@@ -91,16 +91,16 @@ routerRO.put('/restockOrder/:id', param('id').isInt(),
   (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).send();
+      return res.status(422).end();
     }
 
     restockOrders_dao.updateStateRO(req.params.id, req.body.newState).then(
       () => {
-        return res.status(200).send();
+        return res.status(200).end();
       }
     ).catch(
       (err) => {
-        return res.status(err).send();
+        return res.status(err).end();
       }
     );
   })
@@ -110,22 +110,22 @@ routerRO.put('/restockOrder/:id/skuItems', param('id').isInt(),
   (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).send();
+      return res.status(422).end();
     }
 
     restockOrders_dao.addSkuItems(req.params.id, req.body.skuItems).then(
       () => {
-        return res.status(200).send();
+        return res.status(200).end();
       }
     ).catch(
       (err) => {
         if (err === 422) {
           console.log('asd');
-          return res.status(422).send();
+          return res.status(422).end();
         } else if (err === 404) {
-          return res.status(404).send();
+          return res.status(404).end();
         } else {
-          return res.status(503).send();
+          return res.status(503).end();
         }
       }
     );
@@ -138,21 +138,21 @@ routerRO.put('/restockOrder/:id/transportNote', param('id').isInt(),
     const errors = validationResult(req);
     if(!errors.isEmpty()){
       console.log(errors);
-      return res.status(422).send();
+      return res.status(422).end();
     }
     
     restockOrders_dao.addTransportNote(req.params.id ,req.body.transportNote.deliveryDate).then(
       () => {
-        return res.status(200).send();
+        return res.status(200).end();
       }
     ).catch(
       (err) => {
         if (err === 422) {
-          return res.status(422).send();
+          return res.status(422).end();
         } else if (err === 404) {
-          return res.status(404).send();
+          return res.status(404).end();
         } else {
-          return res.status(503).send();
+          return res.status(503).end();
         }
       }
     );
@@ -163,15 +163,15 @@ routerRO.put('/restockOrder/:id/transportNote', param('id').isInt(),
 routerRO.delete('/restockOrder/:id', param('id').isInt(), (req, res) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()){
-    return res.status(422).send();
+    return res.status(422).end();
   }
   restockOrders_dao.deleteRO(req.params.id).then(
     (ok) => {
-      return res.status(ok).send();
+      return res.status(ok).end();
     }
   ).catch(
     (err) => {
-      return res.status(err).send();
+      return res.status(err).end();
     }
   );
 })

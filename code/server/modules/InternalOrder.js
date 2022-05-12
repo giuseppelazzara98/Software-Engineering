@@ -14,7 +14,7 @@ routerIO.get('/internalOrders', (req, res) => {
             return res.status(200).json(list);
         }
     ).catch(
-        () => { return res.status(500).send(); }
+        () => { return res.status(500).end(); }
     )
 });
 
@@ -25,7 +25,7 @@ routerIO.get('/internalOrdersIssued', (req, res) => {
             return res.status(200).json(list);
         }
     ).catch(
-        () => { return res.status(500).send(); }
+        () => { return res.status(500).end(); }
     )
 });
 
@@ -36,26 +36,26 @@ routerIO.get('/internalOrdersAccepted', (req, res) => {
             return res.status(200).json(list);
         }
     ).catch(
-        () => { return res.status(500).send(); }
+        () => { return res.status(500).end(); }
     )
 });
 
 routerIO.get('/internalOrders/:id', param('id').isInt(), (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(422).send()
+        return res.status(422).end()
     }
 
     internalOrders_dao.getIO(req.params.id).then(
         (io) => {
             if (io === undefined) {
-                return res.status(404).send();
+                return res.status(404).end();
             }
             // TODO: create the product array
             return res.status(200).json(io);
         }
     ).catch(
-        () => { return res.status(500).send(); }
+        () => { return res.status(500).end(); }
     );
 
 });
@@ -68,16 +68,16 @@ routerIO.post('/internalOrders',
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             console.log(errors);
-            return res.status(422).send();
+            return res.status(422).end();
         }
         internalOrders_dao.addIO(req.body).then(
             () => {
                 // TODO: check issueDate
-                return res.status(201).send();
+                return res.status(201).end();
             }
         ).catch(
             (err) => {
-                return res.status(err).send();
+                return res.status(err).end();
             }
         )
     });
@@ -89,17 +89,17 @@ routerIO.put('/internalOrders/:id',
     (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(422).send();
+            return res.status(422).end();
         }
 
         internalOrders_dao.updateStateIO(req.params.id, req.body).then(
             () => {
-                return res.status(200).send();
+                return res.status(200).end();
             }
         ).catch(
             (err) => {
-                if(err === 404) return res.status(404).send();
-                return res.status(err).send();
+                if(err === 404) return res.status(404).end();
+                return res.status(err).end();
             }
         )
         
@@ -109,14 +109,14 @@ routerIO.put('/internalOrders/:id',
 // DELETE
 routerIO.delete('/internalOrders/:id', param('id').isInt(), (req, res) => {
     const errors = validationResult(req);
-    if(!errors.isEmpty()) return res.status(422).send();
+    if(!errors.isEmpty()) return res.status(422).end();
     internalOrders_dao.deleteIO(req.params.id).then(
         (ok) => {
-            return res.status(ok).send();
+            return res.status(ok).end();
         }
     ).catch(
         (err) => {
-            return res.status(err).send();
+            return res.status(err).end();
         }
     );
 })
