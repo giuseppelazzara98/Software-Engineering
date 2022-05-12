@@ -5,19 +5,19 @@ In this file there is the list of tables stored in the server. For each table, t
 
 ## Internal Order table
 - id INTEGER PRIMARY KEY
-- issueDate DATETIME NOT NULL : DateTime is used in the format YYYY/MM/DD HH:MM:SS
-- state STRING NOT NULL
-- products STRING : it is a list of SKUIDs separated by the comma. Example: 1, 2, 3, 4, ..
+- issueDate TEXT NOT NULL : DateTime is used in the format YYYY/MM/DD HH:MM:SS
+- state TEXT NOT NULL
+- products TEXT : it is a list of SKUIDs separated by the comma. Example: 1, 2, 3, 4, ..
 - customerID INTEGER NOT NULL
 
 ## Restock Order table
 - id INTEGER PRIMARY KEY
-- issuedDate DATETIME NOT NULL : DateTime is used in the format YYYY/MM/DD HH:MM:SS
-- state STRING NOT NULL
-- products STRING : it is a list of SKUIDs separated by the comma. Example: 1, 2, 3, 4, ..
+- issuedDate TEXT NOT NULL : DateTime is used in the format YYYY/MM/DD HH:MM:SS
+- state TEXT NOT NULL
+- products TEXT : it is a list of SKUIDs separated by the comma. Example: 1, 2, 3, 4, ..
 - supplierID NOT NULL
-- transportDate DATETIME : DateTime is used in the format YYYY/MM/DD HH:MM:SS
-- skuItems STRING : : it is a list of SKUItemIDs separated by the comma. Example: 1, 2, 3, 4, ..
+- transportDate TEXT : DateTime is used in the format YYYY/MM/DD HH:MM:SS
+- skuItems TEXT : : it is a list of SKUItemIDs separated by the comma. Example: 1, 2, 3, 4, ..
 
 ## user table
 - id INTEGER PRIMARY KEY
@@ -61,3 +61,9 @@ In this file there is the list of tables stored in the server. For each table, t
 - price NUMERIC
 - SKUid INTEGER
 - supplierId INTEGER
+
+## TEST DESCRIPTOR
+- id INTEGER PRIMARY KEY
+- name TEXT
+- procedureDescription TEXT
+- idSKU TEXT
