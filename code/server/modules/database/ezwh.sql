@@ -38,12 +38,12 @@ DROP TABLE IF EXISTS SKUs;
 CREATE TABLE SKUs (id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT, weight NUMERIC, volume NUMERIC, notes TEXT, position INTEGER, availableQuantity INTEGER, price NUMERIC, testDescriptors TEXT);
 
 -- Table: test descriptors
-DROP TABLE IF EXISTS "test descriptors";
+DROP TABLE IF EXISTS testDescriptors;
 CREATE TABLE "test descriptors" (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, procedureDescription TEXT, idSKU INTEGER);
 INSERT INTO "test descriptors" (id, name, procedureDescription, idSKU) VALUES (1, 'test descriptor 1', 'this test is described by', 1);
 
 -- Table: test Results
-DROP TABLE IF EXISTS "test Results";
+DROP TABLE IF EXISTS testResults;
 CREATE TABLE "test Results" (id INTEGER PRIMARY KEY AUTOINCREMENT, idTestDescriptor INTEGER, Date TEXT, Result INTEGER);
 
 -- Table: Users
