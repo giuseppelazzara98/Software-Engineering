@@ -1,9 +1,9 @@
 'use strict';
-
+//Data Access Object
 const sqlite = require('sqlite3');
 const dayjs = require('dayjs');
 
-function ROManager() {
+function RestockOrders_dao() {
     // Restock Order 
     const roDB = new sqlite.Database("./modules/database/restockOrders.sqlite", (err) => {
         if (err) {
@@ -209,4 +209,4 @@ function ROManager() {
 }
 
 
-module.exports = ROManager;
+module.exports = RestockOrders_dao;

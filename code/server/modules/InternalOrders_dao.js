@@ -2,7 +2,7 @@
 
 const sqlite = require('sqlite3');
 
-function IOManager() {
+function internalOrders_dao() {
     //Internal Orders
     const ioDB = new sqlite.Database("./modules/database/internalOrders.sqlite", (err) => {
         if (err) {
@@ -169,4 +169,4 @@ function IOManager() {
 
 
 
-module.exports = IOManager;
+module.exports = internalOrders_dao;

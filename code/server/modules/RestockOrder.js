@@ -1,14 +1,14 @@
 'use strict';
 const express = require('express');
 const routerRO = express.Router();
-const ROManager = require('./ROManager')
+const RestockOrders_dao = require('./RestockOrders_dao')
 const { body, param, validationResult } = require('express-validator');
 
-const roManager = new ROManager();
+const restockOrders_dao = new RestockOrders_dao(); //dao class
 
 // GET
 routerRO.get('/restockOrders', (req, res) => {
-  roManager.getAllRO().then(
+  restockOrders_dao.getAllRO().then(
     (list) => {
       // TODO: create the product array and skuItems array
       return res.status(200).json(list);
@@ -19,7 +19,7 @@ routerRO.get('/restockOrders', (req, res) => {
 });
 
 routerRO.get('/restockOrdersIssued', (req, res) => {
-  roManager.getAllROIssued().then(
+  restockOrders_dao.getAllROIssued().then(
     (list) => { return res.status(200).json(list); }
   ).catch(
     () => { return res.status(500).send(); }
@@ -31,7 +31,7 @@ routerRO.get('/restockOrders/:id', param('id').isInt(), (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(422).send();
   }
-  roManager.getRO(req.params.id).then(
+  restockOrders_dao.getRO(req.params.id).then(
     (ro) => {
       if (ro === undefined) {
         return res.status(404).send();
@@ -50,7 +50,7 @@ routerRO.get('/restockOrders/:id/returnItems', param('id').isInt(), (req, res) =
   if (!errors.isEmpty()) {
     return res.status(422).send();
   }
-  roManager.getROReturnedItems(req.params.id).then(
+  restockOrders_dao.getROReturnedItems(req.params.id).then(
     (list) => {
       return res.status(200).json(list);
     }
@@ -73,7 +73,7 @@ routerRO.post('/restockOrder',
       return res.status(422).send();
     }
 
-    roManager.addRO(req.body).then(
+    restockOrders_dao.addRO(req.body).then(
       () => {
         // TODO: check issueDate
         return res.status(201).send();
@@ -94,7 +94,7 @@ routerRO.put('/restockOrder/:id', param('id').isInt(),
       return res.status(422).send();
     }
 
-    roManager.updateStateRO(req.params.id, req.body.newState).then(
+    restockOrders_dao.updateStateRO(req.params.id, req.body.newState).then(
       () => {
         return res.status(200).send();
       }
@@ -113,7 +113,7 @@ routerRO.put('/restockOrder/:id/skuItems', param('id').isInt(),
       return res.status(422).send();
     }
 
-    roManager.addSkuItems(req.params.id, req.body.skuItems).then(
+    restockOrders_dao.addSkuItems(req.params.id, req.body.skuItems).then(
       () => {
         return res.status(200).send();
       }
@@ -141,7 +141,7 @@ routerRO.put('/restockOrder/:id/transportNote', param('id').isInt(),
       return res.status(422).send();
     }
     
-    roManager.addTransportNote(req.params.id ,req.body.transportNote.deliveryDate).then(
+    restockOrders_dao.addTransportNote(req.params.id ,req.body.transportNote.deliveryDate).then(
       () => {
         return res.status(200).send();
       }
@@ -165,7 +165,7 @@ routerRO.delete('/restockOrder/:id', param('id').isInt(), (req, res) => {
   if(!errors.isEmpty()){
     return res.status(422).send();
   }
-  roManager.deleteRO(req.params.id).then(
+  restockOrders_dao.deleteRO(req.params.id).then(
     (ok) => {
       return res.status(ok).send();
     }
