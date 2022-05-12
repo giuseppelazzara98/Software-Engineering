@@ -1,12 +1,12 @@
 'use strict';
 const express = require('express');
 const routerSKU_item = express.Router();
-const SKU_dao = require('./SKU_item_dao')
+const SKU_dao = require('./SKU_item_dao');
 const { body, param, validationResult } = require('express-validator');
 
 const SKU_item_dao = new SKU_item_dao(); //dao class
 
-routerSKU_item.get("/api/skuitems", async (req, res) => {
+routerSKU_item.get("/skuitems", async (req, res) => {
     try {
       const skuitems = await SKU_dao.getSKUItems();
       res.status(200).json(skuitems);
@@ -14,7 +14,7 @@ routerSKU_item.get("/api/skuitems", async (req, res) => {
       res.status(500).end();
     }
   });
-  routerSKU_item.get("/api/skuitems:id", async (req, res) => {
+  routerSKU_item.get("/skuitems:id", async (req, res) => {
     try {
       const id = req.params.id;
       const skuitems = await SKU_dao.getSKUItemsID(id);
@@ -23,7 +23,7 @@ routerSKU_item.get("/api/skuitems", async (req, res) => {
       res.status(404).end();
     }
   });
-  routerSKU_item.get("/api/skuitems:rfid", async (req, res) => {
+  routerSKU_item.get("/skuitems:rfid", async (req, res) => {
     try {
       const rfid = req.params.rfid;
       const skuitems = await SKU_dao.getSKUItemsRFID(rfid);
@@ -33,7 +33,7 @@ routerSKU_item.get("/api/skuitems", async (req, res) => {
     }
   });
   
-  routerSKU_item.post("/api/skuitem", async (req, res) => {
+  routerSKU_item.post("/skuitem", async (req, res) => {
     if (Object.keys(req.body).length === 0) {
       return res.status(422).json({ error: `Empty body request` });
     }
@@ -50,7 +50,7 @@ routerSKU_item.get("/api/skuitems", async (req, res) => {
     return res.status(201).end();
   });
   
-  routerSKU_item.put("/api/skuitem:rfid", async (req, res) => {
+  routerSKU_item.put("/skuitem:rfid", async (req, res) => {
     if (Object.keys(req.body).length === 0) {
       return res.status(422).json({ error: `Empty body request` });
     }
@@ -68,7 +68,7 @@ routerSKU_item.get("/api/skuitems", async (req, res) => {
     return res.status(201).end();
   });
   
-  routerSKU_item.delete("/api/skuitems/:rfid", (req, res) => {
+  routerSKU_item.delete("/skuitems/:rfid", (req, res) => {
     try {
       const rfid = req.params.rfid;
       SKU_dao.deleteSKUItem(rfid);
