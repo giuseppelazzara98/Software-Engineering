@@ -26,4 +26,38 @@ In this file there is the list of tables stored in the server. For each table, t
 - name TEXT 
 - surname TEXT
 - type TEXT
-- 
+
+
+## SKU TABLE
+- id INTEGER PRIMARY KEY
+- description TEXT
+- weight NUMERIC
+- volume NUMERIC
+- notes TEXT
+- position INTEGER
+- availableQuantity INTEGER
+- price NUMERIC
+- testDescriptors TEXT
+
+## SKUITEM TABLE
+- RFID INTEGER 
+- SKUId INTEGER
+- Available INTEGER
+- DateOfStock DATETIME 
+
+(RFID,SKUId) primary key couple
+
+## TEST RESULT
+- id INTEGER
+- idTestDescriptor INTEGER
+- Date DATETIME
+- Result INTEGER (0 or 1)
+
+(id,idTestDescriptor) primary key couple
+
+## ITEM
+- id INTEGER PRIMARY KEY 
+- description TEXT
+- price NUMERIC
+- SKUid INTEGER
+- supplierId INTEGER
