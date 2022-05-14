@@ -41,8 +41,6 @@ function TestDescriptor_dao() {
         const procedure = body.procedureDescription;
         const idSKU = body.idSKU;
 
-
-
         return new Promise((resolve, reject) => {
             const query_SKU = 'SELECT * FROM SKUs WHERE id=?';
             tdDB.get(query_SKU, [idSKU], (err, row) => {
