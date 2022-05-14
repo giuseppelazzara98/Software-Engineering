@@ -13,7 +13,7 @@ INSERT INTO internalOrders (id, issueDate, state, products, customerID) VALUES (
 INSERT INTO internalOrders (id, issueDate, state, products, customerID) VALUES (2, '2021-11-30 19:33', 'COMPLETED', '12, 180', 1);
 INSERT INTO internalOrders (id, issueDate, state, products, customerID) VALUES (3, '2022-02-11 12:22', 'ISSUED', '1,2,3', 3);
 INSERT INTO internalOrders (id, issueDate, state, products, customerID) VALUES (4, '2021-10-01 13:33', 'REFUSED', '4,5,6,10', 2);
-INSERT INTO internalOrders (id, issueDate, state, products, customerID) VALUES (5, '2021-03-14 15:34', 'CANCELED', '2,3,4,', 1);
+INSERT INTO internalOrders (id, issueDate, state, products, customerID) VALUES (5, '2021-03-14 15:34', 'CANCELED', '2,3,4', 1);
 
 -- Table: items
 DROP TABLE IF EXISTS items;
@@ -36,6 +36,12 @@ CREATE TABLE SKUItems (RFID INTEGER PRIMARY KEY AUTOINCREMENT, SKUId INTEGER, Av
 -- Table: SKUs
 DROP TABLE IF EXISTS SKUs;
 CREATE TABLE SKUs (id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT, weight NUMERIC, volume NUMERIC, notes TEXT, position INTEGER, availableQuantity INTEGER, price NUMERIC, testDescriptors TEXT);
+INSERT INTO SKUs (description, weight, volume, notes, position, availableQuantity, price, testDescriptors) VALUES ('desc', 11.1, 1.1, 'note', 1, 89, 12.3, '1,2,3');
+INSERT INTO SKUs (description, weight, volume, notes, position, availableQuantity, price, testDescriptors) VALUES ('desc', 11.1, 1.1, 'note', 1, 89, 12.3, '1,2,3');
+INSERT INTO SKUs (description, weight, volume, notes, position, availableQuantity, price, testDescriptors) VALUES ('desc', 11.1, 1.1, 'note', 1, 89, 12.3, '1,2,3');
+INSERT INTO SKUs (description, weight, volume, notes, position, availableQuantity, price, testDescriptors) VALUES ('desc', 11.1, 1.1, 'note', 1, 89, 12.3, '1,2,3');
+INSERT INTO SKUs (description, weight, volume, notes, position, availableQuantity, price, testDescriptors) VALUES ('desc', 11.1, 1.1, 'note', 1, 89, 12.3, '1,2,3');
+INSERT INTO SKUs (description, weight, volume, notes, position, availableQuantity, price, testDescriptors) VALUES ('desc', 11.1, 1.1, 'note', 1, 89, 12.3, '1,2,3');
 
 -- Table: test descriptors
 DROP TABLE IF EXISTS testDescriptors;
