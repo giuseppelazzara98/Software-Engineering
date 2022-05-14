@@ -1,61 +1,145 @@
 'use strict';
 
 const sqlite = require('sqlite3');
+const dayjs = require('dayjs');
 
 function internalOrders_dao() {
     //Internal Orders
-    const ioDB = new sqlite.Database("./modules/database/internalOrders.sqlite", (err) => {
+    const ioDB = new sqlite.Database("./modules/database/ezwh.sqlite", (err) => {
         if (err) {
-            console.log("Error connecting to ioDB");
+            console.log("Error connecting to DB");
             throw err;
         }
-        console.log("Connected to ioDB");
+        console.log("IO: Connected to DB");
 
     });
 
     this.getAllIO = () => {
-        /* 
-            TO DO: missing list of products
-        */
         const query_all = 'SELECT * FROM internalOrders';
         return new Promise((resolve, reject) => {
-            ioDB.all(query_all, (err, rows) => {
+            ioDB.all(query_all, async (err, rows) => {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(rows);
+                    //rows is an array of internal orders
+                    const list = await Promise.all(rows.map(async (row) => {
+                        //each row must retrieve the products
+                        const IDs = row.products.split(',').map(e => parseInt(e)); //array of INT of product IDs
+                        //retrieve the array of products
+                        const products = await Promise.all(IDs.map(async (id) => {
+                            const product = this.getProduct(id, row.state).then(p => p).catch(e => undefined);
+                            return product;
+                        }));
+                        return {
+                            "id": row.id,
+                            "issueDate": row.issueDate,
+                            "state": row.state,
+                            "products": products.filter(p => p !== undefined),
+                            "customerID": row.customerID
+                        }
+                    }));
+
+                    resolve(list);
                 }
             })
-        });
-    };
+        })
+    }
+
+    this.getProduct = (id, state) => {
+        if (state !== "COMPLETED") {
+            return new Promise((resolve, reject) => {
+                const query = "SELECT id, description, price, availableQuantity FROM SKUs WHERE id=?";
+                ioDB.get(query, [id], (err, row) => {
+                    if (err) {
+                        reject(500);
+                    } else if (row === undefined) {
+                        reject(404);
+                    } else {
+                        resolve({
+                            SKUId: row.id,
+                            description: row.description,
+                            price: row.price,
+                            qty: row.availableQuantity
+                        })
+                    }
+                })
+            })
+        } else {
+            return new Promise((resolve, reject) => {
+                const query = "SELECT id, description, price, RFID FROM SKUs INNER JOIN SKUItems on SKUs.id=SKUItems.SKUId WHERE id=?";
+                ioDB.get(query, [id], (err, row) => {
+                    if (err) {
+                        reject(500);
+                    } else if (row === undefined) {
+                        reject(404);
+                    } else {
+                        resolve({
+                            SKUId: row.id,
+                            description: row.description,
+                            price: row.price,
+                            qty: row.availableQuantity
+                        })
+                    }
+                })
+            })
+        }
+    }
 
     this.getAllIOIssued = () => {
-        /* 
-            TO DO: missing list of products
-        */
         const query_issued = 'SELECT * FROM internalOrders WHERE state="ISSUED"';
         return new Promise((resolve, reject) => {
-            ioDB.all(query_issued, (err, rows) => {
+            ioDB.all(query_issued, async (err, rows) => {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(rows);
+                    const list = await Promise.all(rows.map(async (row) => {
+                        //each row must retrieve the products
+                        const IDs = row.products.split(',').map(e => parseInt(e)); //array of INT of product IDs
+                        //retrieve the array of products
+                        const products = await Promise.all(IDs.map(async (id) => {
+                            const product = this.getProduct(id, row.state).then(p => p).catch(e => undefined);
+                            return product;
+                        }));
+                        return {
+                            "id": row.id,
+                            "issueDate": row.issueDate,
+                            "state": row.state,
+                            "products": products.filter(p => p !== undefined),
+                            "customerID": row.customerID
+                        }
+                    }));
+
+                    resolve(list);
                 }
             })
         });
     };
 
     this.getAllIOAccepted = () => {
-        /* 
-            TO DO: missing list of products
-        */
         const query_issued = 'SELECT * FROM internalOrders WHERE state="ACCEPTED"';
         return new Promise((resolve, reject) => {
-            ioDB.all(query_issued, (err, rows) => {
+            ioDB.all(query_issued, async (err, rows) => {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(rows);
+                    const list = await Promise.all(rows.map(async (row) => {
+                        //each row must retrieve the products
+                        const IDs = row.products.split(',').map(e => parseInt(e)); //array of INT of product IDs
+                        //retrieve the array of products
+                        const products = await Promise.all(IDs.map(async (id) => {
+                            const product = this.getProduct(id, row.state).then(p => p).catch(e => undefined);
+                            return product;
+                        }));
+                        return {
+                            "id": row.id,
+                            "issueDate": row.issueDate,
+                            "state": row.state,
+                            "products": products.filter(p => p !== undefined),
+                            "customerID": row.customerID
+                        }
+                    }));
+
+                    resolve(list);
                 }
             })
         });
@@ -64,46 +148,49 @@ function internalOrders_dao() {
     this.getIO = (id) => {
         const query = 'SELECT * FROM internalOrders WHERE id=?';
         return new Promise((resolve, reject) => {
-            ioDB.get(query, [id], (err, row) => {
+            ioDB.get(query, [id], async (err, row) => {
                 if (err) {
                     reject(500);
+                } else if (row === undefined) {
+                    reject(404);
                 } else {
-                    resolve(row);
+                    const io = new Promise(async (resolve, reject) => {
+                        const IDs = row.products.split(',').map(e => parseInt(e)); //array of INT of product IDs
+                        //retrieve the array of products
+                        const products = await Promise.all(IDs.map(async (id) => {
+                            const product = this.getProduct(id, row.state).then(p => p).catch(e => undefined);
+                            return product;
+                        }));
+                        resolve({
+                            "id": row.id,
+                            "issueDate": row.issueDate,
+                            "state": row.state,
+                            "products": products.filter(p => p !== undefined),
+                            "customerID": row.customerID
+                        })
+                    });
+
+                    resolve(io);
                 }
             })
         })
     };
 
     this.addIO = async (body) => {
-        const query_insert = 'INSERT INTO internalOrders(id, issueDate, state, products, customerID) VALUES(?, ?, "ISSUED", ?, ?)';
-        const date = body.issueDate;
+        const query_insert = 'INSERT INTO internalOrders(issueDate, state, products, customerID) VALUES(?, "ISSUED", ?, ?)';
+        const date = dayjs(body.issueDate).format("YYYY-MM-DD HH:MM").toString(); //date is in ISO8601 format supported by SQLite 
         const products = [...body.products];
         var IDs = Array();
         products.forEach(p => IDs.push(p.SKUId));
         IDs = IDs.toString();
         const customerID = body.customerId;
 
-        const id = await this.getNextIOID();
-
         return new Promise((resolve, reject) => {
-            ioDB.run(query_insert, [id, date, IDs, customerID], (err) => {
+            ioDB.run(query_insert, [date, IDs, customerID], (err) => {
                 if (err) {
                     reject(503);
                 } else {
-                    resolve(true);
-                }
-            })
-        })
-    };
-
-    this.getNextIOID = () => {
-        const query_getID = 'SELECT MAX(id) AS max FROM internalOrders';
-        return new Promise((resolve, reject) => {
-            ioDB.get(query_getID, (err, row) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(row.max + 1);
+                    resolve(201);
                 }
             })
         })
@@ -112,12 +199,12 @@ function internalOrders_dao() {
     this.updateStateIO = async (id, body) => {
         const newState = body.newState;
         const result = await this.getIO(id);
-        if (result === 500 || result === undefined){
+        if (result === 500 || result === undefined) {
             return new Promise((resolve, reject) => {
                 reject(404);
             })
         }
-        
+
         if (newState !== 'COMPLETED') {
             const query = 'UPDATE internalOrders SET state=? WHERE id=?';
             return new Promise((resolve, reject) => {
@@ -131,14 +218,14 @@ function internalOrders_dao() {
             })
         } else {
             const query = 'UPDATE internalOrders SET state=?, products=? WHERE id=?';
-            if(body.products === undefined){
-                return new Promise((resolve, reject)=>{
+            if (body.products === undefined) {
+                return new Promise((resolve, reject) => {
                     reject(422);
                 })
             }
             const products = [...body.products];
             var IDs = Array();
-            products.forEach(p => {IDs.push(p.SKUId)});
+            products.forEach(p => { IDs.push(p.SKUId) });
             IDs = IDs.toString();
             return new Promise((resolve, reject) => {
                 ioDB.run(query, [newState, IDs, id], (err) => {
@@ -156,9 +243,9 @@ function internalOrders_dao() {
         const query = 'DELETE FROM internalOrders WHERE id=?';
         return new Promise((resolve, reject) => {
             ioDB.run(query, [id], (err) => {
-                if(err){
+                if (err) {
                     reject(503);
-                } else{
+                } else {
                     resolve(204);
                 }
             })
