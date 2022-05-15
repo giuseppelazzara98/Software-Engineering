@@ -72,6 +72,20 @@ CREATE TABLE returnOrder (
     restockOrderId INTEGER REFERENCES restockOrders (id) ON DELETE CASCADE
                                                          ON UPDATE CASCADE
 );
+-- Table: position
+DROP TABLE IF EXISTS position;
+CREATE TABLE position (
+    id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    positionID     TEXT,
+    aisleID        TEXT,
+    row            TEXT,
+    col            TEXT,
+    maxWeight      INTEGER,
+    maxVolume      INTEGER,
+    occupiedWeight INTEGER,
+    occupiedVolume INTEGER
+);
+
 
 COMMIT TRANSACTION;
 PRAGMA foreign_keys = on;
