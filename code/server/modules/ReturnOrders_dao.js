@@ -38,11 +38,13 @@ function ReturnOrders_dao() {
         if (err) {
           reject(500);
         } else {
-          if (row == undefined) reject(404);
-          const order = new Promise(async (resolve, reject) => {
-            resolve(convertResultSetToDomainModelSKUItems(row));
-          });
-          resolve(order);
+          if (row == undefined || row.length == 0) reject(404);
+          else {
+            const order = new Promise(async (resolve, reject) => {
+              resolve(convertResultSetToDomainModelSKUItems(row));
+            });
+            resolve(order);
+          }
         }
       });
     });
