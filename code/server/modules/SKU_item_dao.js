@@ -5,7 +5,7 @@ const dayjs = require('dayjs');
 
 function SKU_item_dao() {
     
-    const SKUDB = new sqlite.Database("./modules/database/DB.sqlite", (err) => {
+    const SKUDB = new sqlite.Database("./modules/database/ezwh.sqlite", (err) => {
         if (err) {
             console.log("Error connecting to DB");
             throw err;
@@ -16,7 +16,7 @@ function SKU_item_dao() {
 
     this.deleteSKUItem=(rfid)=> {
         return new Promise((resolve, reject)  => {
-            const sql = 'DELETE FROM TABLE WHERE RFID=?';//WRITE SQL COMMAND 
+            const sql = 'DELETE FROM SKUItems WHERE RFID=?';//WRITE SQL COMMAND 
             SKUDB.run(sql,[rfid], (err) => {
                 if (err) {
                     reject(err);
@@ -30,7 +30,7 @@ function SKU_item_dao() {
     this.postSkuItem=(data)=> {
         return new Promise((resolve, reject) => {
             const sql = 'INSERT INTO TABLENAME(RFID,SKUId,DateOfStock,) VALUES(?, ?, ?)';//WRITE SQL COMMAND
-            SKUDB.run(sql, [data.RFID, data.SKUId, data.DateOfStock], (err) => {
+            SKUDB.run(sql, [data.RFID, data.SKUId, dayjs(data.DateOfStock).format("YYYY/MM/DD HH:MM")], (err) => {
                 if (err) {
                   reject(err);
                   return;
@@ -40,10 +40,10 @@ function SKU_item_dao() {
         });
     }
 
-    this.putSkuItem=(data)=> {
+    this.putSkuItem=(data,rfid)=> {
         return new Promise((resolve, reject) => {
-            const sql = 'UPDATE(RFID,SKUId,DateOfStock,) VALUES(?, ?, ?)';//WRITE SQL COMMAND
-            SKUDB.run(sql, [data.newRFID, data.newAvailable, data.newDateOfStock], (err) => {
+            const sql = 'UPDATE SKUItems SET (RFID,SKUId,DateOfStock) VALUES(?, ?, ?) WHERE RFID=?';//WRITE SQL COMMAND
+            SKUDB.run(sql, [data.newRFID, data.newAvailable, data.newDateOfStock, rfid], (err) => {
                 if (err) {
                   reject(err);
                   return;
@@ -55,7 +55,7 @@ function SKU_item_dao() {
 
     this.getSKUItems=()=>  {
         return new Promise((resolve, reject) => {
-            const sql = '';//WRITE SQL COMMAND
+            const sql = 'SELECT * FROM SKUItems';
             SKUDB.all(sql, [], (err, rows) => {
                 if (err) {
                     reject(err);
@@ -76,7 +76,7 @@ function SKU_item_dao() {
 
     this.getSKUItemsID=(id) =>{
         return new Promise((resolve, reject) => {
-            const sql = 'SELECT * FROM WHERE id=?';//WRITE SQL COMMAND
+            const sql = 'SELECT * FROM SKUItems WHERE id=?';//WRITE SQL COMMAND
             SKUDB.all(sql, [id], (err, rows) => {
                 if (err) {
                     reject(err);
@@ -96,7 +96,7 @@ function SKU_item_dao() {
 
       this.getSKUItemsRFID=(rfid) =>{
         return new Promise((resolve, reject) => {
-            const sql = 'SELECT * FROM WHERE RFID=?';//WRITE SQL COMMAND
+            const sql = 'SELECT * FROM SKUItems WHERE RFID=?';//WRITE SQL COMMAND
             SKUDB.all(sql, [rfid], (err, rows) => {
                 if (err) {
                     reject(err);

@@ -1,35 +1,36 @@
 'use strict';
 const express = require('express');
 const routerSKU_item = express.Router();
-const SKU_dao = require('./SKU_item_dao');
+const SKUItem_dao = require('./SKU_item_dao');
+
 const { body, param, validationResult } = require('express-validator');
 
-const SKU_item_dao = new SKU_item_dao(); //dao class
+const SKU_item_dao = new SKUItem_dao(); //dao class
 
 routerSKU_item.get("/skuitems", async (req, res) => {
     try {
-      const skuitems = await SKU_dao.getSKUItems();
+      const skuitems = await SKU_item_dao.getSKUItems();
       res.status(200).json(skuitems);
     } catch (err) {
-      res.status(500).end();
+      res.status(500).send("500 INTERNAL SERVER ERROR");
     }
   });
   routerSKU_item.get("/skuitems:id", async (req, res) => {
     try {
       const id = req.params.id;
-      const skuitems = await SKU_dao.getSKUItemsID(id);
+      const skuitems = await SKU_item_dao.getSKUItemsID(id);
       res.status(200).json(skuitems);
     } catch (err) {
-      res.status(404).end();
+      res.status(500).send("500 INTERNAL SERVER ERROR");
     }
   });
   routerSKU_item.get("/skuitems:rfid", async (req, res) => {
     try {
       const rfid = req.params.rfid;
-      const skuitems = await SKU_dao.getSKUItemsRFID(rfid);
+      const skuitems = await SKU_item_dao.getSKUItemsRFID(rfid);
       res.status(200).json(skuitems);
     } catch (err) {
-      res.status(404).end();
+      res.status(500).send("500 INTERNAL SERVER ERROR");
     }
   });
   
@@ -41,13 +42,18 @@ routerSKU_item.get("/skuitems", async (req, res) => {
     if (
       skuitem === undefined ||
       skuitem.RFID === undefined ||
-      skuitem.SKUId === undefined
+      skuitem.SKUId === undefined ||
+      skuitem.DateOfStock===undefined
     ) {
-      return res.status(422).json({ error: `Invalid user data` }); //ADD CHECK FOR DATA
+      return res.status(422).send("422 Unprocessable Entity"); //ADD CHECK FOR DATA
     }
-    await SKU_dao.newTableName(); //MODIFY THIS FUNCTION
-    SKU_dao.postSkuItem(skuitem);
-    return res.status(201).end();
+    try{
+    SKU_item_dao.postSkuItem(skuitem);
+    }
+    catch(err){
+      return res.status(404).send("404 NOT FOUND");
+    }
+    return res.status(201).send("201 Created");
   });
   
   routerSKU_item.put("/skuitem:rfid", async (req, res) => {
@@ -61,17 +67,23 @@ routerSKU_item.get("/skuitems", async (req, res) => {
       skuitem.newAvailable === undefined ||
       skuitem.newDateOfStock === undefined
     ) {
-      return res.status(422).json({ error: `Invalid user data` }); //ADD CHECK FOR DATA
+      return res.status(404).send("422 Unprocessable Entity");
     }
-  
-    SKU_dao.putSkuItem(skuitem);
-    return res.status(201).end();
+    const rfid=req.params.rfid;
+    try{
+      SKU_item_dao.putSkuItem(skuitem,rfid);
+    }
+    catch (err){
+      return res.status(404).send("404 NOT FOUND");
+    }
+    return res.status(201).send("201 Created");
+    
   });
   
   routerSKU_item.delete("/skuitems/:rfid", (req, res) => {
     try {
       const rfid = req.params.rfid;
-      SKU_dao.deleteSKUItem(rfid);
+      SKU_item_dao.deleteSKUItem(rfid);
       res.status(204).end();
     } catch (err) {
       res.status(503).end();

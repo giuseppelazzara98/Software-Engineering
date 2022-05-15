@@ -3,7 +3,7 @@
 const sqlite = require('sqlite3');
 const dayjs = require('dayjs');
 function testResult_dao(){
-    const testResultDB = new sqlite.Database("./modules/database/DB.sqlite", (err) => {
+    const testResultDB = new sqlite.Database("./modules/database/ezwh.sqlite", (err) => {
         if (err) {
             console.log("Error connecting to DB");
             throw err;
@@ -14,7 +14,7 @@ function testResult_dao(){
 
     this.getTestResultsByRFID=(rfid)=>{
         return new Promise((resolve, reject) => {
-            const sql = 'SELECT * FROM WHERE RFID=?';//WRITE SQL COMMAND
+            const sql = 'SELECT id,idTestDescriptor,Date,Result FROM testResults  WHERE RFID=?';
             testResultDB.all(sql, [rfid], (err, rows) => {
                 if (err) {
                     reject(err);
@@ -35,7 +35,7 @@ function testResult_dao(){
     
       this.getTestResultsById=(rfid,id)=>{
         return new Promise((resolve, reject) => {
-            const sql = 'SELECT * FROM WHERE RFID=? AND ID=?';//WRITE SQL COMMAND
+            const sql = 'SELECT id, idTestDescriptor, Date, Result FROM testResults WHERE RFID=? AND ID=?';//DA COMPLETARE
             testResultDB.all(sql, [rfid,id], (err, rows) => {
                 if (err) {
                     reject(err);
@@ -58,7 +58,7 @@ function testResult_dao(){
     
       this.postTestResult=(data)=>{
         return new Promise((resolve, reject) => {
-            const sql = 'INSERT INTO TABLENAME(rfid,idTestDescriptor,Date,Result) VALUES(?, ?, ?, ?)';//WRITE SQL COMMAND
+            const sql = 'INSERT INTO testResult(rfid,idTestDescriptor,Date,Result) VALUES(?, ?, ?, ?)';
             testResultDB.run(sql, [data.rfid, data.idTestDescriptor, data.Date,data.Result], (err) => {
                 if (err) {
                   reject(err);
@@ -71,7 +71,7 @@ function testResult_dao(){
     
     this.putTestResult=(data,rfid,id)=>{
         return new Promise((resolve, reject) => {
-        const sql = 'UPDATE(idTestDescriptor,Date,Result) VALUES(?, ?, ?) WHERE rfid=? AND id=?';//WRITE SQL COMMAND
+        const sql = 'UPDATE testResult SET(idTestDescriptor,Date,Result) VALUES(?, ?, ?)  WHERE rfid=? AND id=?';
         testResultDB.run(sql, [data.newIdTestDescriptor, data.newDate, data.newResult,rfid,id], (err) => {
             if (err) {
               reject(err);
@@ -82,9 +82,9 @@ function testResult_dao(){
     });
     }
     
-    deleteTestResult=(rfid,id)=>{
+    this.deleteTestResult=(rfid,id)=>{
         return new Promise((resolve, reject)  => {
-            const sql = 'DELETE FROM TABLE WHERE RFID=? AND id=?';//WRITE SQL COMMAND 
+            const sql = 'DELETE FROM testResult WHERE RFID=? AND id=?';
             testResultDB.run(sql,[rfid,id], (err) => {
                 if (err) {
                     reject(err);
