@@ -11,9 +11,6 @@ const port = 3001;
 app.use(express.json());
 // const db=new DB;
 
-
-
-
 const internalOrder = require("./modules/InternalOrder");
 const restockOrder = require("./modules/RestockOrder");
 const testDescriptors = require("./modules/TestDescriptor");
@@ -22,6 +19,7 @@ const SKU_item = require("./modules/SKU_item");
 const item = require("./modules/item");
 const test_result = require("./modules/testResult");
 const returnOrder = require("./modules/ReturnOrder");
+const position = require("./modules/Position");
 
 app.use("/api", internalOrder);
 app.use("/api", restockOrder);
@@ -31,7 +29,7 @@ app.use("/api", SKU_item);
 app.use("/api", item);
 app.use("/api", test_result);
 app.use("/api", returnOrder);
-
+app.use("/api", position);
 
 // activate the server
 app.listen(port, () => {
