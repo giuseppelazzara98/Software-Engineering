@@ -1,10 +1,11 @@
 "use strict";
 // import './modules/DB'
 // import DB from './modules/DB';
-const userManager = require("./modules/userManager");
+const morgan = require("morgan");
 const express = require("express");
 // init express
 const app = new express();
+app.use(morgan("dev"));
 const port = 3001;
 
 app.use(express.json());
@@ -20,6 +21,7 @@ const SKU = require("./modules/SKU");
 const SKU_item = require("./modules/SKU_item");
 const item = require("./modules/item");
 const test_result = require("./modules/testResult");
+const returnOrder = require("./modules/ReturnOrder");
 
 app.use("/api", internalOrder);
 app.use("/api", restockOrder);
@@ -28,30 +30,8 @@ app.use("/api", SKU);
 app.use("/api", SKU_item);
 app.use("/api", item);
 app.use("/api", test_result);
-// USER
+app.use("/api", returnOrder);
 
-// custom middleware: check if a given request is coming from an authenticated user
-/*
-const isLoggedIn = (req, res, next) => {
-  if (req.isAuthenticated()) return next();
-
-  return res.status(401).json({ error: "not authenticated" });
-};
-*/
-app.get(
-  "/api/userinfo",
-  /* isLoggedIn */ (req, res) => {
-    // req.user.id
-    userManager
-      .getUserInfo()
-      .then((userInfo) => {
-        res.status(200).json(userInfo);
-      })
-      .catch((err) => {
-        res.status(500).json(err);
-      });
-  }
-);
 
 // activate the server
 app.listen(port, () => {
