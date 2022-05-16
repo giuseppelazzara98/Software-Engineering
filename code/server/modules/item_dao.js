@@ -118,8 +118,8 @@ function item_dao(){
     
     this.putItem=(data,id)=>{
         return new Promise((resolve, reject) => {
-        const sql = 'UPDATE items SET id=?,description=?,price=? WHERE id=?';//WRITE SQL COMMAND
-        itemDB.run(sql, [data.id, data.newDescription,data.newPrice, id], (err) => {
+        const sql = 'UPDATE items SET ,description=?,price=? WHERE id=?';
+        itemDB.run(sql, [ data.newDescription,data.newPrice, id], (err) => {
             if (err) {
               reject(err);
               return;

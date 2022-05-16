@@ -25,7 +25,7 @@ function testResult_dao(){
                        id:r.id,
                        idTestDescriptor:r.idTestDescriptor,
                        Date:r.Date,
-                       Result:r.Result
+                       Result:Boolean(r.Result)
                     }
                 ));
                 resolve(testResults);
@@ -35,7 +35,7 @@ function testResult_dao(){
     
       this.getTestResultsById=(rfid,id)=>{
         return new Promise((resolve, reject) => {
-            const sql = 'SELECT id, idTestDescriptor, Date, Result FROM testResults WHERE RFID=? AND ID=?';//DA COMPLETARE
+            const sql = 'SELECT id, idTestDescriptor, Date, Result FROM testResults WHERE RFID=? AND ID=?';
             testResultDB.all(sql, [rfid,id], (err, rows) => {
                 if (err) {
                     reject(err);
@@ -46,7 +46,41 @@ function testResult_dao(){
                        id:r.id,
                        idTestDescriptor:r.idTestDescriptor,
                        Date:r.Date,
-                       Result:r.Result
+                       Result:Boolean(r.Result)
+                    }
+                ));
+                resolve(testResults);
+            });
+        });
+      }
+      this.checkrfid=(rfid)=>{
+        return new Promise((resolve, reject) => {
+            const sql = 'SELECT rfid FROM testresults WHERE rfid=? ';
+            testResultDB.all(sql, [rfid], (err, rows) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                const testResults = rows.map((r) => (
+                    {  
+                       rfid:r.rfid
+                    }
+                ));
+                resolve(testResults);
+            });
+        });
+      }
+      this.checkTestDescriptor=(idTest)=>{
+        return new Promise((resolve, reject) => {
+            const sql = 'SELECT id FROM testdescriptors WHERE id=? ';
+            testResultDB.all(sql, [idTest], (err, rows) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                const testResults = rows.map((r) => (
+                    {  
+                       id:r.id
                     }
                 ));
                 resolve(testResults);
@@ -58,7 +92,7 @@ function testResult_dao(){
     
       this.postTestResult=(data)=>{
         return new Promise((resolve, reject) => {
-            const sql = 'INSERT INTO testResult(rfid,idTestDescriptor,Date,Result) VALUES(?, ?, ?, ?)';
+            const sql = 'INSERT INTO testResults(rfid,idTestDescriptor,Date,Result) VALUES(?, ?, ?, ?)';
             testResultDB.run(sql, [data.rfid, data.idTestDescriptor, data.Date,data.Result], (err) => {
                 if (err) {
                   reject(err);
@@ -71,7 +105,7 @@ function testResult_dao(){
     
     this.putTestResult=(data,rfid,id)=>{
         return new Promise((resolve, reject) => {
-        const sql = 'UPDATE testResult SET(idTestDescriptor,Date,Result) VALUES(?, ?, ?)  WHERE rfid=? AND id=?';
+        const sql = 'UPDATE testResults SET idTestDescriptor=?,Date=?,Result=?   WHERE rfid=? AND id=?';
         testResultDB.run(sql, [data.newIdTestDescriptor, data.newDate, data.newResult,rfid,id], (err) => {
             if (err) {
               reject(err);
@@ -84,7 +118,7 @@ function testResult_dao(){
     
     this.deleteTestResult=(rfid,id)=>{
         return new Promise((resolve, reject)  => {
-            const sql = 'DELETE FROM testResult WHERE RFID=? AND id=?';
+            const sql = 'DELETE FROM testResults WHERE RFID=? AND id=?';
             testResultDB.run(sql,[rfid,id], (err) => {
                 if (err) {
                     reject(err);
