@@ -68,5 +68,29 @@ DROP TABLE IF EXISTS Users;
 CREATE TABLE Users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE, password TEXT, name TEXT, surname TEXT, type TEXT);
 INSERT INTO Users (id, username, password, name, surname, type) VALUES (1, 'f.i.s', 'test', 'farzad', 'ips', 'manager');
 
+-- Table: returnOrder
+DROP TABLE IF EXISTS returnOrder;
+CREATE TABLE returnOrder (
+    id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    returnDate     TEXT,
+    products       TEXT,
+    restockOrderId INTEGER REFERENCES restockOrders (id) ON DELETE CASCADE
+                                                         ON UPDATE CASCADE
+);
+-- Table: position
+DROP TABLE IF EXISTS position;
+CREATE TABLE position (
+    id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    positionID     TEXT,
+    aisleID        TEXT,
+    row            TEXT,
+    col            TEXT,
+    maxWeight      INTEGER,
+    maxVolume      INTEGER,
+    occupiedWeight INTEGER,
+    occupiedVolume INTEGER
+);
+
+
 COMMIT TRANSACTION;
 PRAGMA foreign_keys = on;
