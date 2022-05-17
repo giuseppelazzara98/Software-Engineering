@@ -81,20 +81,20 @@ function SKU_dao() {
     }
     this.checkPosition=(id)=>{
         return new Promise((resolve, reject) => {
-            const sql = 'SELECT maxWeight,maxVolume,occupiedWeight,occupiedVolume FROM POSITION P,SKU S WHERE P.id=S.position AND S.id=?';
-            SKUDB.all(sql, [id], (err, rows) => {
+            const sql = 'SELECT maxWeight,maxVolume,occupiedWeight,occupiedVolume FROM POSITION P,SKUs S WHERE P.positionID=S.position AND S.id=?';
+            SKUDB.get(sql, [id], (err, rows) => {
                 if (err) {
                     reject(err);
                     return;
                 }
-                const info = rows.map((r) => (
+                const info = 
                     {  
-                       maxWeight:r.maxWeight,
-                       maxVolume:r.maxVolume,
-                       occupiedWeight:r.occupiedWeight,
-                       occupiedVolume:r.occupiedVolume
+                       maxWeight:rows.maxWeight,
+                       maxVolume:rows.maxVolume,
+                       occupiedWeight:rows.occupiedWeight,
+                       occupiedVolume:rows.occupiedVolume
                     }
-                ));
+                ;
                 resolve(info);
             });
         });
@@ -102,7 +102,7 @@ function SKU_dao() {
 
     this.putSku=(data,id)=>{
         return new Promise((resolve, reject) => {
-            const sql = 'UPDATE SKUs SET (description,weight,volume,notes,price,availableQuantity) VALUES(?, ?, ?, ?, ?, ?) WHERE id=?';
+            const sql = 'UPDATE SKUs SET description=?,weight=?,volume=?,notes=?,price=?,availableQuantity=? WHERE id=?';
             SKUDB.run(sql, [data.newDescription, data.newWeight, data.newVolume,data.newNotes,data.newPrice,data.newAvailableQuantity,id], (err) => {
                 if (err) {
                   reject(err);

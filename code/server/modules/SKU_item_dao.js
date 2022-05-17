@@ -16,7 +16,7 @@ function SKU_item_dao() {
 
     this.deleteSKUItem=(rfid)=> {
         return new Promise((resolve, reject)  => {
-            const sql = 'DELETE FROM SKUItems WHERE RFID=?';//WRITE SQL COMMAND 
+            const sql = 'DELETE FROM SKUItems WHERE RFID=?';
             SKUDB.run(sql,[rfid], (err) => {
                 if (err) {
                     reject(err);
@@ -29,8 +29,8 @@ function SKU_item_dao() {
 
     this.postSkuItem=(data)=> {
         return new Promise((resolve, reject) => {
-            const sql = 'INSERT INTO TABLENAME(RFID,SKUId,DateOfStock,) VALUES(?, ?, ?)';//WRITE SQL COMMAND
-            SKUDB.run(sql, [data.RFID, data.SKUId, dayjs(data.DateOfStock).format("YYYY/MM/DD HH:MM")], (err) => {
+            const sql = 'INSERT INTO SKUItems(RFID,SKUId,Available,DateOfStock) VALUES(?, ?, ?, ?)';
+            SKUDB.run(sql, [data.RFID, data.SKUId,data.Available, dayjs(data.DateOfStock).format("YYYY/MM/DD HH:MM")], (err) => {
                 if (err) {
                   reject(err);
                   return;
@@ -42,7 +42,7 @@ function SKU_item_dao() {
 
     this.putSkuItem=(data,rfid)=> {
         return new Promise((resolve, reject) => {
-            const sql = 'UPDATE SKUItems SET (RFID,SKUId,DateOfStock) VALUES(?, ?, ?) WHERE RFID=?';//WRITE SQL COMMAND
+            const sql = 'UPDATE SKUItems SET RFID=?,SKUId=?,DateOfStock=? WHERE RFID=?';
             SKUDB.run(sql, [data.newRFID, data.newAvailable, data.newDateOfStock, rfid], (err) => {
                 if (err) {
                   reject(err);
@@ -76,7 +76,7 @@ function SKU_item_dao() {
 
     this.getSKUItemsID=(id) =>{
         return new Promise((resolve, reject) => {
-            const sql = 'SELECT * FROM SKUItems WHERE id=?';//WRITE SQL COMMAND
+            const sql = 'SELECT * FROM SKUItems WHERE SKUid=? AND Available=1';
             SKUDB.all(sql, [id], (err, rows) => {
                 if (err) {
                     reject(err);
