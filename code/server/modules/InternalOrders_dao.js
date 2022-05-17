@@ -10,8 +10,6 @@ function internalOrders_dao() {
             console.log("Error connecting to DB");
             throw err;
         }
-        console.log("IO: Connected to DB");
-
     });
 
     this.getAllIO = () => {
@@ -66,7 +64,7 @@ function internalOrders_dao() {
             })
         } else {
             return new Promise((resolve, reject) => {
-                const query = "SELECT id, description, price, RFID FROM SKUs INNER JOIN SKUItems on SKUs.id=SKUItems.SKUId WHERE id=?";
+                const query = "SELECT id, description, price, RFID FROM SKUs INNER JOIN SKUItems on SKUs.id=SKUItems.SKUId WHERE SKUs.id=?";
                 ioDB.get(query, [id], (err, row) => {
                     if (err) {
                         reject(500);
@@ -77,7 +75,7 @@ function internalOrders_dao() {
                             SKUId: row.id,
                             description: row.description,
                             price: row.price,
-                            qty: row.availableQuantity
+                            RFID: row.RFID
                         })
                     }
                 })

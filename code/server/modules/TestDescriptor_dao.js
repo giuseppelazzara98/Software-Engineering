@@ -7,7 +7,7 @@ function TestDescriptor_dao() {
             console.log("Error connecting to DB");
             throw err;
         }
-        console.log("TD: Connected to DB");
+
     });
 
     this.getAllTD = () => {
@@ -112,15 +112,59 @@ function TestDescriptor_dao() {
 
     this.deleteTD = (id) => {
         return new Promise((resolve, reject) => {
-            const query = 'DELETE FROM testDescriptors WHERE id=?';
-            tdDB.run(query, [id], (err) => {
-                if (err) {
+            const query_idSKU = 'SELECT idSKU FROM testDescriptors WHERE id=?';
+            tdDB.get(query_idSKU, [id], (err, row) => {
+                if(err){
                     reject(500);
+                } else if(row === undefined) {
+                    reject(404); 
                 } else {
-                    resolve(204);
+                    resolve(row.idSKU);
                 }
             })
-        })
+        }).then(
+            (idSKU) => {
+                const query_getSKU = 'SELECT testDescriptors FROM SKUs WHERE id=?';
+                tdDB.get(query_getSKU, [idSKU], (err, row) => {
+                    if(err) {return new Promise((resolve, reject) => reject(500))}
+                    const IDs = row.testDescriptors.split(',').map(e => parseInt(e)).filter(e => e!=id).toString();
+                    return new Promise((resolve, reject) => {
+                        const update = 'UPDATE SKUs SET testDescriptors=? WHERE id=?';
+                        tdDB.run(update, [IDs, idSKU], (err) =>{
+                            if(err) {
+                                console.log(err);
+                                reject(500)}
+                            resolve(204)
+                        })
+                    })
+                })
+            }
+        ).then(
+            () => {
+                return new Promise((resolve, reject) => {
+                    const query = "DELETE FROM testDescriptors WHERE id=?";
+                    tdDB.run(query, [id], (err) => {
+                        if(err){
+                            reject(500);
+                        } else {
+                            resolve(204);
+                        }
+                    })
+                })
+            }
+        ).catch((err) => new Promise((resolve, reject) => reject(err)));
+
+        // return new Promise((resolve, reject) => {
+        //     const query = 'DELETE FROM testDescriptors WHERE id=?';
+        //     tdDB.run(query, [id], (err) => {
+        //         if (err) {
+        //             reject(500);
+        //         } else {
+        //             // TO DO: delete td from SKU table(testDescriptors column) and from testResults(idTestDescriptor)
+        //             resolve(204);
+        //         }
+        //     })
+        // })
     }
 }
 

@@ -10,8 +10,6 @@ function RestockOrders_dao() {
             console.log("Error connecting to DB");
             throw err;
         }
-        console.log("RO: Connected to DB");
-
     });
 
     this.getAllRO = () => {
@@ -31,9 +29,9 @@ function RestockOrders_dao() {
                             return product;
                         }));
 
-                        const SKUItemsIDs = row.skuItems.split(',').map(e => parseInt(e));
-                        const skuItems = await Promise.all(SKUItemsIDs.map(async (id) => {
-                            const skuItem = this.getSKUItem(id).then(i => i).catch(e => undefined);
+                        const SKUItemsIDs = row.skuItems.split(','); // array of strings with RFIDs 
+                        const skuItems = await Promise.all(SKUItemsIDs.map(async (rfid) => {
+                            const skuItem = this.getSKUItem(rfid).then(i => i).catch(e => undefined);
                             return skuItem;
                         }))
 
@@ -45,7 +43,7 @@ function RestockOrders_dao() {
                                 "products": products.filter(p => p !== undefined),
                                 "supplierId": row.supplierID,
                                 "transportNote": row.transportDate ? { "deliveryDate": row.transportDate } : null,
-                                "skuItems": skuItems.filter(i => i !== undefined)
+                                "skuItems": row.state === 'DELIVERY'? [] : skuItems.filter(i => i !== undefined)
                             }
                         }
                         return {
@@ -54,7 +52,7 @@ function RestockOrders_dao() {
                             "state": row.state,
                             "products": products.filter(p => p !== undefined),
                             "supplierId": row.supplierID,
-                            "skuItems": skuItems.filter(i => i !== undefined)
+                            "skuItems": []
                         }
                     }));
 
@@ -84,10 +82,10 @@ function RestockOrders_dao() {
         })
     }
 
-    this.getSKUItem = (id) => {
+    this.getSKUItem = (rfid) => {
         return new Promise((resolve, reject) => {
-            const query = "SELECT RFID, SKUId FROM SKUItems WHERE id=?";
-            roDB.get(query, [id], (err, row) => {
+            const query = "SELECT RFID, SKUId FROM SKUItems WHERE RFID=?";
+            roDB.get(query, [rfid], (err, row) => {
                 if (err) {
                     reject(500);
                 } else if (row === undefined) {
