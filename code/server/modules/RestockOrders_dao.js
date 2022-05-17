@@ -36,13 +36,15 @@ function RestockOrders_dao() {
                         }))
 
                         if (row.state !== "ISSUED") {
+                            const transportNote = await this.getTransportDate(row.transportNoteID);
+                            
                             return {
                                 "id": row.id,
                                 "issueDate": row.issueDate,
                                 "state": row.state,
                                 "products": products.filter(p => p !== undefined),
                                 "supplierId": row.supplierID,
-                                "transportNote": row.transportDate ? { "deliveryDate": row.transportDate } : null,
+                                "transportNote": {transportDate: transportNote.deliveryDate},
                                 "skuItems": row.state === 'DELIVERY'? [] : skuItems.filter(i => i !== undefined)
                             }
                         }
@@ -95,6 +97,21 @@ function RestockOrders_dao() {
                         "SKUId": row.SKUId,
                         "RFID": row.RFID
                     })
+                }
+            })
+        })
+    }
+
+    this.getTransportDate = (id) => {
+        return new Promise((resolve, reject) => {
+            const query = 'SELECT deliveryDate FROM transportNote WHERE id=?';
+            roDB.get(query, [id], (err, row)=>{
+                if(err){
+                    reject(500);
+                } else if(row === undefined){
+                    reject(404);
+                } else {
+                    resolve(row);
                 }
             })
         })
