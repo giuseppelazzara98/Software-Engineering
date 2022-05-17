@@ -11,9 +11,9 @@ const port = 3001;
 app.use(express.json());
 // const db=new DB;
 
-const internalOrder = require("./modules/InternalOrder");
-const restockOrder = require("./modules/RestockOrder");
-const testDescriptors = require("./modules/TestDescriptor");
+const internalOrder = require("./modules/routers/InternalOrder");
+const restockOrder = require("./modules/routers/RestockOrder");
+const testDescriptors = require("./modules/routers/TestDescriptor");
 const SKU = require("./modules/SKU");
 const SKU_item = require("./modules/SKU_item");
 const item = require("./modules/item");

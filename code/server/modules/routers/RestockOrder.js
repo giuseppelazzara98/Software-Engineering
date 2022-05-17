@@ -1,7 +1,7 @@
 'use strict';
 const express = require('express');
 const routerRO = express.Router();
-const RestockOrders_dao = require('./RestockOrders_dao')
+const RestockOrders_dao = require('../dao/RestockOrders_dao')
 const { body, param, validationResult } = require('express-validator');
 
 const restockOrders_dao = new RestockOrders_dao(); //dao class

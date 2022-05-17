@@ -3,7 +3,7 @@ const dayjs = require('dayjs');
 const express = require('express');
 const { body, param, validationResult } = require('express-validator');
 const routerIO = express.Router();
-const InternalOrders_dao = require('./InternalOrders_dao')
+const InternalOrders_dao = require('../dao/InternalOrders_dao')
 
 const internalOrders_dao = new InternalOrders_dao();
 

@@ -2,14 +2,14 @@
 const express = require('express');
 const routerTD = express.Router();
 const { body, param, validationResult } = require('express-validator');
-const TestDescriptor_dao = require('./TestDescriptor_dao');
-
-const testDescriptor_dao = new TestDescriptor_dao();
+const TestDescriptor_service = require('../services/TestDescriptor_service');
+const TestDescriptor_dao = require('../dao/TestDescriptor_dao');
+const td_service = new TestDescriptor_service(new TestDescriptor_dao());
 
 routerTD.get('/testDescriptors', (req, res) => {
-    testDescriptor_dao.getAllTD().then(
-        (rows) => {
-            return res.status(200).json(rows);
+    td_service.getAllTD().then(
+        (list) => {
+            return res.status(200).json(list);
         }
     ).catch(
         (err) => {
@@ -23,15 +23,12 @@ routerTD.get('/testDescriptors/:id', param('id').isInt(), (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(422).send();
     }
-    testDescriptor_dao.getTD(req.params.id).then(
+    td_service.getTD(req.params.id).then(
         (td) => {
-            if (td === undefined) {
-                return res.status(404).end();
-            }
             return res.status(200).json(td);
         }
     ).catch(
-        () => { return res.status(500).end(); }
+        (err) => { return res.status(err).end(); }
     );
 
 })
@@ -46,9 +43,9 @@ routerTD.post('/testDescriptor',
             return res.status(422).end();
         }
 
-        testDescriptor_dao.addTD(req.body).then(
-            () => {
-                return res.status(201).end();
+        td_service.addTD(req.body).then(
+            (ok) => {
+                return res.status(ok).end();
             }
         ).catch(
             (err) => {
@@ -69,7 +66,7 @@ routerTD.put('/testDescriptor/:id',
             return res.status(422).end();
         }
 
-        testDescriptor_dao.updateTD(req.params.id, req.body).then(
+        td_service.modifyTD(req.params.id, req.body).then(
             (code) => {
                 return res.status(code).end();
             }
@@ -86,7 +83,7 @@ routerTD.delete('/testDescriptor/:id', param('id').isInt(), (req, res) => {
         return res.status(422).end();
     }
 
-    testDescriptor_dao.deleteTD(req.params.id).then(
+    td_service.deleteTD(req.params.id).then(
         (ok) => {
             return res.status(ok).end();
         }
