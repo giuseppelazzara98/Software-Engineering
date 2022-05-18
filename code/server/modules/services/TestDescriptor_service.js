@@ -4,49 +4,51 @@ function TestDescriptor_service(dao) {
     const db = dao;
 
     this.getAllTD = () => {
-        return db.getAllTD().then(      //first get all the rows in the db
-            (rows) => {
-                return new Promise((resolve, reject) => {
-                    const list = rows.map(row => {      //mapping each row in a test descriptor
-                        return {
-                            id: row.id,
-                            name: row.name,
-                            procedureDescription: row.procedureDescription,
-                            idSKU: row.idSKU
-                        }
-                    });
-                    resolve(list);      //return the array of test descriptors
-                })
-            }
-        ).catch(
-            (err) => new Promise((resolve, reject) => reject(500))
-        );
+        return db.getAllTD();
+        // return db.getAllTD().then(      //first get all the rows in the db
+        //     (rows) => {
+        //         return new Promise((resolve, reject) => {
+        //             const list = rows.map(row => {      //mapping each row in a test descriptor
+        //                 return {
+        //                     id: row.id,
+        //                     name: row.name,
+        //                     procedureDescription: row.procedureDescription,
+        //                     idSKU: row.idSKU
+        //                 }
+        //             });
+        //             resolve(list);      //return the array of test descriptors
+        //         })
+        //     }
+        // ).catch(
+        //     (err) => new Promise((resolve, reject) => reject(500))
+        // );
     }
 
     this.getTD = (id) => {
         //TODO: validation of id
-        return db.getTD(id).then(       //get the test descriptor
-            (row) => {
-                return new Promise((resolve, reject) => {
-                    if (row === undefined) {    //not found in the database
-                        reject(404);
-                    } else {
-                        resolve(
-                            {
-                                id: row.id,
-                                name: row.name,
-                                procedureDescription: row.procedureDescription,
-                                idSKU: row.idSKU
-                            }
-                        );
-                    }
-                });
-            }
-        ).catch(
-            (err) => {
-                return new Promise((resolve, reject) => reject(500));
-            }
-        );
+        return db.getTD(id);
+        // return db.getTD(id).then(       //get the test descriptor
+        //     (row) => {
+        //         return new Promise((resolve, reject) => {
+        //             if (row === undefined) {    //not found in the database
+        //                 reject(404);
+        //             } else {
+        //                 resolve(
+        //                     {
+        //                         id: row.id,
+        //                         name: row.name,
+        //                         procedureDescription: row.procedureDescription,
+        //                         idSKU: row.idSKU
+        //                     }
+        //                 );
+        //             }
+        //         });
+        //     }
+        // ).catch(
+        //     (err) => {
+        //         return new Promise((resolve, reject) => reject(500));
+        //     }
+        // );
     }
 
     this.addTD = (body) => {

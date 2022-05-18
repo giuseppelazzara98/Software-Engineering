@@ -15,9 +15,18 @@ function TestDescriptor_dao() {
             const query = 'SELECT * FROM testDescriptors';
             tdDB.all(query, (err, rows) => {
                 if (err) {
-                    reject(err);
+                    reject(500);
                 } else {
-                    resolve(rows);
+                    const list = rows.map(row => {      //mapping each row in a test descriptor
+                        return {
+                            id: row.id,
+                            name: row.name,
+                            procedureDescription: row.procedureDescription,
+                            idSKU: row.idSKU
+                        }
+                    });
+                    resolve(list);
+                    // resolve(rows);
                 }
             })
         })
@@ -28,9 +37,14 @@ function TestDescriptor_dao() {
             const query = "SELECT * FROM testDescriptors WHERE id=?";
             tdDB.get(query, [id], (err, row) => {
                 if (err) {
-                    reject(err);
+                    reject(500);
                 } else {
-                    resolve(row);
+                    resolve({
+                        id: row.id,
+                        name: row.name,
+                        procedureDescription: row.procedureDescription,
+                        idSKU: row.idSKU
+                    });
                 }
             })
         })
@@ -74,7 +88,7 @@ function TestDescriptor_dao() {
             })
         })
     }
-    
+
     this.updateSKUTestDescriptors = (id, tests) => {
         return new Promise((resolve, reject) => {
             const update = 'UPDATE SKUs SET testDescriptors=? WHERE id=?';
