@@ -3,23 +3,24 @@ const dayjs = require('dayjs');
 const express = require('express');
 const { body, param, validationResult } = require('express-validator');
 const routerIO = express.Router();
-const InternalOrders_dao = require('../dao/InternalOrders_dao')
+const InternalOrders_dao = require('../dao/InternalOrders_dao');
+const InternalOrder_service = require('../services/InternalOrder_service');
 
-const internalOrders_dao = new InternalOrders_dao();
+const internalOrder_service = new InternalOrder_service(new InternalOrders_dao());
 
 // GET
 routerIO.get('/internalOrders', (req, res) => {
-    internalOrders_dao.getAllIO().then(
+    internalOrder_service.getAllIO().then(
         (list) => {
             return res.status(200).json(list);
         }
     ).catch(
-        () => { return res.status(500).end(); }
+        (err) => { return res.status(err).end(); }
     )
 });
 
 routerIO.get('/internalOrdersIssued', (req, res) => {
-    internalOrders_dao.getAllIOIssued().then(
+    internalOrder_service.getAllIOIssued().then(
         (list) => {
             return res.status(200).json(list);
         }
@@ -29,7 +30,7 @@ routerIO.get('/internalOrdersIssued', (req, res) => {
 });
 
 routerIO.get('/internalOrdersAccepted', (req, res) => {
-    internalOrders_dao.getAllIOAccepted().then(
+    internalOrder_service.getAllIOAccepted().then(
         (list) => {
             return res.status(200).json(list);
         }
@@ -44,7 +45,7 @@ routerIO.get('/internalOrders/:id', param('id').isInt(), (req, res) => {
         return res.status(422).end()
     }
 
-    internalOrders_dao.getIO(req.params.id).then(
+    internalOrder_service.getIO(req.params.id).then(
         (io) => {
             return res.status(200).json(io);
         }
@@ -63,7 +64,7 @@ routerIO.post('/internalOrders',
         if (!errors.isEmpty() || !dayjs(req.body.issueDate).isValid()) {
             return res.status(422).end();
         }
-        internalOrders_dao.addIO(req.body).then(
+        internalOrder_service.addIO(req.body).then(
             () => {
                 // TODO: check issueDate
                 return res.status(201).end();
@@ -85,7 +86,7 @@ routerIO.put('/internalOrders/:id',
             return res.status(422).end();
         }
 
-        internalOrders_dao.updateStateIO(req.params.id, req.body).then(
+        internalOrder_service.updateStateIO(req.params.id, req.body).then(
             () => {
                 return res.status(200).end();
             }
@@ -103,7 +104,7 @@ routerIO.put('/internalOrders/:id',
 routerIO.delete('/internalOrders/:id', param('id').isInt(), (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) return res.status(422).end();
-    internalOrders_dao.deleteIO(req.params.id).then(
+    internalOrder_service.deleteIO(req.params.id).then(
         (ok) => {
             return res.status(ok).end();
         }
