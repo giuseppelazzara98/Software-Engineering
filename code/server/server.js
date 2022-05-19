@@ -18,8 +18,8 @@ const SKU = require("./modules/SKU");
 const SKU_item = require("./modules/SKU_item");
 const item = require("./modules/item");
 const test_result = require("./modules/testResult");
-const returnOrder = require("./modules/ReturnOrder");
-const position = require("./modules/Position");
+const returnOrder = require("./modules/routers/ReturnOrder");
+const position = require("./modules/routers/Position");
 
 app.use("/api", internalOrder);
 app.use("/api", restockOrder);

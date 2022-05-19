@@ -2,7 +2,7 @@
 const express = require("express");
 const routerPO = express.Router();
 var fs = require("fs");
-const Position_dao = require("./dao/Position_dao");
+const Position_dao = require("../dao/Position_dao");
 var {
   Validator,
   ValidationError,
