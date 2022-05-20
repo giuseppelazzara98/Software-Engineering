@@ -2,17 +2,22 @@
 const express = require("express");
 const routerPO = express.Router();
 var fs = require("fs");
-const Position_dao = require("./Position_dao");
+const Position_dao = require("../dao/Position_dao");
 var {
   Validator,
   ValidationError,
 } = require("express-json-validator-middleware");
+const { param, validationResult } = require("express-validator");
 
 var positionSchema = JSON.parse(
   fs.readFileSync("./JSON-Schemas/position_schema.json").toString()
 );
+var newPositionSchema = JSON.parse(
+  fs.readFileSync("./JSON-Schemas/newPosition_schema.json").toString()
+);
+
 var validator = new Validator({ allErrors: true });
-validator.ajv.addSchema([positionSchema]);
+validator.ajv.addSchema([positionSchema, newPositionSchema]);
 var validate = validator.validate;
 
 const dao = new Position_dao();
@@ -48,8 +53,29 @@ routerPO.post("/position", validate({ body: positionSchema }), (req, res) => {
     });
 });
 
+routerPO.put(
+  "/position/:positionID",
+  validate({ body: newPositionSchema }),
+  param("positionID").isNumeric(),
+
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).end();
+    }
+    dao
+      .updatePositionByPosId(req.params.positionID, req.body)
+      .then((code) => {
+        return res.status(code).end();
+      })
+      .catch((err) => {
+        return res.status(err).end();
+      });
+  }
+);
+
 routerPO.use(function (err, req, res, next) {
-  if (err instanceof ValidationError) {
+  if (err instanceof ValidationError || err instanceof validationResult) {
     res.status(422).end();
   } else next(err);
 });
