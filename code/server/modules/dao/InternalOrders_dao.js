@@ -21,7 +21,49 @@ function internalOrders_dao() {
                     resolve(rows);
                 }
             })
-        });
+        }).then(
+            (rows) => {
+                return new Promise(async (resolve, reject) => {
+                    const list = await Promise.all(rows.map(async (row) => {
+                        //each row must retrieve the products
+                        var products = [];
+                        if (row.products) {
+                            const IDs = row.products.split(',').map(e => parseInt(e)); //array of INT of product IDs
+                            //retrieve the array of products
+                            products = await Promise.all(IDs.map(async (id) => {
+                                const product = this.getProduct(id, row.state).then(p => {
+                                    if (row.state !== 'COMPLETED') {
+                                        return {
+                                            SKUId: p.id,
+                                            description: p.description,
+                                            price: p.price,
+                                            qty: p.availableQuantity
+                                        }
+                                    } else {
+                                        return {
+                                            SKUId: p.id,
+                                            description: p.description,
+                                            price: p.price,
+                                            RFID: p.RFID
+                                        }
+                                    }
+                                }).catch(e => undefined);
+                                return product;
+                            }));
+                            return {
+                                "id": row.id,
+                                "issueDate": row.issueDate,
+                                "state": row.state,
+                                "products": products.filter(p => p !== undefined),
+                                "customerID": row.customerID
+                            }
+                        }
+                    }));
+
+                    resolve(list);
+                })
+            }
+        );
     }
 
     this.getProduct = (id, state) => {
@@ -32,6 +74,7 @@ function internalOrders_dao() {
                 if (err) {
                     reject(500);
                 } else {
+                    console.log(row);
                     resolve(row);
                 }
             })
@@ -48,7 +91,40 @@ function internalOrders_dao() {
                     resolve(rows);
                 }
             })
-        });
+        }).then(
+            (rows) => {
+                return new Promise(async (resolve, reject) => {
+                    const list = await Promise.all(rows.map(async (row) => {
+                        //each row must retrieve the products
+                        var products = [];
+                        if (row.products) {
+                            const IDs = row.products.split(',').map(e => parseInt(e)); //array of INT of product IDs
+                            //retrieve the array of products
+                            products = await Promise.all(IDs.map(async (id) => {
+                                const product = this.getProduct(id, row.state).then(p => {
+                                    return {
+                                        SKUId: p.id,
+                                        description: p.description,
+                                        price: p.price,
+                                        qty: p.availableQuantity
+                                    }
+                                }).catch(e => undefined);
+                                return product;
+                            }));
+                            return {
+                                "id": row.id,
+                                "issueDate": row.issueDate,
+                                "state": row.state,
+                                "products": products.filter(p => p !== undefined),
+                                "customerID": row.customerID
+                            }
+                        }
+                    }));
+
+                    resolve(list);
+                })
+            }
+        );
     };
 
     this.getAllIOAccepted = () => {
@@ -61,7 +137,39 @@ function internalOrders_dao() {
                     resolve(rows);
                 }
             })
-        });
+        }).then(
+            (rows) => {
+                return new Promise(async (resolve, reject) => {
+                    const list = await Promise.all(rows.map(async (row) => {
+                        //each row must retrieve the products
+                        var products = [];
+                        if (row.products) {
+                            const IDs = row.products.split(',').map(e => parseInt(e)); //array of INT of product IDs
+                            //retrieve the array of products
+                            products = await Promise.all(IDs.map(async (id) => {
+                                const product = this.getProduct(id, row.state).then(p => {
+                                    return {
+                                        SKUId: p.id,
+                                        description: p.description,
+                                        price: p.price,
+                                        qty: p.availableQuantity
+                                    }
+                                }).catch(e => undefined);
+                                return product;
+                            }));
+                            return {
+                                "id": row.id,
+                                "issueDate": row.issueDate,
+                                "state": row.state,
+                                "products": products.filter(p => p !== undefined),
+                                "customerID": row.customerID
+                            }
+                        }
+                    }));
+                    resolve(list);
+                })
+            }
+        );
     };
 
 
@@ -75,7 +183,55 @@ function internalOrders_dao() {
                     resolve(row);
                 }
             });
-        });
+        }).then(
+            (row) => {
+                return new Promise((resolve, reject) => {
+                    if (row === undefined) {
+                        reject(404);
+                    } else {
+                        const io = new Promise(async (resolve, reject) => {
+                            var products = [];
+                            if (row.products) {
+                                const IDs = row.products.split(',').map(e => parseInt(e)); //array of INT of product IDs
+                                //retrieve the array of products
+                                // console.log(IDs);
+                                products = await Promise.all(IDs.map(async (SKUid) => {
+                                    // console.log(row.state);
+                                    const product = this.getProduct(SKUid, row.state).then(p => {
+                                        if (row.state !== 'COMPLETED') {
+                                            return {
+                                                SKUId: p.id,
+                                                description: p.description,
+                                                price: p.price,
+                                                qty: p.availableQuantity
+                                            }
+                                        } else {
+                                            return {
+                                                SKUId: p.id,
+                                                description: p.description,
+                                                price: p.price,
+                                                RFID: p.RFID
+                                            }
+                                        }
+                                    }).catch(e => undefined);
+                                    return product;
+                                }));
+                                // console.log(products);
+                            }
+                            resolve({
+                                "id": row.id,
+                                "issueDate": row.issueDate,
+                                "state": row.state,
+                                "products": products.filter(p => p !== undefined),
+                                "customerID": row.customerID
+                            })
+                        });
+
+                        resolve(io);
+                    }
+                })
+            }
+        );
     };
 
     this.insertIO = async (date, IDs, customerID) => {
@@ -91,6 +247,19 @@ function internalOrders_dao() {
         })
     };
 
+    this.IOexists = (id) => {
+        return new Promise((resolve, reject) => {
+            const query = 'SELECT * FROM internalOrders WHERE id=?';
+            ioDB.get(query, [id], (err, row) => {
+                if(err){
+                    reject(500);
+                } else {
+                    resolve(row);
+                }
+            })
+        })
+    }
+
     this.updateStateIO = async (id, newState, IDs) => {
         return new Promise((resolve, reject) => {
             if (newState !== 'COMPLETED') {
@@ -105,7 +274,7 @@ function internalOrders_dao() {
             } else {
                 const query = 'UPDATE internalOrders SET state=?, products=? WHERE id=?';
                 ioDB.run(query, [newState, IDs, id], (err) => {
-                    if(err) {
+                    if (err) {
                         reject(503);
                     } else {
                         resolve(200);
