@@ -20,6 +20,7 @@ const item = require("./modules/item");
 const test_result = require("./modules/testResult");
 const returnOrder = require("./modules/routers/ReturnOrder");
 const position = require("./modules/routers/Position");
+const user = require("./modules/routers/User");
 
 app.use("/api", internalOrder);
 app.use("/api", restockOrder);
@@ -30,6 +31,7 @@ app.use("/api", item);
 app.use("/api", test_result);
 app.use("/api", returnOrder);
 app.use("/api", position);
+app.use("/api", user);
 
 // activate the server
 app.listen(port, () => {
