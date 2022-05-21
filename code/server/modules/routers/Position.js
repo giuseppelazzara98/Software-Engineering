@@ -29,7 +29,7 @@ routerPO.get("/positions", (req, res) => {
       return res.status(200).json(positions);
     })
     .catch((err) => {
-      res.status(500).json(err.message);
+      res.status(500).end();
     });
 });
 

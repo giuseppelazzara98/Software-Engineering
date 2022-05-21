@@ -64,7 +64,7 @@ DROP TABLE IF EXISTS testResults;
 CREATE TABLE testResults (id INTEGER PRIMARY KEY AUTOINCREMENT, idTestDescriptor INTEGER, Date TEXT, Result INTEGER);
 
 -- Table: Users
-DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS user;
 CREATE TABLE Users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE, password TEXT, name TEXT, surname TEXT, type TEXT);
 INSERT INTO Users (id, username, password, name, surname, type) VALUES (1, 'f.i.s', 'test', 'farzad', 'ips', 'manager');
 
