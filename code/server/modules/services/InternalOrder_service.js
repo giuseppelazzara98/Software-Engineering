@@ -2,10 +2,10 @@
 const dayjs = require('dayjs');
 
 function InternalOrder_service(dao) {
-    const db = dao;
+    this.dao = dao;
 
     this.getAllIO = () => {
-        return db.getAllIO();
+        return dao.getAllIO();
         // return db.getAllIO().then(
         //     (rows) => {
         //         return new Promise(async (resolve, reject) => {
@@ -56,7 +56,7 @@ function InternalOrder_service(dao) {
     }
 
     this.getAllIOIssued = () => {
-        return db.getAllIOIssued();
+        return dao.getAllIOIssued();
         // return db.getAllIOIssued().then(
         //     (rows) => {
         //         return new Promise(async (resolve, reject) => {
@@ -140,7 +140,7 @@ function InternalOrder_service(dao) {
 
     this.getIO = (id) => {
         // TODO: validation on id
-        return db.getIO(id);
+        return dao.getIO(id);
         // return db.getIO(id).then(
         //     (row) => {
         //         return new Promise((resolve, reject) => {
@@ -195,7 +195,7 @@ function InternalOrder_service(dao) {
         products.forEach(p => IDs.push(p.SKUId));
         IDs = IDs.toString();
         const customerID = body.customerId;
-        return db.insertIO(date, IDs, customerID);
+        return dao.insertIO(date, IDs, customerID);
     }
 
     this.updateStateIO = (id, body) => {
@@ -206,7 +206,7 @@ function InternalOrder_service(dao) {
         const IDs = products.map(e => e.SkuID).toString();
         // console.log(IDs);
         return new Promise(async (resolve, reject) => {
-            const io = await db.IOexists(id);
+            const io = await dao.IOexists(id);
             if( io === undefined){
                 reject(404);
             } else {
@@ -214,10 +214,10 @@ function InternalOrder_service(dao) {
             }
         }).then(
             () => {
-                return db.updateStateIO(id, newState, IDs);
+                return dao.updateStateIO(id, newState, IDs);
             }
         );
-        return db.updateStateIO(id, newState, IDs);
+        // return db.updateStateIO(id, newState, IDs);
         // return db.getIO(id).then(
         //     (row) => {
         //         return new Promise((resolve, reject) => {

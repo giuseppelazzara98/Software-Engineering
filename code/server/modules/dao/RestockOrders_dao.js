@@ -5,7 +5,7 @@ const dayjs = require('dayjs');
 
 function RestockOrders_dao() {
     // Restock Order 
-    const roDB = new sqlite.Database("./modules/database/ezwh.sqlite", (err) => {
+    const db = new sqlite.Database("./modules/database/ezwh.sqlite", (err) => {
         if (err) {
             console.log("Error connecting to DB");
             throw err;
@@ -15,7 +15,7 @@ function RestockOrders_dao() {
     this.getAllRO = () => {
         return new Promise((resolve, reject) => {
             const query = 'SELECT * FROM restockOrders';
-            roDB.all(query, async (err, rows) => {
+            db.all(query, async (err, rows) => {
                 if (err) {
                     reject(500);
                 } else {
@@ -84,7 +84,7 @@ function RestockOrders_dao() {
     this.getProduct = (id) => {
         return new Promise((resolve, reject) => {
             const query = "SELECT * FROM SKUs WHERE id=?";
-            roDB.get(query, [id], (err, row) => {
+            db.get(query, [id], (err, row) => {
                 if (err) {
                     reject(500);
                 } else {
@@ -97,7 +97,7 @@ function RestockOrders_dao() {
     this.getSKUItem = (rfid) => {
         return new Promise((resolve, reject) => {
             const query = "SELECT * FROM SKUItems WHERE RFID=?";
-            roDB.get(query, [rfid], (err, row) => {
+            db.get(query, [rfid], (err, row) => {
                 if (err) {
                     reject(500);
                 } else {
@@ -110,7 +110,7 @@ function RestockOrders_dao() {
     this.getTransportNote = (id) => {
         return new Promise((resolve, reject) => {
             const query = 'SELECT * FROM transportNote WHERE id=?';
-            roDB.get(query, [id], (err, row) => {
+            db.get(query, [id], (err, row) => {
                 if (err) {
                     reject(500);
                 } else {
@@ -123,7 +123,7 @@ function RestockOrders_dao() {
     this.getAllROIssued = () => {
         return new Promise((resolve, reject) => {
             const query = 'SELECT * FROM restockOrders WHERE state="ISSUED"';
-            roDB.all(query, async (err, rows) => {
+            db.all(query, async (err, rows) => {
                 if (err) {
                     reject(500);
                 } else {
@@ -165,7 +165,7 @@ function RestockOrders_dao() {
     this.ROexists = (id) => {
         return new Promise((resolve, reject) => {
             const query = 'SELECT * FROM restockOrders WHERE id=?';
-            roDB.get(query, [id], (err, row) => {
+            db.get(query, [id], (err, row) => {
                 if(err){
                     reject(500);
                 } else {
@@ -178,7 +178,7 @@ function RestockOrders_dao() {
     this.getRO = (id) => {
         return new Promise((resolve, reject) => {
             const query = 'SELECT * FROM restockOrders WHERE id=?';
-            roDB.get(query, [id], (err, row) => {
+            db.get(query, [id], (err, row) => {
                 if (err) {
                     reject(500);
                 } else {
@@ -233,7 +233,7 @@ function RestockOrders_dao() {
     this.getROReturnedItems = (id) => {
         return new Promise((resolve, reject) => {
             const query = 'SELECT * FROM restockOrders WHERE id=?';
-            roDB.get(query, [id], async (err, row) => {
+            db.get(query, [id], async (err, row) => {
                 if (err) {
                     reject(503);
                 } else if (row.state !== 'COMPLETEDRETURN') {
@@ -268,7 +268,7 @@ function RestockOrders_dao() {
     this.insertRO = async (date, IDs, supplierId) => {
         return new Promise((resolve, reject) => {
             const query = 'INSERT INTO restockOrders(issueDate, state, products, supplierID) VALUES(?, "ISSUED", ?, ?)';
-            roDB.run(query, [date, IDs, supplierId], (err) => {
+            db.run(query, [date, IDs, supplierId], (err) => {
                 if (err) {
                     // console.log(err);
                     reject(503);
@@ -282,7 +282,7 @@ function RestockOrders_dao() {
     this.updateStateRO = (id, newState) => {
         return new Promise((resolve, reject) => {
             const query = 'UPDATE restockOrders SET state=? WHERE id=?';
-            roDB.run(query, [newState, id], (err) => {
+            db.run(query, [newState, id], (err) => {
                 if (err) {
                     reject(503);
                 } else {
@@ -301,7 +301,7 @@ function RestockOrders_dao() {
     this.addSkuItems = async (id, skuItems) => {
         return new Promise((resolve, reject) => {
             const query = 'UPDATE restockOrders SET skuItems=? WHERE id=?';
-            roDB.run(query, [skuItems, id], (err) => {
+            db.run(query, [skuItems, id], (err) => {
                 if (err) {
                     reject(503);
                 } else {
@@ -314,7 +314,7 @@ function RestockOrders_dao() {
     this.insertTransportNote = async (date) => {
         return new Promise((resolve, reject) => {
             const query = 'INSERT INTO transportNote (deliveryDate) VALUES(?)';
-            roDB.run(query, [date], (err) => {
+            db.run(query, [date], (err) => {
                 if (err) {
                     reject(503);
                 } else {
@@ -331,7 +331,7 @@ function RestockOrders_dao() {
     this.getTransportNoteID = () => {
         return new Promise((resolve, reject) => {
             const query = 'SELECT MAX(id) AS max FROM transportNote';
-            roDB.get(query, (err, row) => {
+            db.get(query, (err, row) => {
                 if (err) {
                     reject(503);
                 } else {
@@ -343,7 +343,7 @@ function RestockOrders_dao() {
     this.updateSKUNote = (id, noteID) => {
         return new Promise((resolve, reject) => {
             const query = 'UPDATE restockOrders SET transportNoteID=? WHERE id=?';
-            roDB.run(query, [noteID, id], (err) => {
+            db.run(query, [noteID, id], (err) => {
                 if (err) {
                     reject(503);
                 } else {
@@ -356,7 +356,7 @@ function RestockOrders_dao() {
     this.deleteRO = (id) => {
         return new Promise((resolve, reject) => {
             const query = 'DELETE FROM restockOrders WHERE id=?';
-            roDB.run(query, [id], (err) => {
+            db.run(query, [id], (err) => {
                 if (err) {
                     reject(503);
                 } else {

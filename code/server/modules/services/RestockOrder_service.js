@@ -2,10 +2,10 @@
 const dayjs = require('dayjs');
 
 function RestockOrders_service(dao) {
-    const db = dao;
+    this.dao = dao;
 
     this.getAllRO = () => {
-        return db.getAllRO();
+        return dao.getAllRO();
         // return db.getAllRO().then(
         //     (rows) => {
         //         return new Promise(async (resolve, reject) => {
@@ -78,7 +78,7 @@ function RestockOrders_service(dao) {
     }
 
     this.getAllROIssued = () => {
-        return db.getAllROIssued();
+        return dao.getAllROIssued();
         // return db.getAllROIssued().then(
         //     (rows) => {
         //         return new Promise(async (resolve, reject) => {
@@ -125,7 +125,7 @@ function RestockOrders_service(dao) {
 
     this.getRO = (id) => {
         //TODO: id validation
-        return db.getRO(id);
+        return dao.getRO(id);
         // return db.getRO(id).then(
         //     (row) => {
         //         return new Promise((resolve, reject) => {
@@ -187,7 +187,7 @@ function RestockOrders_service(dao) {
     this.getROReturnedItems = (id) => {
         //TODO: id validation
         return new Promise(async (resolve, reject) => {
-            const ro = await db.ROexists(id);
+            const ro = await dao.ROexists(id);
             if (ro === undefined) {
                 reject(404);
             } else {
@@ -195,7 +195,7 @@ function RestockOrders_service(dao) {
             }
         }).then(
             () => {
-                return db.getROReturnedItems(id);
+                return dao.getROReturnedItems(id);
             }
         )
         // return db.getROReturnedItems(id);
@@ -241,14 +241,14 @@ function RestockOrders_service(dao) {
         products.forEach(p => IDs.push(p.SKUId));
         IDs = IDs.toString();
 
-        return db.insertRO(date, IDs, supplierId);
+        return dao.insertRO(date, IDs, supplierId);
     }
 
     this.updateStateRO = (id, body) => {
         // TODO: id and body validation
         const newState = body.newState;
         return new Promise(async (resolve, reject) => {
-            const ro = await db.ROexists(id);
+            const ro = await dao.ROexists(id);
             if (ro === undefined) {
                 reject(404);
             } else {
@@ -256,10 +256,10 @@ function RestockOrders_service(dao) {
             }
         }).then(
             () => {
-                return db.updateStateRO(id, newState)
+                return dao.updateStateRO(id, newState)
             }
         )
-        return db.updateStateRO(id, newState);
+        // return db.updateStateRO(id, newState);
         // return db.getRO(id).then(
         //     (row) => {
         //         return new Promise((resolve, reject) => {
@@ -292,7 +292,7 @@ function RestockOrders_service(dao) {
         RFIDs = RFIDs.slice(0, RFIDs.length - 1);
 
         return new Promise(async (resolve, reject) => {
-            const ro = await db.ROexists(id);
+            const ro = await dao.ROexists(id);
             if (ro === undefined) {
                 reject(404);
             } else if(ro.state !== 'DELIVERED'){
@@ -302,7 +302,7 @@ function RestockOrders_service(dao) {
             }
         }).then(
             () => {
-                return db.updateStateRO(id, newState)
+                return dao.updateStateRO(id, newState)
             }
         )
         // return db.getRO(id).then(
@@ -335,7 +335,7 @@ function RestockOrders_service(dao) {
         const date = dayjs(body.transportNote.deliveryDate).format("YYYY-MM-DD").toString();
 
         return new Promise(async (resolve, reject) => {
-            const ro = await db.ROexists(id);
+            const ro = await dao.ROexists(id);
             if (ro === undefined) {
                 reject(404);
             } else if(ro.state !== 'DELIVERY' || dayjs(date).isBefore(dayjs(ro.issueDate))){
@@ -345,11 +345,11 @@ function RestockOrders_service(dao) {
             }
         }).then(
             () => {
-                return db.insertTransportNote(date);
+                return dao.insertTransportNote(date);
             }
         ).then(
             (row) => {
-                return db.updateSKUNote(id, row.max);
+                return dao.updateSKUNote(id, row.max);
             }
         )
 

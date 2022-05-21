@@ -1,10 +1,10 @@
 'use strict';
 
 function TestDescriptor_service(dao) {
-    const db = dao;
+    this.dao = dao;
 
     this.getAllTD = () => {
-        return db.getAllTD();
+        return dao.getAllTD();
         // return db.getAllTD().then(      //first get all the rows in the db
         //     (rows) => {
         //         return new Promise((resolve, reject) => {
@@ -26,7 +26,7 @@ function TestDescriptor_service(dao) {
 
     this.getTD = (id) => {
         //TODO: validation of id
-        return db.getTD(id);
+        return dao.getTD(id);
         // return db.getTD(id).then(       //get the test descriptor
         //     (row) => {
         //         return new Promise((resolve, reject) => {
