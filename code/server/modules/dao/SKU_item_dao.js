@@ -27,10 +27,11 @@ function SKU_item_dao() {
         });
     }
 
-    this.postSkuItem=(data)=> {
+    this.postSkuItem=(data)=>{
         return new Promise((resolve, reject) => {
-            const sql = 'INSERT INTO SKUItems(RFID,SKUId,Available,DateOfStock) VALUES(?, ?, ?, ?)';
-            SKUDB.run(sql, [data.RFID, data.SKUId,data.Available, dayjs(data.DateOfStock).format("YYYY/MM/DD HH:MM")], (err) => {
+            console.log(data.DateOfStock);
+            const sql = 'INSERT INTO SKUItems(RFID,SKUId,DateOfStock) VALUES(?,?,?)';
+            SKUDB.run(sql, [data.RFID, data.SKUId, data.DateOfStock], (err) => {
                 if (err) {
                   reject(err);
                   return;
@@ -111,6 +112,23 @@ function SKU_item_dao() {
                     }
                 ));
                 resolve(skuitemsRFID);
+            });
+        });
+      }
+      this.checkSKU=(id) =>{
+        return new Promise((resolve, reject) => {
+            const sql = 'SELECT * FROM SKUs WHERE id=? ';
+            SKUDB.all(sql, [id], (err, rows) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                const skuitemsID = rows.map((r) => (
+                    {  
+                       id:r.id
+                    }
+                ));
+                resolve(skuitemsID);
             });
         });
       }

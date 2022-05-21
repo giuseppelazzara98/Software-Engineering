@@ -1,6 +1,5 @@
 'use strict';
 const testResultDao = require('../dao/testResult_dao');
-const { body, param, validationResult } = require('express-validator');
 
 const testResult_dao = new testResultDao();
 class testResult_service{

@@ -59,7 +59,7 @@ function item_dao(){
     
       this.postItem=(data)=>{
         return new Promise((resolve, reject) => {
-            const sql = 'INSERT INTO items(id,description,price,SKUId,supplierId) VALUES(?, ?, ?, ?, ?)';//WRITE SQL COMMAND
+            const sql = 'INSERT INTO items(id,description,price,SKUId,supplierId) VALUES(?, ?, ?, ?, ?)';
             itemDB.run(sql, [data.id, data.description, data.price,data.SKUId, data.supplierId], (err) => {
                 if (err) {
                   reject(err);
@@ -118,7 +118,7 @@ function item_dao(){
     
     this.putItem=(data,id)=>{
         return new Promise((resolve, reject) => {
-        const sql = 'UPDATE items SET ,description=?,price=? WHERE id=?';
+        const sql = 'UPDATE items SET description=?,price=? WHERE id=?';
         itemDB.run(sql, [ data.newDescription,data.newPrice, id], (err) => {
             if (err) {
               reject(err);
