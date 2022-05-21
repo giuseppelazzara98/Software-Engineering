@@ -7,7 +7,7 @@ var {
   Validator,
   ValidationError,
 } = require("express-json-validator-middleware");
-const { param, validationResult } = require("express-validator");
+const { param, body, validationResult } = require("express-validator");
 
 var positionSchema = JSON.parse(
   fs.readFileSync("./JSON-Schemas/position_schema.json").toString()
@@ -42,7 +42,7 @@ routerPO.post("/position", validate({ body: positionSchema }), (req, res) => {
       req.body.col
     )
   )
-    res.status(422).end();
+    return res.status(422).end();
   dao
     .createNewPosition(req.body)
     .then((code) => {
@@ -57,6 +57,7 @@ routerPO.put(
   "/position/:positionID",
   validate({ body: newPositionSchema }),
   param("positionID").isNumeric(),
+  param("positionID").isLength({ min: 12, max: 12 }),
 
   (req, res) => {
     const errors = validationResult(req);
@@ -65,6 +66,49 @@ routerPO.put(
     }
     dao
       .updatePositionByPosId(req.params.positionID, req.body)
+      .then((code) => {
+        return res.status(code).end();
+      })
+      .catch((err) => {
+        return res.status(err).end();
+      });
+  }
+);
+
+routerPO.put(
+  "/position/:positionID/changeID",
+  body("newPositionID").isNumeric(),
+  body("newPositionID").isLength({ min: 12, max: 12 }),
+  param("positionID").isLength({ min: 12, max: 12 }),
+  param("positionID").isNumeric(),
+
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).end();
+    }
+    dao
+      .updatePositionId(req.params.positionID, req.body.newPositionID)
+      .then((code) => {
+        return res.status(code).end();
+      })
+      .catch((err) => {
+        return res.status(err).end();
+      });
+  }
+);
+
+routerPO.delete(
+  "/position/:positionID",
+  param("positionID").isNumeric(),
+  param("positionID").isLength({ min: 12, max: 12 }),
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).end();
+    }
+    dao
+      .deletePositionByPosid(req.params.positionID)
       .then((code) => {
         return res.status(code).end();
       })

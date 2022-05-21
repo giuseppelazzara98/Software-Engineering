@@ -146,6 +146,46 @@ function Position_dao() {
       });
     });
   };
+  this.updatePositionId = (oldPosid, newPosid) => {
+    return new Promise((resolve, reject) => {
+      const sql1 = "SELECT * from position p where p.positionID = ?";
+      poDB.all(sql1, [oldPosid], (err, rows) => {
+        if (err) reject(503);
+        else if (rows.length == 0) {
+          reject(404);
+        } else {
+          var sql2 =
+            "UPDATE position SET aisleID = ?, row = ?, col = ?, positionID = ? WHERE positionID = ?";
+          poDB.run(
+            sql2,
+            [
+              newPosid.substr(0, 4),
+              newPosid.substr(4, 4),
+              newPosid.substr(8, 4),
+              newPosid,
+              oldPosid,
+            ],
+            function (err) {
+              if (err) reject(err);
+              else resolve(200);
+            }
+          );
+        }
+      });
+    });
+  };
+  this.deletePositionByPosid = (posId) => {
+    const sql = "DELETE FROM position WHERE positionID = ?";
+    return new Promise((resolve, reject) => {
+      poDB.run(sql, [posId], (err) => {
+        if (err) {
+          reject(503);
+        } else {
+          resolve(204);
+        }
+      });
+    });
+  };
 }
 
 module.exports = Position_dao;
