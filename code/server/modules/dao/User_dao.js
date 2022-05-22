@@ -88,17 +88,26 @@ function User_dao() {
     const sql =
       "INSERT INTO user(username, password, name, surname, type) VALUES(?, ?, ?, ?, ?)";
     return new Promise((resolve, reject) => {
-      userDB.run(
-        sql,
-        [newUser.username, hash, newUser.name, newUser.surname, newUser.type],
-        (err) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(201);
-          }
+      // const sql1 = "SELECT username,type,COUNT(*) FROM user GROUP BY username, type HAVING COUNT(*) = 0"
+      const sql1 = "SELECT id FROM user WHERE username = ? AND type = ?"
+      userDB.get(sql1, [newUser.username,newUser.type], (err, row) => {
+        if (err) reject(503);
+        else if (!(row === undefined || row.length == 0)) reject(409);
+        else {
+          userDB.run(
+            sql,
+            [newUser.username, hash, newUser.name, newUser.surname, newUser.type],
+            (err) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(201);
+              }
+            }
+          );
         }
-      );
+      })
+
     });
   };
 }

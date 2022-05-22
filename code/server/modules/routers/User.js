@@ -28,9 +28,9 @@ const isLoggedIn = (req, res, next) => {
   return res.status(401).end();
 };
 
-routerUser.get("/userinfo", (req, res) => {});
+routerUser.get("/userinfo", (req, res) => {});  
 
-routerUser.get("/suppliers", isLoggedIn, (req, res) => {
+routerUser.get("/suppliers", /*isLoggedIn,*/ (req, res) => {
   // todo: check is req.user.type == "manager"
   dao
     .getAllSuppliers()
@@ -57,13 +57,17 @@ routerUser.post(
         return res.status(code).end();
       })
       .catch((err) => {
-        return res.status(err).json(err);
+        return res.status(err).end();
       });
   }
 );
 
 // login
-routerUser.post("/customerSessions", function (req, res, next) {
+routerUser.post("/customerSessions", body("username").isEmail() , function (req, res, next) {
+  const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(500).end();
+    }
   passport.authenticate("local", (err, user, info) => {
     if (err) return next(err);
     if (!user) {
@@ -81,7 +85,7 @@ routerUser.post("/customerSessions", function (req, res, next) {
 });
 
 // logout
-routerUser.post("/logout", isLoggedIn, (req, res) => {
+routerUser.post("/logout", /*isLoggedIn,*/ (req, res) => {
   req.logout();
   res.status(200).end();
 });
