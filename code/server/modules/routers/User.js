@@ -31,7 +31,7 @@ const isLoggedIn = (req, res, next) => {
 routerUser.get("/userinfo", (req, res) => {});
 
 routerUser.get("/suppliers", isLoggedIn, (req, res) => {
-  // todo: check is req.user.role == "manager"
+  // todo: check is req.user.type == "manager"
   dao
     .getAllSuppliers()
     .then((suppliers) => {
