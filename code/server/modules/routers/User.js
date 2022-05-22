@@ -3,6 +3,7 @@ const express = require("express");
 const routerUser = express.Router();
 
 const User_dao = require("../dao/User_dao");
+const passport = require("../passport");
 
 var fs = require("fs");
 var {
@@ -63,6 +64,24 @@ routerUser.post(
       });
   }
 );
+
+// login
+routerUser.post("/customerSessions", function (req, res, next) {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) {
+      // display wrong login messages
+      return res.status(401).end();
+    }
+    // success, perform the login
+    req.login(user, (err) => {
+      if (err) return next(err);
+      // req.user contains the authenticated user, we send all the user info back
+      // this is coming from userDao.getUser()
+      return res.json(req.user);
+    });
+  })(req, res, next);
+});
 
 // logout
 routerUser.post("/logout", isLoggedIn, (req, res) => {
