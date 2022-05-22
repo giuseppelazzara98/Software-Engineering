@@ -57,9 +57,9 @@ function Position_dao() {
         ],
         (err) => {
           if (err) {
-            resolve(503);
+            reject(503);
           } else {
-            reject(201);
+            resolve(201);
           }
         }
       );
@@ -69,6 +69,7 @@ function Position_dao() {
     if (aisleID.concat(row).concat(col) != positionId) return false;
     return true;
   };
+
   this.buildPositionID = (aisleID, row, col) => {
     return aisleID.concat(row).concat(col);
   };

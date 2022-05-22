@@ -4,9 +4,28 @@ const routerUser = express.Router();
 
 const User_dao = require("../dao/User_dao");
 
+var fs = require("fs");
+var {
+  Validator,
+  ValidationError,
+} = require("express-json-validator-middleware");
 const { param, body, validationResult } = require("express-validator");
 
+var userSchema = JSON.parse(
+  fs.readFileSync("./JSON-Schemas/user_schema.json").toString()
+);
+var validator = new Validator({ allErrors: true });
+validator.ajv.addSchema([userSchema]);
+var validate = validator.validate;
+
 const dao = new User_dao();
+
+// custom middleware: check if a given request is coming from an authenticated user
+const isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) return next();
+
+  return res.status(401).json({ error: "not authenticated" });
+};
 
 routerUser.get("/userinfo", (req, res) => {});
 
@@ -24,5 +43,37 @@ routerUser.get(
       });
   }
 );
+
+routerUser.post(
+  "/newUser",
+  validate({ body: userSchema }),
+  body("username").isEmail(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).end();
+    }
+    dao
+      .addNewUser(req.body)
+      .then((code) => {
+        return res.status(code).end();
+      })
+      .catch((err) => {
+        return res.status(err).json(err);
+      });
+  }
+);
+
+// logout
+routerUser.post("/logout", isLoggedIn, (req, res) => {
+  req.logout();
+  res.status(200).end();
+});
+
+routerUser.use(function (err, req, res, next) {
+  if (err instanceof ValidationError) {
+    res.status(422).end();
+  } else next(err);
+});
 
 module.exports = routerUser;
