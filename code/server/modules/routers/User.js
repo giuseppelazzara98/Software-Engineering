@@ -25,25 +25,22 @@ const dao = new User_dao();
 const isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) return next();
 
-  return res.status(401).json({ error: "not authenticated" });
+  return res.status(401).end();
 };
 
 routerUser.get("/userinfo", (req, res) => {});
 
-routerUser.get(
-  "/suppliers",
-  /* isLoggedIn , */ (req, res) => {
-    // todo: check is req.user.role == "manager"
-    dao
-      .getAllSuppliers()
-      .then((suppliers) => {
-        res.status(200).json(suppliers);
-      })
-      .catch((err) => {
-        res.status(err).json(err.message);
-      });
-  }
-);
+routerUser.get("/suppliers", isLoggedIn, (req, res) => {
+  // todo: check is req.user.role == "manager"
+  dao
+    .getAllSuppliers()
+    .then((suppliers) => {
+      res.status(200).json(suppliers);
+    })
+    .catch((err) => {
+      res.status(err).json(err.message);
+    });
+});
 
 routerUser.post(
   "/newUser",
