@@ -28,7 +28,7 @@ app.use(passport.session());
 const internalOrder = require("./modules/routers/InternalOrder");
 const restockOrder = require("./modules/routers/RestockOrder");
 const testDescriptors = require("./modules/routers/TestDescriptor");
-const SKU = require("./modules/SKU");
+const SKU = require("./modules/routers/SKU");
 const SKU_item = require("./modules/routers/SKU_item");
 const item = require("./modules/routers/item");
 const test_result = require("./modules/routers/testResult");
