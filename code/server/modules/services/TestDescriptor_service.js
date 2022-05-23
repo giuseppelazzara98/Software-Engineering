@@ -26,7 +26,16 @@ function TestDescriptor_service(dao) {
 
     this.getTD = (id) => {
         //TODO: validation of id
-        return dao.getTD(id);
+        return dao.getTD(id).then((row) => {
+            return new Promise((resolve, reject) => {
+                if (row === undefined) {
+                    reject(404);
+                } else {
+                    resolve(row);
+                }
+
+            })
+        });
         // return db.getTD(id).then(       //get the test descriptor
         //     (row) => {
         //         return new Promise((resolve, reject) => {
@@ -61,8 +70,9 @@ function TestDescriptor_service(dao) {
             (row) => {
                 if (row === undefined) {
                     return new Promise((resolve, reject) => reject(404));
+                } else {
+                    return dao.insertTD(name, procedure, idSKU);
                 }
-                return dao.insertTD(name, procedure, idSKU);
             }
         ).catch(
             (err) => {
@@ -75,29 +85,38 @@ function TestDescriptor_service(dao) {
         const newName = body.newName;
         const newProcedure = body.newProcedureDescription;
         const newIdSKU = body.newIdSKU;
-        // TODO: validation on these fields
 
-        return dao.getTD(id).then(  //check if the test descriptor exists
-            (td) => {
-                if (td === undefined) {
-                    return new Promise((resolve, reject) => reject(404));
+
+        if (newIdSKU == undefined) {
+            return Promise.reject(422);
+        } else {
+            return dao.getTD(id).then(  //check if the test descriptor exists
+                (td) => {
+                    if (td === undefined) {
+                        return new Promise((resolve, reject) => reject(404));
+                    } else {
+                        //the td exists
+                        return dao.getSKU(newIdSKU); // check if the new SKUId exists
+                    }
+
                 }
-                //the td exists
-                return dao.getSKU(newIdSKU); // check if the new SKUId exists
-            }
-        ).then(
-            (row) => {
-                if (row === undefined) {
-                    return new Promise((resolve, reject) => reject(404));
+            ).then(
+                (row) => {
+                    if (row === undefined) {
+                        return new Promise((resolve, reject) => reject(404));
+                    } else {
+                        //the newSKUId exists
+                        return dao.updateTD(id, newName, newProcedure, newIdSKU)
+                    }
+
                 }
-                //the newSKUId exists
-                return dao.updateTD(id, newName, newProcedure, newIdSKU)
-            }
-        ).catch(
-            (err) => {
-                return new Promise((resolve, reject) => reject(err));
-            }
-        );
+            ).catch(
+                (err) => {
+                    return new Promise((resolve, reject) => reject(err));
+                }
+            );
+        }
+
     }
 
     this.deleteTD = (id) => {
@@ -106,17 +125,19 @@ function TestDescriptor_service(dao) {
             (row) => {
                 if (row === undefined) {
                     return new Promise((resolve, reject) => reject(404));
+                } else {
+                    //update SKU table: delete test descriptor from the field
+                    return dao.getSKU(row.idSKU);
                 }
-                //update SKU table: delete test descriptor from the field
-                return dao.getSKU(row.idSKU);
             }
         ).then(
             (row) => {
-                if(row === undefined){  //sku does not exist
+                if (row === undefined) {  //sku does not exist
                     return new Promise((resolve, reject) => reject(404));
+                } else {
+                    const IDs = row.testDescriptors.split(',').map(e => parseInt(e)).filter(e => e != id).toString();
+                    return dao.updateSKUTestDescriptors(row.id, IDs);
                 }
-                const IDs = row.testDescriptors.split(',').map(e => parseInt(e)).filter(e => e != id).toString();
-                return dao.updateSKUTestDescriptors(row.id, IDs);
             }
         ).then(
             () => {

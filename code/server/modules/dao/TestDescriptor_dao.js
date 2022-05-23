@@ -4,7 +4,7 @@ const sqlite = require('sqlite3');
 function TestDescriptor_dao() {
     const db = new sqlite.Database("./modules/database/ezwh.sqlite", (err) => {
         if (err) {
-            console.log("Error connecting to DB");
+            // console.log("Error connecting to DB");
             throw err;
         }
 
@@ -39,12 +39,17 @@ function TestDescriptor_dao() {
                 if (err) {
                     reject(500);
                 } else {
-                    resolve({
-                        id: row.id,
-                        name: row.name,
-                        procedureDescription: row.procedureDescription,
-                        idSKU: row.idSKU
-                    });
+                    if (row === undefined) {
+                        resolve(undefined);
+                    } else {
+                        resolve({
+                            id: row.id,
+                            name: row.name,
+                            procedureDescription: row.procedureDescription,
+                            idSKU: row.idSKU
+                        });
+                    }
+
                 }
             })
         })
@@ -55,6 +60,7 @@ function TestDescriptor_dao() {
             const query_add = 'INSERT into testDescriptors(name, procedureDescription, idSKU) VALUES(?, ?, ?)';
             db.run(query_add, [name, procedure, idSKU], (err) => {
                 if (err) {
+                    console.log(err);
                     reject(503);
                 } else {
                     resolve(201);
@@ -68,7 +74,7 @@ function TestDescriptor_dao() {
             const query_SKU = 'SELECT * FROM SKUs WHERE id=?';
             db.get(query_SKU, [idSKU], (err, row) => {
                 if (err) {
-                    reject(err);
+                    reject(500);
                 } else {
                     resolve(row);
                 }
@@ -95,8 +101,10 @@ function TestDescriptor_dao() {
             db.run(update, [tests, id], (err) => {
                 if (err) {
                     reject(503)
+                } else {
+                    resolve(204)
                 }
-                resolve(204)
+
             })
         })
     }

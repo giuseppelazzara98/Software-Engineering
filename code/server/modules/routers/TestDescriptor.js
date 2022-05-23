@@ -6,6 +6,7 @@ const TestDescriptor_service = require('../services/TestDescriptor_service');
 const TestDescriptor_dao = require('../dao/TestDescriptor_dao');
 const td_service = new TestDescriptor_service(new TestDescriptor_dao());
 
+//ok
 routerTD.get('/testDescriptors', (req, res) => {
     td_service.getAllTD().then(
         (list) => {
@@ -18,6 +19,7 @@ routerTD.get('/testDescriptors', (req, res) => {
     );
 })
 
+//ok
 routerTD.get('/testDescriptors/:id', param('id').isInt(), (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -33,6 +35,7 @@ routerTD.get('/testDescriptors/:id', param('id').isInt(), (req, res) => {
 
 })
 
+//ok
 routerTD.post('/testDescriptor',
     body('name').isString(),
     body('procedureDescription').isString(),
@@ -54,12 +57,12 @@ routerTD.post('/testDescriptor',
         );
     }
 )
-
+//ok
 routerTD.put('/testDescriptor/:id',
     param('id').isInt(),
     body('newName').isString(),
     body('newProcedureDescription').isString(),
-    body('newIdSKU').isInt(),
+    body('newIdSKU').isLength({min: 1}).isInt(),
     (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -77,7 +80,7 @@ routerTD.put('/testDescriptor/:id',
         )
     })
 
-routerTD.delete('/testDescriptor/:id', param('id').isInt(), (req, res) => {
+routerTD.delete('/testDescriptor/:id', param('id').isLength({min: 1}).isInt(), (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(422).end();
