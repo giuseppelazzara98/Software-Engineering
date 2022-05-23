@@ -80,7 +80,6 @@ function User_dao() {
     });
   };
   this.addNewUser = async (newUser) => {
-    // tod0 : check 409 Conflict (user with same mail and type already exists),
     // generate salt to hash password
     const salt = await bcrypt.genSalt(10);
     // now we set user password to hashed password
@@ -110,6 +109,60 @@ function User_dao() {
 
     });
   };
+  this.updateUserByUsername = (username,type) => {
+
+  return new Promise((resolve, reject) => {
+    const sql1 = "SELECT id FROM user WHERE type=? AND username=? ";
+    userDB.all(sql1, [type.oldType,username], (err, rows) => {
+      if (err) reject(503);
+      else if (rows === undefined || rows.length == 0) reject(404);
+      else {
+        const sql =
+        "UPDATE user SET type=? where id=? and type=?"
+        userDB.run(
+          sql,
+          [type.newType, rows[0].id, type.oldType],
+          (err) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(200);
+            }
+          }
+        );
+      }
+    })
+
+  });
+  };
+
+  this.deleteUserByUsernameAndType = (username,type) => {
+    return new Promise((resolve, reject) => {
+      const sql1 = "SELECT * FROM user WHERE type=? AND username=? ";
+      userDB.all(sql1, [type,username], (err, rows) => {
+        if (err) reject(503);
+        else if (rows === undefined || rows.length == 0) reject(404);
+        else {
+          const sql =
+          "DELETE FROM USER where username=? and type=?"
+          console.log(rows[0].type)
+          userDB.run(
+            sql,
+            [rows[0].username,rows[0].type],
+            (err) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(200);
+              }
+            }
+          );
+        }
+      })
+  
+    });
+  };
+
 }
 
 module.exports = User_dao;
