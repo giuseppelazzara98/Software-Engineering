@@ -8,7 +8,7 @@ function Position_dao() {
       console.log("Error connecting to DB");
       throw err;
     }
-    console.log("PO: Connected to DB");
+    //  console.log("PO: Connected to DB");
   });
 
   this.getAllPositions = () => {
