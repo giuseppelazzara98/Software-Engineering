@@ -22,6 +22,9 @@
   },
   "scripts": {
     "apiTest": "./node_modules/.bin/mocha test --exit",
-    "test": "node_modules/.bin/jest"
+    "test": "jest"
+  },
+  "directories": {
+    "test": "__test__"
   }
 }
