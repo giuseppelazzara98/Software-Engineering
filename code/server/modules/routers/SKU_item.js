@@ -128,14 +128,14 @@ routerSKU_item.get("/skuitems", async (req, res) => {
   param("rfid").isString(),
   param("rfid").isLength({min:32}),
   param("rfid").isLength({max:32}),
-  (req, res) => {
+  async (req, res) => {
     try {
       const errors=validationResult(req);
       if(!errors.isEmpty()){
         return res.status(422).send("422 Unprocessable Entity");
       }
       const rfid = req.params.rfid;
-      SKU_item_service.deleteSKUItem(rfid);
+      await SKU_item_service.deleteSKUItem(rfid);
       return res.status(204).send("204 success");
     } catch (err) {
       return res.status(err).end();

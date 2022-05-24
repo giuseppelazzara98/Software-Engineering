@@ -114,7 +114,7 @@ routertestResult.put("/skuitems/:rfid/testResult/:id",
         return res.status(422).send("422 Unprocessable Entity(validation of request body or of rfid failed)");
       }
       
-      testResult_service.putTestResult(testResult, rfid, id);
+      await testResult_service.putTestResult(testResult, rfid, id);
       return res.status(201).send("200 OK");
     }
     catch (err) {
@@ -126,7 +126,7 @@ routertestResult.delete("/skuitems/:rfid/testResult/:id",
   param('rfid').isString(),
   param('rfid').isLength({ min: 32 }),
   param('rfid').isLength({ max: 32 }),
-  param('id').isInt(), (req, res) => {
+  param('id').isInt(),async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).send("422 Unprocessable Entity(validation of rfid or id failed)")
@@ -134,7 +134,7 @@ routertestResult.delete("/skuitems/:rfid/testResult/:id",
     try {
       const rfid = req.params.rfid;
       const id = req.params.id;
-      testResult_service.deleteTestResult(rfid, id);
+      await testResult_service.deleteTestResult(rfid, id);
       return res.status(204).end();
     } catch (err) {
       return res.status(err).end();

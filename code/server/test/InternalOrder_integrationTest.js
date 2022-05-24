@@ -243,7 +243,6 @@ describe('POST and DELETE Internal Orders', () => {
     testPOSTio(201, '2010/12/12', products, 1);
     testDELETEio(6, 204);
     testPOSTio(422, 'a', products, 1);
-    // testDELETEio(6, 204);
     testPOSTio(422, '2010/12/12', '', 1);
     testPOSTio(422, '2010/12/12', [], 1);
 

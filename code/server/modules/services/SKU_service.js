@@ -23,7 +23,7 @@ class SKU_service{
       return skus;
         }
     catch(err){
-      res.status(err).end();
+      return err;
     }
 
   }

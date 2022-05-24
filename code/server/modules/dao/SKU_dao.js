@@ -18,7 +18,7 @@ function SKU_dao() {
             const sql = 'SELECT * FROM SKUs';
             SKUDB.all(sql, [], (err, rows) => {
                 if (err) {
-                    reject(err);
+                    reject(new Promise( (resolve,reject)=> reject(500)));
                     return;
                 }
                 const sku = rows.map((r) => (
@@ -45,7 +45,7 @@ function SKU_dao() {
             const sql = 'SELECT * FROM SKUs WHERE id=?';
             SKUDB.all(sql, [id], (err, rows) => {
                 if (err) {
-                    reject(err);
+                    reject(new Promise( (resolve,reject)=> reject(500)));
                     return;
                 }
                 const sku = rows.map((r) => (
@@ -71,7 +71,7 @@ function SKU_dao() {
             const sql = 'INSERT INTO SKUs(id,description,weight,volume,notes,position,price,availableQuantity,testDescriptors) VALUES(?,?, ?, ?, ?, ?, ?,?,?)';
             SKUDB.run(sql, [data.id,data.description, data.weight, data.volume,data.notes,0,data.price,data.availableQuantity,''], (err) => {
                 if (err) {
-                  reject(err);
+                  reject(new Promise( (resolve,reject)=> reject(503)));
                   return;
                 }
                 resolve(true);
@@ -84,7 +84,7 @@ function SKU_dao() {
             const sql = 'SELECT maxWeight,maxVolume,occupiedWeight,occupiedVolume,positionID FROM POSITION P,SKUs S WHERE P.positionID=S.position AND S.id=?';
             SKUDB.get(sql, [id], (err, rows) => {
                 if (err) {
-                    reject(err);
+                    reject(new Promise( (resolve,reject)=> reject(503)));
                     return;
                 }
                 const info = 
@@ -105,7 +105,7 @@ function SKU_dao() {
             const sql = 'SELECT * FROM position WHERE positionID=?';
             SKUDB.all(sql, [positionID], (err, rows) => {
                 if (err) {
-                    reject(err);
+                    reject(new Promise( (resolve,reject)=> reject(503)));
                     return;
                 }
                 const sku = rows.map((r) => (
@@ -125,7 +125,7 @@ function SKU_dao() {
             const sql = 'UPDATE SKUs SET description=?,weight=?,volume=?,notes=?,price=?,availableQuantity=? WHERE id=?';
             SKUDB.run(sql, [data.newDescription, data.newWeight, data.newVolume,data.newNotes,data.newPrice,data.newAvailableQuantity,id], (err) => {
                 if (err) {
-                  reject(err);
+                  reject(new Promise( (resolve,reject)=> reject(503)));
                   return;
                 }
                 resolve(this.lastID);
@@ -137,7 +137,7 @@ function SKU_dao() {
             const sql = 'UPDATE position SET occupiedWeight=?,occupiedVolume=? WHERE positionID=?';
             SKUDB.run(sql, [weight,volume,id], (err) => {
                 if (err) {
-                  reject(err);
+                  reject(new Promise( (resolve,reject)=> reject(503)));
                   return;
                 }
                 resolve(this.lastID);
@@ -150,7 +150,7 @@ function SKU_dao() {
             const sql = 'UPDATE SKUs SET position=? WHERE id=?';
             SKUDB.run(sql, [position,id], (err) => {
                 if (err) {
-                  reject(err);
+                  reject(new Promise( (resolve,reject)=> reject(503)));
                   return;
                 }
                 resolve(this.lastID);
@@ -165,7 +165,7 @@ function SKU_dao() {
             const sql = 'DELETE FROM SKUs WHERE ID=?';
             SKUDB.run(sql, [id], (err) => {
                 if (err) {
-                  reject(err);
+                  reject(new Promise( (resolve,reject)=> reject(503)));
                   return;
                 }
                 resolve(true);
