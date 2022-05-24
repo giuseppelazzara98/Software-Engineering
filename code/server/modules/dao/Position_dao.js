@@ -18,7 +18,7 @@ function Position_dao() {
         if (err) {
           reject(err);
         } else {
-          console.log(rows);
+          // console.log(rows);
           const positions = rows.map((position) =>
             this.convertResultSetToDomainModelposition(position)
           );
@@ -187,6 +187,22 @@ function Position_dao() {
       });
     });
   };
+
+
+  this.deleteAll = () => {
+    const sql = "DELETE FROM position";
+    return new Promise((resolve, reject) => {
+      poDB.run(sql,[], (err) => {
+        if (err) {
+          reject(503);
+        } else {
+          resolve(204);
+        }
+      });
+    });
+  };
+
+
 }
 
 module.exports = Position_dao;

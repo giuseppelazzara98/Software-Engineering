@@ -22,7 +22,7 @@ class SKU_item_service{
       return sku_item;
     }
     catch(err){
-      res.status(err).end();
+      return err;
     }
   }
   getSKUItemsRFID=async(rfid)=>{
@@ -54,7 +54,7 @@ class SKU_item_service{
   }
   putSkuItem=async(skuitem,rfid)=>{
     try{
-      const check1= await SKU_item_dao.getSKUItemsRFID(rfid);
+      const check1= await SKU_item_dao.checkSKUItemsRFID(rfid);
       if (check1.length===0){
         return new Promise( (resolve,reject)=> reject(404));
       }

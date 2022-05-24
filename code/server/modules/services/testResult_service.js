@@ -41,7 +41,8 @@ postTestResult = async (testResult) =>{
       if (check2.length === 0) {
         return new Promise( (resolve,reject)=> reject(404));
       }
-      testResult_dao.postTestResult(testResult);
+      console.log(testResult);
+      await testResult_dao.postTestResult(testResult);
       return new Promise( (resolve,reject)=> resolve(201));
   }
 
@@ -64,7 +65,7 @@ putTestResult= async(testResult, rfid,id)=>{
       if (check3.length === 0) {
         return new Promise( (resolve,reject)=> reject(404));
       }
-      testResult_dao.putTestResult(testResult,rfid,id);
+      await testResult_dao.putTestResult(testResult,rfid,id);
       return new Promise( (resolve,reject)=> resolve(200));
 
 
@@ -75,7 +76,7 @@ putTestResult= async(testResult, rfid,id)=>{
 }
 deleteTestResult= async(rfid, id) =>{
   try{
-    testResult_dao.deleteTestResult(rfid,id);
+    await testResult_dao.deleteTestResult(rfid,id);
     return new Promise( (resolve,reject)=> resolve(200));
   }
   catch(err){

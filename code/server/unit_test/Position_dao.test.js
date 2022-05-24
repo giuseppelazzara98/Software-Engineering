@@ -103,7 +103,7 @@ async function testCreatePosition(positions) {
         );
       
           res = await dao.getAllPositions();
-      console.log(res)
+      // console.log(res)
 
       expect(positions).toEqual({
 
@@ -171,7 +171,6 @@ async function testUpdatePositionByPosId(positions) {
       
                 );
       res = await dao.getAllPositions();
-      console.log(res[0].occupiedVolume);
       expect(res[0]).toEqual({
 
           positionID: res[0].positionID,

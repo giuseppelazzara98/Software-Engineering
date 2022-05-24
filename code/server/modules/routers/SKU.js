@@ -120,11 +120,11 @@ routerSKU.get("/skus", async (req, res) => {
     let position = req.body.position;
     let id = req.params.id;
     if (
-      sku.position === undefined 
+      req.body.position === undefined 
     ) {
       return res.status(422).end();
     }  
-    SKU_service.putSkuPosition(id,position);
+    await SKU_service.putSkuPosition(id,position);
     return res.status(201).end();
   }
   catch(err){
@@ -133,14 +133,14 @@ routerSKU.get("/skus", async (req, res) => {
   });
 
   routerSKU.delete("/skus/:id",
-  param('id').isInt(), (req, res) => {
+  param('id').isInt(), async(req, res) => {
     try {
       const errors=validationResult(req);
       if(!errors.isEmpty()){
         return res.status(422).send("422 Unprocessable Entity");
       }
       const id = req.params.id;
-      SKU_service.deleteSKU(id);
+      await SKU_service.deleteSKU(id);
       return res.status(204).end();
     } catch (err) {
       return res.status(err).end();
