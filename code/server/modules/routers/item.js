@@ -104,7 +104,7 @@ routeritem.get("/items", async (req, res) => {
         return res.status(422).send("422 Unprocessable Entity");
       }
       const id = req.params.id;
-      item_service.deleteItem(id);
+      await item_service.deleteItem(id);
       return res.status(204).end();
     } catch (err) {
        res.status(err).end();

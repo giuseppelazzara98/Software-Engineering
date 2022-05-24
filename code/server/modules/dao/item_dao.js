@@ -18,7 +18,7 @@ function item_dao(){
             const sql = 'SELECT * FROM items';
             itemDB.all(sql, [], (err, rows) => {
                 if (err) {
-                    reject(err);
+                    reject(new Promise( (resolve,reject)=> reject(500)));
                     return;
                 }
                 const items = rows.map((r) => (
@@ -37,10 +37,10 @@ function item_dao(){
     
       this.getItemsById=(id)=>{
         return new Promise((resolve, reject) => {
-            const sql = 'SELECT * FROM items WHERE ID=?';//WRITE SQL COMMAND
+            const sql = 'SELECT * FROM items WHERE ID=?';
             itemDB.all(sql, [id], (err, rows) => {
                 if (err) {
-                    reject(err);
+                    reject(new Promise( (resolve,reject)=> reject(500)));
                     return;
                 }
                 const items = rows.map((r) => (
@@ -62,7 +62,7 @@ function item_dao(){
             const sql = 'INSERT INTO items(id,description,price,SKUId,supplierId) VALUES(?, ?, ?, ?, ?)';
             itemDB.run(sql, [data.id, data.description, data.price,data.SKUId, data.supplierId], (err) => {
                 if (err) {
-                  reject(err);
+                  reject(new Promise( (resolve,reject)=> reject(503)));
                   return;
                 }
                 resolve(this.lastID);
@@ -75,7 +75,7 @@ function item_dao(){
             const sql = 'SELECT * FROM items WHERE supplierId=? AND SKUId=?';
             itemDB.all(sql, [supplierId,SKUId], (err, rows) => {
                 if (err) {
-                    reject(err);
+                    reject(new Promise( (resolve,reject)=> reject(503)));
                     return;
                 }
                 const items = rows.map((r) => (
@@ -96,7 +96,7 @@ function item_dao(){
             const sql = 'SELECT * FROM items WHERE supplierId=? AND id=?';
             itemDB.all(sql, [supplierId,id], (err, rows) => {
                 if (err) {
-                    reject(err);
+                    reject(new Promise( (resolve,reject)=> reject(503)));
                     return;
                 }
                 const items = rows.map((r) => (
@@ -121,7 +121,7 @@ function item_dao(){
         const sql = 'UPDATE items SET description=?,price=? WHERE id=?';
         itemDB.run(sql, [ data.newDescription,data.newPrice, id], (err) => {
             if (err) {
-              reject(err);
+              reject(new Promise( (resolve,reject)=> reject(503)));
               return;
             }
             resolve(this.lastID);
@@ -134,7 +134,7 @@ function item_dao(){
             const sql = 'DELETE FROM items WHERE id=?';
             itemDB.run(sql,[id], (err) => {
                 if (err) {
-                    reject(err);
+                    reject(new Promise( (resolve,reject)=> reject(503)));
                     return;
                 }
                 resolve(this.lastID);
