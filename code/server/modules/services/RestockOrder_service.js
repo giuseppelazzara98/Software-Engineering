@@ -289,7 +289,7 @@ function RestockOrders_service(dao) {
         const skuItems = body.skuItems;
         var RFIDs = String();
         for (let SkuItem of skuItems) {
-            console.log(SkuItem.rfid);
+            // console.log(SkuItem.rfid);
             RFIDs += SkuItem.rfid + ",";
         }
         RFIDs = RFIDs.slice(0, RFIDs.length - 1);
@@ -305,7 +305,7 @@ function RestockOrders_service(dao) {
             }
         }).then(
             () => {
-                return dao.updateStateRO(id, newState)
+                return dao.addSkuItems(id, RFIDs)
             }
         )
         // return db.getRO(id).then(
@@ -388,7 +388,7 @@ function RestockOrders_service(dao) {
 
     this.deleteRO = (id) => {
         // TODO: id validation
-        return db.deleteRO(id);
+        return dao.deleteRO(id);
     }
 
 }

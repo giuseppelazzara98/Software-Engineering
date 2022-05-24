@@ -181,6 +181,8 @@ function RestockOrders_dao() {
             db.get(query, [id], (err, row) => {
                 if (err) {
                     reject(500);
+                } else if(row === undefined){
+                    reject(404);
                 } else {
                     const ro = new Promise(async (resolve, reject) => {
                         var products = [];
