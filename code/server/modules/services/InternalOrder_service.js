@@ -189,6 +189,8 @@ function InternalOrder_service(dao) {
 
     this.addIO = (body) => {
         // TODO: body validation
+        
+        console.log(res);
         if(!body.issueDate){
             return Promise.reject(422);
         }
@@ -210,11 +212,6 @@ function InternalOrder_service(dao) {
             const products = [...body.products];
             // console.log(products);
             IDs = products.map(e => e.SkuID).toString();
-        } else {
-            if(newState === "COMPLETED"){
-                return Promise.reject(422);
-            }
-            IDs = "";
         }
         
         // console.log(IDs);
@@ -229,7 +226,7 @@ function InternalOrder_service(dao) {
             () => {
                 return dao.updateStateIO(id, newState, IDs);
             }
-        );
+        ).catch((err) => Promise.reject(err));
         // return db.updateStateIO(id, newState, IDs);
         // return db.getIO(id).then(
         //     (row) => {
@@ -251,7 +248,7 @@ function InternalOrder_service(dao) {
 
     this.deleteIO = (id) => {
         // TODO: id validation 
-        return db.deleteIO(id);
+        return dao.deleteIO(id);
     }
 }
 
