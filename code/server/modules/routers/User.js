@@ -268,4 +268,18 @@ routerUser.delete(
       });
   }
 );
+routerUser.delete(
+  "/users",
+  
+  (req, res) => {
+    dao
+      .deleteAll()
+      .then((code) => {
+        return res.status(code).end();
+      })
+      .catch((err) => {
+        return res.status(err).end();
+      });
+  }
+);
 module.exports = routerUser;
