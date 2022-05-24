@@ -1,6 +1,7 @@
 'use strict';
 
 const sqlite = require('sqlite3');
+const dayjs = require('dayjs');
 
 function InternalOrders_dao() {
     //Internal Orders
@@ -52,7 +53,7 @@ function InternalOrders_dao() {
                             }));
                             return {
                                 "id": row.id,
-                                "issueDate": row.issueDate,
+                                "issueDate": dayjs(row.issueDate).format("YYYY/MM/DD HH:MM").toString(),
                                 "state": row.state,
                                 "products": products.filter(p => p !== undefined),
                                 "customerID": row.customerID
@@ -74,7 +75,6 @@ function InternalOrders_dao() {
                 if (err) {
                     reject(500);
                 } else {
-                    console.log(row);
                     resolve(row);
                 }
             })
@@ -113,7 +113,7 @@ function InternalOrders_dao() {
                             }));
                             return {
                                 "id": row.id,
-                                "issueDate": row.issueDate,
+                                "issueDate": dayjs(row.issueDate).format("YYYY/MM/DD HH:MM").toString(),
                                 "state": row.state,
                                 "products": products.filter(p => p !== undefined),
                                 "customerID": row.customerID
@@ -159,7 +159,7 @@ function InternalOrders_dao() {
                             }));
                             return {
                                 "id": row.id,
-                                "issueDate": row.issueDate,
+                                "issueDate": dayjs(row.issueDate).format("YYYY/MM/DD HH:MM").toString(),
                                 "state": row.state,
                                 "products": products.filter(p => p !== undefined),
                                 "customerID": row.customerID
@@ -220,7 +220,7 @@ function InternalOrders_dao() {
                             }
                             resolve({
                                 "id": row.id,
-                                "issueDate": row.issueDate,
+                                "issueDate": dayjs(row.issueDate).format("YYYY/MM/DD HH:MM").toString(),
                                 "state": row.state,
                                 "products": products.filter(p => p !== undefined),
                                 "customerID": row.customerID
