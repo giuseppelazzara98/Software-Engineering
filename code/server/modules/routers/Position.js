@@ -118,6 +118,27 @@ routerPO.delete(
   }
 );
 
+
+routerPO.delete(
+  "/positions",
+  
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).end();
+    }
+    dao
+      .deleteAll()
+      .then((code) => {
+        return res.status(code).end();
+      })
+      .catch((err) => {
+        return res.status(err).end();
+      });
+  }
+);
+
+
 routerPO.use(function (err, req, res, next) {
   if (err instanceof ValidationError || err instanceof validationResult) {
     res.status(422).end();
