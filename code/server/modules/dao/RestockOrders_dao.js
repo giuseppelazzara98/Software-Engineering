@@ -57,17 +57,17 @@ function RestockOrders_dao() {
                             const transportNote = await this.getTransportNote(row.transportNoteID).catch(e => undefined);
                             return {
                                 "id": row.id,
-                                "issueDate": row.issueDate,
+                                "issueDate": dayjs(row.issueDate).format('YYYY/MM/DD HH:MM').toString(),
                                 "state": row.state,
                                 "products": products.filter(p => p !== undefined),
                                 "supplierId": row.supplierID,
-                                "transportNote": transportNote !== undefined ? { 'transportDate': transportNote.deliveryDate } : {},
+                                "transportNote": transportNote !== undefined ? { 'transportDate': dayjs(transportNote.deliveryDate).format('YYYY/MM/DD').toString() } : {},
                                 "skuItems": row.state === 'DELIVERY' ? [] : skuItems.filter(i => i !== undefined)
                             }
                         }
                         return {
                             "id": row.id,
-                            "issueDate": row.issueDate,
+                            "issueDate": dayjs(row.issueDate).format('YYYY/MM/DD HH:MM').toString(),
                             "state": row.state,
                             "products": products.filter(p => p !== undefined),
                             "supplierId": row.supplierID,
@@ -148,7 +148,7 @@ function RestockOrders_dao() {
 
                         return {
                             "id": row.id,
-                            "issueDate": row.issueDate,
+                            "issueDate": dayjs(row.issueDate).format('YYYY/MM/DD HH:MM').toString(),
                             "state": row.state,
                             "products": products.filter(p => p !== undefined),
                             "supplierId": row.supplierID,
@@ -215,11 +215,11 @@ function RestockOrders_dao() {
                         }
                         const transportNote = await this.getTransportNote(row.transportNoteID).catch(e => undefined);
                         resolve({
-                            "issueDate": row.issueDate,
+                            "issueDate": dayjs(row.issueDate).format('YYYY/MM/DD HH:MM').toString(),
                             "state": row.state,
                             "products": products.filter(p => p !== undefined),
                             "supplierId": row.supplierID,
-                            "transportNote": transportNote !== undefined ? { transportDate: transportNote.deliveryDate } : {},
+                            "transportNote": transportNote !== undefined ? { transportDate: dayjs(transportNote.deliveryDate).format("YYYY/MM/DD").toString() } : {},
                             "skuItems": skuItems.filter(i => i !== undefined)
                         })
                     })
