@@ -190,7 +190,6 @@ function InternalOrder_service(dao) {
     this.addIO = (body) => {
         // TODO: body validation
         
-        console.log(res);
         if(!body.issueDate){
             return Promise.reject(422);
         }

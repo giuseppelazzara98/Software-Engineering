@@ -734,9 +734,36 @@ describe('get IO by ID', () => {
             "customerID": 1
         })
 
-        id = 9999;
+        id = 1;
         try {
             res = await io_service.getIO(id);
+            expect(res).toEqual({
+                "id": 1,
+                "issueDate": "2021/11/29 09:11",
+                "state": "ACCEPTED",
+                "products": [
+                    {
+                        "SKUId": 1,
+                        "description": "a new sku",
+                        "price": 10.99,
+                        "qty": 50
+                    },
+                    {
+                        "SKUId": 2,
+                        "description": "another sku",
+                        "price": 10.99,
+                        "qty": 55
+                    },
+                    {
+                        "SKUId": 3,
+                        "description": "sku",
+                        "price": 10.99,
+                        "qty": 45
+                    }
+                ],
+                "customerID": 1
+            })
+
         } catch (e) {
             expect(e).toEqual(404);
         }
@@ -751,7 +778,6 @@ describe('insert new IO', () => {
             .mockResolvedValueOnce(201)
             .mockRejectedValueOnce(500)
             .mockResolvedValue(201)
-            .mockRejectedValue(500)
     })
     test('insert IO', async () => {
         var body = {
@@ -820,7 +846,6 @@ describe('update IO', () => {
     })
 
     test('update', async () => {
-        jest.setTimeout(10000);
         var body = {
             newState: "COMPLETED",
             products: [{"SkuID": 1, RFID: "11222"}, {"SkuID": 2, RFID: "11222"}]
