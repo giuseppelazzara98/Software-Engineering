@@ -10,7 +10,7 @@ var {
   Validator,
   ValidationError,
 } = require("express-json-validator-middleware");
-const { param, body, validationResult } = require("express-validator");
+const { oneOf,param, body, validationResult ,check} = require("express-validator");
 
 var userSchema = JSON.parse(
   fs.readFileSync("./JSON-Schemas/user_schema.json").toString()
@@ -84,6 +84,120 @@ routerUser.post("/customerSessions", body("username").isEmail() , function (req,
   })(req, res, next);
 });
 
+
+routerUser.post("/managerSessions", body("username").isEmail() , function (req, res, next) {
+  const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(500).end();
+    }
+  passport.authenticate("local", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) {
+      // display wrong login messages
+      return res.status(401).end();
+    }
+    // success, perform the login
+    req.login(user, (err) => {
+      if (err) return next(err);
+      // req.user contains the authenticated user, we send all the user info back
+      // this is coming from userDao.getUser()
+      return res.json(req.user);
+    });
+  })(req, res, next);
+});
+
+
+routerUser.post("/supplierSessions", body("username").isEmail() , function (req, res, next) {
+  const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(500).end();
+    }
+  passport.authenticate("local", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) {
+      // display wrong login messages
+      return res.status(401).end();
+    }
+    // success, perform the login
+    req.login(user, (err) => {
+      if (err) return next(err);
+      // req.user contains the authenticated user, we send all the user info back
+      // this is coming from userDao.getUser()
+      return res.json(req.user);
+    });
+  })(req, res, next);
+});
+
+
+routerUser.post("/clerkSessions", body("username").isEmail() , function (req, res, next) {
+  const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(500).end();
+    }
+  passport.authenticate("local", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) {
+      // display wrong login messages
+      return res.status(401).end();
+    }
+    // success, perform the login
+    req.login(user, (err) => {
+      if (err) return next(err);
+      // req.user contains the authenticated user, we send all the user info back
+      // this is coming from userDao.getUser()
+      return res.json(req.user);
+    });
+  })(req, res, next);
+});
+
+
+routerUser.post("/qualityEmployeeSessions", body("username").isEmail() , function (req, res, next) {
+  const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(500).end();
+    }
+  passport.authenticate("local", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) {
+      // display wrong login messages
+      return res.status(401).end();
+    }
+    // success, perform the login
+    req.login(user, (err) => {
+      if (err) return next(err);
+      // req.user contains the authenticated user, we send all the user info back
+      // this is coming from userDao.getUser()
+      return res.json(req.user);
+    });
+  })(req, res, next);
+});
+
+
+
+routerUser.post("/deliveryEmployeeSessions", body("username").isEmail() , function (req, res, next) {
+  const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(500).end();
+    }
+  passport.authenticate("local", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) {
+      // display wrong login messages
+      return res.status(401).end();
+    }
+    // success, perform the login
+    req.login(user, (err) => {
+      if (err) return next(err);
+      // req.user contains the authenticated user, we send all the user info back
+      // this is coming from userDao.getUser()
+      return res.json(req.user);
+    });
+  })(req, res, next);
+});
+
+
+
+
 // logout
 routerUser.post("/logout", /*isLoggedIn,*/ (req, res) => {
   req.logout();
@@ -96,4 +210,62 @@ routerUser.use(function (err, req, res, next) {
   } else next(err);
 });
 
+routerUser.put(
+  "/users/:username",
+  
+  param("username").isEmail().not().isEmpty(),
+  check("oldType").not().isIn(["manager"]),
+  check("newType").isIn([
+    "customer",
+    "qualityEmployee",
+    "clerk",
+    "deliveryEmployee",
+    "supplier",
+  ]),
+
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).end();
+    }
+    dao
+      .updateUserByUsername(req.params.username, req.body)
+      .then((code) => {
+        return res.status(code).end();
+      })
+      .catch((err) => {
+        return res.status(err).end();
+      });
+  }
+);
+routerUser.delete(
+  "/users/:username/:type",
+  oneOf([
+    [
+      param("username").isEmail(),
+      param("type").not().isIn(["manager"]),
+      param("type").isIn([
+        "customer",
+        "qualityEmployee",
+        "clerk",
+        "deliveryEmployee",
+        "supplier",
+      ]),
+    ],
+  ]),
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).end();
+    }
+    dao
+      .deleteUserByUsernameAndType(req.params.username,req.params.type)
+      .then((code) => {
+        return res.status(code).end();
+      })
+      .catch((err) => {
+        return res.status(err).end();
+      });
+  }
+);
 module.exports = routerUser;

@@ -98,7 +98,7 @@ function InternalOrder_service(dao) {
     }
 
     this.getAllIOAccepted = () => {
-        return db.getAllIOAccepted();
+        return dao.getAllIOAccepted();
         // return db.getAllIOAccepted().then(
         //     (rows) => {
         //         return new Promise(async (resolve, reject) => {
@@ -189,6 +189,11 @@ function InternalOrder_service(dao) {
 
     this.addIO = (body) => {
         // TODO: body validation
+        
+        console.log(res);
+        if(!body.issueDate){
+            return Promise.reject(422);
+        }
         const date = dayjs(body.issueDate).format("YYYY-MM-DD HH:MM").toString(); //date is in ISO8601 format supported by SQLite 
         const products = [...body.products];
         var IDs = Array();
@@ -201,9 +206,14 @@ function InternalOrder_service(dao) {
     this.updateStateIO = (id, body) => {
         // TODO: id and body validation
         const newState = body.newState;
-        const products = [...body.products];
-        // console.log(products);
-        const IDs = products.map(e => e.SkuID).toString();
+        var IDs = "";
+        if(body.products){
+            
+            const products = [...body.products];
+            // console.log(products);
+            IDs = products.map(e => e.SkuID).toString();
+        }
+        
         // console.log(IDs);
         return new Promise(async (resolve, reject) => {
             const io = await dao.IOexists(id);
@@ -216,7 +226,7 @@ function InternalOrder_service(dao) {
             () => {
                 return dao.updateStateIO(id, newState, IDs);
             }
-        );
+        ).catch((err) => Promise.reject(err));
         // return db.updateStateIO(id, newState, IDs);
         // return db.getIO(id).then(
         //     (row) => {
@@ -238,7 +248,7 @@ function InternalOrder_service(dao) {
 
     this.deleteIO = (id) => {
         // TODO: id validation 
-        return db.deleteIO(id);
+        return dao.deleteIO(id);
     }
 }
 

@@ -53,11 +53,11 @@ INSERT INTO SKUs (description, weight, volume, notes, position, availableQuantit
 
 -- Table: test descriptors
 DROP TABLE IF EXISTS testDescriptors;
-CREATE TABLE testdescriptors (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, procedureDescription TEXT, idSKU INTEGER);
-INSERT INTO testdescriptors (name, procedureDescription, idSKU) VALUES ('test descriptor 1', 'this test is described by', 1);
-INSERT INTO testdescriptors (name, procedureDescription, idSKU) VALUES ('test descriptor 2', 'this test is described by', 2);
-INSERT INTO testdescriptors (name, procedureDescription, idSKU) VALUES ('test descriptor 3', 'this test is described by', 3);
-INSERT INTO testdescriptors (name, procedureDescription, idSKU) VALUES ('test descriptor 4', 'this test is described by', 4);
+CREATE TABLE testDescriptors (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, procedureDescription TEXT, idSKU INTEGER);
+INSERT INTO testDescriptors (name, procedureDescription, idSKU) VALUES ('test descriptor 1', 'this test is described by', 1);
+INSERT INTO testDescriptors (name, procedureDescription, idSKU) VALUES ('test descriptor 2', 'this test is described by', 2);
+INSERT INTO testDescriptors (name, procedureDescription, idSKU) VALUES ('test descriptor 3', 'this test is described by', 3);
+INSERT INTO testDescriptors (name, procedureDescription, idSKU) VALUES ('test descriptor 4', 'this test is described by', 4);
 
 -- Table: test Results
 DROP TABLE IF EXISTS testResults;

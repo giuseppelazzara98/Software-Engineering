@@ -234,6 +234,9 @@ function RestockOrders_service(dao) {
 
     this.addRO = (body) => {
         // TODO: body validation
+        if(!dayjs(body.issueDate,"YYYY/MM/DD HH:MM", true).isValid()){
+            return Promise.reject(422);
+        }
         const date = dayjs(body.issueDate).format("YYYY-MM-DD HH:MM").toString();
         const supplierId = body.supplierId;
         const products = [...body.products];
@@ -332,6 +335,9 @@ function RestockOrders_service(dao) {
 
     this.addTransportNote = (id, body) => {
         // TODO: id and body validation
+        if(!body.transportNote.deliveryDate || !dayjs(body.transportNote.deliveryDate, "YYYY/MM/DD", true).isValid()){
+            return Promise.reject(422);
+        }
         const date = dayjs(body.transportNote.deliveryDate).format("YYYY-MM-DD").toString();
 
         return new Promise(async (resolve, reject) => {

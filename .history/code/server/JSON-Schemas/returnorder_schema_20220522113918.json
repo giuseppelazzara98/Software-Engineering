@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id" : "http://www.my-schema.com/position_schema.json",
+    "title": "position",
+    "description": "JSON Schema for position objects",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "positionID": {
+        "type": "string",
+        "maxLength": 12,
+        "minLength": 12
+      },
+      "aisleID": {
+        "type": "string",
+        "maxLength": 4,
+        "minLength": 4
+      },
+      "row": {
+        "type": "string",
+        "maxLength": 4,
+        "minLength": 4
+      },
+      "col": {
+        "type": "string",
+        "maxLength": 4,
+        "minLength": 4
+      },
+      "maxWeight": {
+        "type": "integer"
+     },
+      "maxVolume": {
+        "type": "integer"
+      }
+    },
+    "required": ["positionID", "aisleID", "row", "col", "maxWeight", "maxVolume"]
+  }
