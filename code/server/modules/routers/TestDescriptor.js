@@ -14,7 +14,7 @@ routerTD.get('/testDescriptors', (req, res) => {
         }
     ).catch(
         (err) => {
-            return res.status(500).end();
+            return res.status(err).end();
         }
     );
 })
@@ -23,7 +23,7 @@ routerTD.get('/testDescriptors', (req, res) => {
 routerTD.get('/testDescriptors/:id', param('id').isInt(), (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(422).send();
+        return res.status(422).end();
     }
     td_service.getTD(req.params.id).then(
         (td) => {
@@ -37,12 +37,17 @@ routerTD.get('/testDescriptors/:id', param('id').isInt(), (req, res) => {
 
 //ok
 routerTD.post('/testDescriptor',
-    body('name').isString(),
-    body('procedureDescription').isString(),
+    body('name').isString({min:1}),
+    body('procedureDescription').isString({min:1}),
     body('idSKU').isInt(),
     (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
+            
+            return res.status(422).end();
+        }
+
+        if(req.body.name == '' || req.body.procedureDescription == ''){
             return res.status(422).end();
         }
 
@@ -60,12 +65,16 @@ routerTD.post('/testDescriptor',
 //ok
 routerTD.put('/testDescriptor/:id',
     param('id').isInt(),
-    body('newName').isString(),
+    body('newName').isString({min:1}),
     body('newProcedureDescription').isString(),
     body('newIdSKU').isLength({min: 1}).isInt(),
     (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
+            return res.status(422).end();
+        }
+        
+        if(req.body.newName == '' || req.body.newProcedureDescription == ''){
             return res.status(422).end();
         }
 
