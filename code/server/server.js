@@ -45,7 +45,7 @@ app.listen(port, () => {
       console.log('Table Created');
     }
   });
-  const query3 = 'CREATE TABLE SKUItems (rowID INTEGER PRIMARY KEY AUTOINCREMENT, RFID TEXT, SKUId INTEGER, Available INTEGER, DateOfStock TEXT);';
+  const query3 = 'CREATE TABLE SKUItems (rowID INTEGER PRIMARY KEY , RFID TEXT, SKUId INTEGER, Available INTEGER, DateOfStock TEXT);';
   db.run(query3, (err) => {
     if (err) {
       console.log('Some Error Occured');
@@ -69,7 +69,7 @@ app.listen(port, () => {
       console.log('Table Created');
     }
   });
-  const query6 = 'CREATE TABLE testResults (id INTEGER PRIMARY KEY AUTOINCREMENT, rfid TEXT, idTestDescriptor INTEGER, Date TEXT, Result INTEGER);';
+  const query6 = 'CREATE TABLE testResults (id INTEGER PRIMARY KEY , rfid TEXT, idTestDescriptor INTEGER, Date TEXT, Result INTEGER);';
   db.run(query6, (err) => {
     if (err) {
       console.log('Some Error Occured');
