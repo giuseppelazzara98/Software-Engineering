@@ -26,7 +26,6 @@ describe("getUser", () => {
 async function testUser(name, surname, username, type, password) {
   test("getUser", async () => {
     let res = await dao.getUser(username, password);
-    console.log(res);
     if (res) {
       expect(res).toEqual({
         id: res.id,
@@ -209,7 +208,7 @@ async function testGetSuppliers(users) {
 
 /******* */
 
-describe("editUser", () => {
+describe("UpdateUser", () => {
   beforeEach(async () => {
     await dao.deleteAll();
     await dao.addNewUser(
@@ -230,7 +229,7 @@ describe("editUser", () => {
 });
 
 async function testEditUser(user) {
-  test("edituser", async () => {
+  test("UpdateUser", async () => {
     // await dao.updateUserByUsername(user.username, user.oldType, user.newType);
     let res = await dao.getUser(user.username, "testpassword");
     expect(res).toEqual({
@@ -248,7 +247,7 @@ describe("deleteUser", () => {
     await dao.deleteAll();
     await dao.addNewUser(
       {
-        "username":"user1@ezwh.com",
+        "username":"userold@ezwh.com",
         "name":"farzad",
         "surname" : "user1",
         "password" : "testpassword",
@@ -258,7 +257,7 @@ describe("deleteUser", () => {
     );
   });
   testDeleteUser({
-    username: "user1@ezwh.com",
+    username: "userold@ezwh.com",
     type: "clerk",
   });
 });

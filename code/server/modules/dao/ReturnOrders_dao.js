@@ -78,7 +78,8 @@ function ReturnOrders_dao() {
         if (err) {
           reject(500);
         } else {
-          if (row == undefined) reject(404);
+          if (row == undefined) {
+            reject(404);}
           else {
             if (row.state != "COMPLETEDRETURN") reject(404);
             resolve(row.state);
@@ -127,7 +128,18 @@ function ReturnOrders_dao() {
       });
     });
   };
-
+  this.deleteAll = () => {
+    const sql = "DELETE FROM returnOrder";
+    return new Promise((resolve, reject) => {
+      reDB.run(sql,[], (err) => {
+        if (err) {
+          reject(503);
+        } else {
+          resolve(204);
+        }
+      });
+    });
+  };
   const convertResultSetToDomainModelSKUItems = async (row) => {
     const IDs = row.products.split(",");
     //retrieve the array of products
