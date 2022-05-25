@@ -40,26 +40,10 @@ CREATE TABLE Users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, passwor
 
 -- Table: returnOrder
 DROP TABLE IF EXISTS returnOrder;
-CREATE TABLE returnOrder (
-    id             INTEGER PRIMARY KEY AUTOINCREMENT,
-    returnDate     TEXT,
-    products       TEXT,
-    restockOrderId INTEGER REFERENCES restockOrders (id) ON DELETE CASCADE
-                                                         ON UPDATE CASCADE
-);
+CREATE TABLE returnOrder (id INTEGER PRIMARY KEY AUTOINCREMENT, returnDate TEXT, products TEXT, restockOrderId INTEGER REFERENCES restockOrders (id) ON DELETE CASCADE ON UPDATE CASCADE);
 -- Table: position
 DROP TABLE IF EXISTS position;
-CREATE TABLE position (
-    id             INTEGER PRIMARY KEY AUTOINCREMENT,
-    positionID     TEXT,
-    aisleID        TEXT,
-    row            TEXT,
-    col            TEXT,
-    maxWeight      INTEGER,
-    maxVolume      INTEGER,
-    occupiedWeight INTEGER,
-    occupiedVolume INTEGER
-);
+CREATE TABLE position (id INTEGER PRIMARY KEY AUTOINCREMENT, positionID TEXT, aisleID TEXT, row TEXT, col TEXT, maxWeight INTEGER, maxVolume INTEGER, occupiedWeight INTEGER, occupiedVolume INTEGER);
 
 -- Table: transportNote
 DROP TABLE IF EXISTS transportNote;
