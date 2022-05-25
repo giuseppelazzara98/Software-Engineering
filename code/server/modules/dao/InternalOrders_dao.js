@@ -194,9 +194,7 @@ function InternalOrders_dao() {
                             if (row.products) {
                                 const IDs = row.products.split(',').map(e => parseInt(e)); //array of INT of product IDs
                                 //retrieve the array of products
-                                // console.log(IDs);
                                 products = await Promise.all(IDs.map(async (SKUid) => {
-                                    // console.log(row.state);
                                     const product = this.getProduct(SKUid, row.state).then(p => {
                                         if (row.state !== 'COMPLETED') {
                                             return {
@@ -216,7 +214,6 @@ function InternalOrders_dao() {
                                     }).catch(e => undefined);
                                     return product;
                                 }));
-                                // console.log(products);
                             }
                             resolve({
                                 "id": row.id,

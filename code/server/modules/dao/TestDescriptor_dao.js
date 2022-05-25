@@ -4,7 +4,7 @@ const sqlite = require('sqlite3');
 function TestDescriptor_dao() {
     const db = new sqlite.Database("./modules/database/ezwh.sqlite", (err) => {
         if (err) {
-            // console.log("Error connecting to DB");
+            console.log("Error connecting to DB");
             throw err;
         }
 
@@ -26,7 +26,6 @@ function TestDescriptor_dao() {
                         }
                     });
                     resolve(list);
-                    // resolve(rows);
                 }
             })
         })

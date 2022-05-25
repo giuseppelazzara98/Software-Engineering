@@ -8,7 +8,6 @@ const RestockOrders_service = require('../services/RestockOrder_service');
 const ro_service = new RestockOrders_service(new RestockOrders_dao());
 
 // GET
-//ok
 routerRO.get('/restockOrders', (req, res) => {
   ro_service.getAllRO().then(
     (list) => {
@@ -19,7 +18,6 @@ routerRO.get('/restockOrders', (req, res) => {
   );
 });
 
-//ok
 routerRO.get('/restockOrdersIssued', (req, res) => {
   ro_service.getAllROIssued().then(
     (list) => { return res.status(200).json(list); }
@@ -28,7 +26,6 @@ routerRO.get('/restockOrdersIssued', (req, res) => {
   );
 });
 
-//ok
 routerRO.get('/restockOrders/:id', param('id').isLength({ min: 1 }).isInt(), (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -44,7 +41,6 @@ routerRO.get('/restockOrders/:id', param('id').isLength({ min: 1 }).isInt(), (re
 
 })
 
-//ok
 routerRO.get('/restockOrders/:id/returnItems', param('id').isLength({ min: 1 }).isInt(), (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -82,10 +78,9 @@ routerRO.post('/restockOrder',
         return res.status(err).end();
       }
     )
-  });
+});
 
 // PUT
-//ok
 routerRO.put('/restockOrder/:id', param('id').isInt(),
   body('newState').isIn(['ISSUED', 'DELIVERY', 'DELIVERED', 'TESTED', 'COMPLETEDRETURN', 'COMPLETED']),
   (req, res) => {
@@ -103,7 +98,7 @@ routerRO.put('/restockOrder/:id', param('id').isInt(),
         return res.status(err).end();
       }
     );
-  })
+})
 
 routerRO.put('/restockOrder/:id/skuItems', param('id').isInt(),
   body('skuItems').isArray(),
@@ -122,7 +117,7 @@ routerRO.put('/restockOrder/:id/skuItems', param('id').isInt(),
         return res.status(err).end();
       }
     );
-  });
+});
 
 routerRO.put('/restockOrder/:id/transportNote', param('id').isInt(),
   body('transportNote').isObject(),
@@ -145,7 +140,6 @@ routerRO.put('/restockOrder/:id/transportNote', param('id').isInt(),
 );
 
 // DELETE
-//ok
 routerRO.delete('/restockOrder/:id', param('id').isInt(), (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -161,8 +155,5 @@ routerRO.delete('/restockOrder/:id', param('id').isInt(), (req, res) => {
     }
   );
 })
-
-
-
 
 module.exports = routerRO;

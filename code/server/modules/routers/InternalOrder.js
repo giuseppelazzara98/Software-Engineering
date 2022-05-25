@@ -9,7 +9,6 @@ const InternalOrder_service = require('../services/InternalOrder_service');
 const internalOrder_service = new InternalOrder_service(new InternalOrders_dao());
 
 // GET
-//ok
 routerIO.get('/internalOrders', (req, res) => {
     internalOrder_service.getAllIO().then(
         (list) => {
@@ -20,7 +19,6 @@ routerIO.get('/internalOrders', (req, res) => {
     )
 });
 
-//ok
 routerIO.get('/internalOrdersIssued', (req, res) => {
     internalOrder_service.getAllIOIssued().then(
         (list) => {
@@ -31,7 +29,6 @@ routerIO.get('/internalOrdersIssued', (req, res) => {
     )
 });
 
-//ok
 routerIO.get('/internalOrdersAccepted', (req, res) => {
     internalOrder_service.getAllIOAccepted().then(
         (list) => {
@@ -42,7 +39,6 @@ routerIO.get('/internalOrdersAccepted', (req, res) => {
     )
 });
 
-//ok
 routerIO.get('/internalOrders/:id', param('id').isInt(), (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -56,11 +52,9 @@ routerIO.get('/internalOrders/:id', param('id').isInt(), (req, res) => {
     ).catch(
         (err) => { return res.status(err).end(); }
     );
-
 });
 
 // POST
-//ok
 routerIO.post('/internalOrders',
     body('products').isArray({min:1}),
     body('customerId').isLength({min:1}).isInt(),
@@ -79,10 +73,10 @@ routerIO.post('/internalOrders',
                 return res.status(err).end();
             }
         )
-    });
+    }
+);
 
 // PUT
-//ok
 routerIO.put('/internalOrders/:id',
     param('id').isInt(),
     body('newState').isIn(['ACCEPTED', 'COMPLETED', 'REFUSED', 'CANCELED', 'ISSUED']),
@@ -102,12 +96,10 @@ routerIO.put('/internalOrders/:id',
                 return res.status(err).end();
             }
         )
-        
-
-    });
+    }
+);
 
 // DELETE
-//ok
 routerIO.delete('/internalOrders/:id', param('id').isInt(), (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) return res.status(422).end();

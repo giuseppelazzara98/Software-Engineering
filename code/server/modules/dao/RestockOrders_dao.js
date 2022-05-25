@@ -20,7 +20,6 @@ function RestockOrders_dao() {
                     reject(500);
                 } else {
                     const list = await Promise.all(rows.map(async (row) => {
-                        // console.log(row);
                         var products = [];
                         if (row.products) {
                             //each row must retrieve the products
@@ -75,7 +74,6 @@ function RestockOrders_dao() {
                         }
                     }));
                     resolve(list);
-                    // resolve(rows);
                 }
             });
         })
@@ -156,7 +154,6 @@ function RestockOrders_dao() {
                         }
                     }));
                     resolve(list);
-                    // resolve(rows);
                 }
             })
         })
@@ -226,7 +223,6 @@ function RestockOrders_dao() {
                         })
                     })
                     resolve(ro);
-                    // resolve(row);
                 }
             })
         })
@@ -259,12 +255,6 @@ function RestockOrders_dao() {
             })
             
         })
-        // return this.getRO(id).then(
-        //     (row) => {
-        //         // console.log(row);
-                
-        //     }
-        // )
     }
 
     this.insertRO = async (date, IDs, supplierId) => {
@@ -272,7 +262,6 @@ function RestockOrders_dao() {
             const query = 'INSERT INTO restockOrders(issueDate, state, products, supplierID) VALUES(?, "ISSUED", ?, ?)';
             db.run(query, [date, IDs, supplierId], (err) => {
                 if (err) {
-                    // console.log(err);
                     reject(503);
                 } else {
                     resolve(201);
@@ -292,12 +281,6 @@ function RestockOrders_dao() {
                 }
             })
         });
-        // return this.getRO(id).then(
-        //     () => {
-                
-        //     }
-        // )
-        
     }
 
     this.addSkuItems = async (id, skuItems) => {
