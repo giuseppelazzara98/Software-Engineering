@@ -9,7 +9,6 @@ function item_dao(){
             console.log("Error connecting to DB");
             throw err;
         }
-        console.log("Connected to DB");
 
     });
 
