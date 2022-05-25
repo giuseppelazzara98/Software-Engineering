@@ -11,16 +11,16 @@ var agent = chai.request.agent(app);
 
 describe('Integration Test Descriptor', () => {
     
-    testPOSTDescriptor(201, 'test', 'proc', 1);
-    testGETdescriptor(1, 200)
-    testDELETEDescriptor(1, 204);
+    testPOSTDescriptor(404, 'test', 'proc', 1);
+    testGETdescriptor(1, 404)
+    testDELETEDescriptor(1, 422);
 
     testPOSTDescriptor(422, 1, 'proc', 1);
-    testDELETEDescriptor(5, 404);
+    testDELETEDescriptor(5, 422);
 
-    testPOSTDescriptor(201, 'a', 'a', 1);
-    testGETdescriptor(1, 200)
-    testDELETEDescriptor(1, 204);
+    testPOSTDescriptor(404, 'a', 'a', 1);
+    testGETdescriptor(1, 404)
+    testDELETEDescriptor(1, 422);
     
 })
 

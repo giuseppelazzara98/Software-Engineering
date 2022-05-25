@@ -27,7 +27,7 @@ describe('Integration Restock Orders', () => {
 function testGETro(id, HTTPresponse) {
     it('get by id', async () => {
         var result = await agent.get('/api/restockOrders/' + id);
-        console.log(id);
+        // console.log(id);
         result.should.have.status(HTTPresponse);
         if (HTTPresponse === 200 && id) {
             result.should.to.be.json;
