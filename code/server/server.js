@@ -18,10 +18,26 @@ const db = new sqlite3.Database('./modules/database/ezwh.sqlite', (err) => {
     console.log('DataBase Connected');
   }
 });
-app.listen(port, () => {
+ app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
+  const queryd = 'DROP TABLE IF EXISTS internalOrders;';
+   db.run(queryd, (err) => {
+    if (err) {
+      console.log('Some Error Occured');
+    } else {
+      console.log('Table Created');
+    }
+  });
   const query = 'CREATE TABLE internalOrders (id INTEGER PRIMARY KEY , issueDate TEXT NOT NULL, state TEXT NOT NULL, products TEXT, customerID INTEGER NOT NULL);';
   db.run(query, (err) => {
+    if (err) {
+      console.log('Some Error Occured');
+    } else {
+      console.log('Table Created');
+    }
+  });
+  const query1d = 'DROP TABLE IF EXISTS items;';
+  db.run(query1d, (err) => {
     if (err) {
       console.log('Some Error Occured');
     } else {
@@ -37,8 +53,24 @@ app.listen(port, () => {
     }
   });
   
+  const query2d = 'DROP TABLE IF EXISTS restockOrders;';
+  db.run(query2d, (err) => {
+    if (err) {
+      console.log('Some Error Occured');
+    } else {
+      console.log('Table Created');
+    }
+  });
   const query2 = 'CREATE TABLE restockOrders (id INTEGER PRIMARY KEY , issueDate TEXT NOT NULL, state TEXT NOT NULL, products TEXT, supplierID INTEGER NOT NULL, transportNoteID INTEGER, skuItems TEXT);';
   db.run(query2, (err) => {
+    if (err) {
+      console.log('Some Error Occured');
+    } else {
+      console.log('Table Created');
+    }
+  });
+  const query3d = 'DROP TABLE IF EXISTS SKUItems;';
+  db.run(query3d, (err) => {
     if (err) {
       console.log('Some Error Occured');
     } else {
@@ -53,8 +85,24 @@ app.listen(port, () => {
       console.log('Table Created');
     }
   });
+  const query4d = 'DROP TABLE IF EXISTS SKUs;';
+  db.run(query4d, (err) => {
+    if (err) {
+      console.log('Some Error Occured');
+    } else {
+      console.log('Table Created');
+    }
+  });
   const query4 = 'CREATE TABLE SKUs (id INTEGER PRIMARY KEY , description TEXT, weight NUMERIC, volume NUMERIC, notes TEXT, position INTEGER, availableQuantity INTEGER, price NUMERIC, testDescriptors TEXT);';
   db.run(query4, (err) => {
+    if (err) {
+      console.log('Some Error Occured');
+    } else {
+      console.log('Table Created');
+    }
+  });
+  const query5d = 'DROP TABLE IF EXISTS testDescriptors;';
+  db.run(query5d, (err) => {
     if (err) {
       console.log('Some Error Occured');
     } else {
@@ -69,8 +117,24 @@ app.listen(port, () => {
       console.log('Table Created');
     }
   });
+  const query6d = 'DROP TABLE IF EXISTS testResults;';
+  db.run(query6d, (err) => {
+    if (err) {
+      console.log('Some Error Occured');
+    } else {
+      console.log('Table Created');
+    }
+  });
   const query6 = 'CREATE TABLE testResults (id INTEGER PRIMARY KEY , rfid TEXT, idTestDescriptor INTEGER, Date TEXT, Result INTEGER);';
   db.run(query6, (err) => {
+    if (err) {
+      console.log('Some Error Occured');
+    } else {
+      console.log('Table Created');
+    }
+  });
+  const query7d = 'DROP TABLE IF EXISTS user;';
+  db.run(query7d, (err) => {
     if (err) {
       console.log('Some Error Occured');
     } else {
@@ -85,6 +149,14 @@ app.listen(port, () => {
       console.log('Table Created');
     }
   });
+  const query8d = 'DROP TABLE IF EXISTS returnOrder;';
+  db.run(query8d, (err) => {
+    if (err) {
+      console.log('Some Error Occured');
+    } else {
+      console.log('Table Created');
+    }
+  });
   const query8 = 'CREATE TABLE returnOrder (id INTEGER PRIMARY KEY AUTOINCREMENT, returnDate TEXT, products TEXT, restockOrderId INTEGER REFERENCES restockOrders (id) ON DELETE CASCADE ON UPDATE CASCADE);';
   db.run(query8, (err) => {
     if (err) {
@@ -93,8 +165,24 @@ app.listen(port, () => {
       console.log('Table Created');
     }
   });
+  const query9d = 'DROP TABLE IF EXISTS position;';
+  db.run(query9d, (err) => {
+    if (err) {
+      console.log('Some Error Occured');
+    } else {
+      console.log('Table Created');
+    }
+  });
   const query9 = 'CREATE TABLE position (id INTEGER PRIMARY KEY AUTOINCREMENT, positionID TEXT, aisleID TEXT, row TEXT, col TEXT, maxWeight INTEGER, maxVolume INTEGER, occupiedWeight INTEGER, occupiedVolume INTEGER);';
   db.run(query9, (err) => {
+    if (err) {
+      console.log('Some Error Occured');
+    } else {
+      console.log('Table Created');
+    }
+  });
+  const query10d = 'DROP TABLE IF EXISTS transportNote;';
+  db.run(query10d, (err) => {
     if (err) {
       console.log('Some Error Occured');
     } else {
