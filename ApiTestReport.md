@@ -32,7 +32,7 @@ Version:
 
 # Dependency graph 
 
-     <report the here the dependency graph of the classes in EzWH, using plantuml or other tool>
+    ![depgraph](Images/dependencygraph.jpg)
      
 # Integration approach
 We used a bottom up integration approach since we had already completed unit tests, supposing we've already fixed the majority of failures on them. That means we started from test individual units (dao), then proceeded with services testing  methods integration until the top (API).
