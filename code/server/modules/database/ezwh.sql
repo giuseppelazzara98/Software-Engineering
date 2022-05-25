@@ -12,7 +12,7 @@ CREATE TABLE internalOrders (id INTEGER PRIMARY KEY , issueDate TEXT NOT NULL, s
 
 -- Table: items
 DROP TABLE IF EXISTS items;
-CREATE TABLE items (id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT, price NUMERIC, SKUid INTEGER, supplierId INTEGER);
+CREATE TABLE items (id INTEGER PRIMARY KEY , description TEXT, price NUMERIC, SKUid INTEGER, supplierId INTEGER);
 
 -- Table: restockOrders
 DROP TABLE IF EXISTS restockOrders;
@@ -20,11 +20,11 @@ CREATE TABLE restockOrders (id INTEGER PRIMARY KEY , issueDate TEXT NOT NULL, st
 
 -- Table: SKUItems
 DROP TABLE IF EXISTS SKUItems;
-CREATE TABLE SKUItems (rowID INTEGER PRIMARY KEY AUTOINCREMENT, RFID TEXT, SKUId INTEGER, Available INTEGER, DateOfStock TEXT);
+CREATE TABLE SKUItems (rowID INTEGER PRIMARY KEY , RFID TEXT, SKUId INTEGER, Available INTEGER, DateOfStock TEXT);
 
 -- Table: SKUs
 DROP TABLE IF EXISTS SKUs;
-CREATE TABLE SKUs (id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT, weight NUMERIC, volume NUMERIC, notes TEXT, position INTEGER, availableQuantity INTEGER, price NUMERIC, testDescriptors TEXT);
+CREATE TABLE SKUs (id INTEGER PRIMARY KEY , description TEXT, weight NUMERIC, volume NUMERIC, notes TEXT, position INTEGER, availableQuantity INTEGER, price NUMERIC, testDescriptors TEXT);
 
 -- Table: test descriptors
 DROP TABLE IF EXISTS testDescriptors;
@@ -32,11 +32,11 @@ CREATE TABLE testDescriptors (id INTEGER PRIMARY KEY, name TEXT, procedureDescri
 
 -- Table: test Results
 DROP TABLE IF EXISTS testResults;
-CREATE TABLE testResults (id INTEGER PRIMARY KEY AUTOINCREMENT, rfid TEXT, idTestDescriptor INTEGER, Date TEXT, Result INTEGER);
+CREATE TABLE testResults (id INTEGER PRIMARY KEY , rfid TEXT, idTestDescriptor INTEGER, Date TEXT, Result INTEGER);
 
 -- Table: Users
 DROP TABLE IF EXISTS user;
-CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT, name TEXT, surname TEXT, type TEXT);
+CREATE TABLE user (id INTEGER PRIMARY KEY , username TEXT, password TEXT, name TEXT, surname TEXT, type TEXT);
 
 -- Table: returnOrder
 DROP TABLE IF EXISTS returnOrder;
