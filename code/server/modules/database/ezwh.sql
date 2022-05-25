@@ -36,7 +36,7 @@ CREATE TABLE testResults (id INTEGER PRIMARY KEY AUTOINCREMENT, rfid TEXT, idTes
 
 -- Table: Users
 DROP TABLE IF EXISTS user;
-CREATE TABLE Users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT, name TEXT, surname TEXT, type TEXT);
+CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT, name TEXT, surname TEXT, type TEXT);
 
 -- Table: returnOrder
 DROP TABLE IF EXISTS returnOrder;
