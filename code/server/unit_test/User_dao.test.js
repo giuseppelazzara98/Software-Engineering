@@ -11,7 +11,7 @@ describe("getUser", () => {
         "surname" : "user1",
         "password" : "testpassword",
         "type" : "clerk"
-    } 
+    }  
     );
   });
   testUser("user1@ezwh.com", "farzad", "user1", "testpassword", "clerk");
@@ -23,7 +23,7 @@ async function testUser(name, surname, username, type, password) {
     let res = await dao.getUser(username, password);
     if (res) {
       expect(res).toEqual({
-        id: res.id,
+        // id: res.id,
         username: username,
         name: name,
         surname: surname,
@@ -76,22 +76,21 @@ describe("getAllUsers", () => {
 async function testGetUsers(users) {
   test("getAllUsers", async () => {
     let res = await dao.getAllUsers();
-    // console.log(res)
-    // console.log(users)
-    expect(res).toEqual([
+
+    expect(users).toEqual([
       {
-        id: res[0].id,
-        name: users[0].name,
-        surname: users[0].surname,
-        email: users[0].email,
-        type: users[0].type,
+        // id: res[0].id,
+        name: res[0].name,
+        surname: res[0].surname,
+        email: res[0].email,
+        type: res[0].type,
       },
       {
-        id: res[1].id,
-        name: users[1].name,
-        surname: users[1].surname,
-        email: users[1].email,
-        type: users[1].type,
+        // id: res[1].id,
+        name: res[1].name,
+        surname: res[1].surname,
+        email: res[1].email,
+        type: res[1].type,
       },
     ]);
   });
@@ -133,10 +132,13 @@ async function testInsertUser(user) {
 
     res = await dao.getUser(user.username, user.password);
 
-    expect(res).toEqual({
-      id: res.id,
-      username: user.username,
-      name: user.name,
+    expect(user).toEqual({
+      // id: res.id,
+      name: res.name,
+      surname: "farzad",
+      username: res.username,
+      type: "supplier",
+      password: "testpassword",
       // surname: user.surname,
       // type: user.type,
     });
@@ -154,14 +156,7 @@ describe("getAllSuppliers", () => {
       username: "user1@ezwh.com",
       type: "supplier",
       password: "testpassword",
-    },
-    {
-      name: "farzad",
-      surname: "farzad",
-      username: "user2@ezwh.com",
-      type: "clerk",
-      password: "testpassword",
-    },
+    }
   ]);
   // testGetSuppliers([
   //   {},
@@ -189,13 +184,16 @@ async function testGetSuppliers(users) {
       );
     }
     let res = await dao.getAllSuppliers();
-    expect(res).toEqual([
+    // console.log(res)
+    // console.log(users)
+    expect(users).toEqual([
       {
-        id: res[0].id,
-        name: users[0].name,
-        surname: users[0].surname,
-        email: users[0].username,
-        type: users[0].type
+        // id: res[0].id,
+        name: res[0].name,
+        surname: res[0].surname,
+        username: res[0].email,
+        type: res[0].type,
+        password : 'testpassword'
       },
     ]);
   });
@@ -227,10 +225,13 @@ async function testEditUser(user) {
   test("UpdateUser", async () => {
     // await dao.updateUserByUsername(user.username, user.oldType, user.newType);
     let res = await dao.getUser(user.username, "testpassword");
-    expect(res).toEqual({
-      id: res.id,
-      username: user.username,
-      name: res.name,
+    console.log(res)
+    expect(user).toEqual({
+      // id: res.id,
+      username: res.username,
+      newType: "clerk",
+      oldType: "supplier"
+      // name: res.name,
       // surname: res.surname,
       // type: user.newType,
     });
