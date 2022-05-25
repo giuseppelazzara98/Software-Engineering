@@ -24,7 +24,7 @@ CREATE TABLE SKUItems (rowID INTEGER PRIMARY KEY AUTOINCREMENT, RFID TEXT, SKUId
 
 -- Table: SKUs
 DROP TABLE IF EXISTS SKUs;
-CREATE TABLE SKUs (id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT, weight NUMERIC, volume NUMERIC, notes TEXT, position INTEGER, availableQuantity INTEGER, price NUMERIC, testDescriptors TEXT);
+CREATE TABLE SKUs (id INTEGER PRIMARY KEY , description TEXT, weight NUMERIC, volume NUMERIC, notes TEXT, position INTEGER, availableQuantity INTEGER, price NUMERIC, testDescriptors TEXT);
 
 -- Table: test descriptors
 DROP TABLE IF EXISTS testDescriptors;
