@@ -124,7 +124,7 @@ function TestDescriptor_service(dao) {
         return dao.getTD(id).then(
             (row) => {
                 if (row === undefined) {
-                    return new Promise((resolve, reject) => reject(404));
+                    return new Promise((resolve, reject) => reject(422));
                 } else {
                     //update SKU table: delete test descriptor from the field
                     return dao.getSKU(row.idSKU);
@@ -133,7 +133,7 @@ function TestDescriptor_service(dao) {
         ).then(
             (row) => {
                 if (row === undefined) {  //sku does not exist
-                    return new Promise((resolve, reject) => reject(404));
+                    return new Promise((resolve, reject) => reject(422));
                 } else {
                     const IDs = row.testDescriptors.split(',').map(e => parseInt(e)).filter(e => e != id).toString();
                     return dao.updateSKUTestDescriptors(row.id, IDs);

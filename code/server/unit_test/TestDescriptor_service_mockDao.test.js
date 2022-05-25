@@ -82,6 +82,7 @@ describe('get test descriptor', () => {
                 procedureDescription: 'test desc 2',
                 idSKU: 1
             })
+            .mockResolvedValueOnce(undefined)
             .mockRejectedValueOnce(500)
             .mockResolvedValue({
                 id: 2,
@@ -111,6 +112,12 @@ describe('get test descriptor', () => {
             procedureDescription: 'test desc 2',
             idSKU: 1
         })
+        id = 99999;
+        try {
+            await td_service.getTD(id);
+        } catch (e) {
+            expect(e).toBe(404);
+        }
 
         try {
             await td_service.getTD(id);
