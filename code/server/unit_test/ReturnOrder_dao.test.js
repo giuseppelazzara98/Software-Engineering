@@ -31,6 +31,16 @@ describe("getReturn", () => {
 
     
   });
+  afterEach(async () => {
+    await dao.deleteAll();
+    await rdao.deleteAll();
+    await udao.deleteAll();
+    await idao.deleteAll();
+    await sidao.deleteAll();
+    await sdao.deleteAll();
+
+    
+  });
 
   testgetReturn({
     
@@ -93,6 +103,16 @@ async function testgetReturn(returned) {
 
 describe("deleteReturn", () => {
   beforeEach(async () => {
+    await dao.deleteAll();
+    await rdao.deleteAll();
+    await udao.deleteAll();
+    await idao.deleteAll();
+    await sidao.deleteAll();
+    await sdao.deleteAll();
+
+    
+  });
+  afterEach(async () => {
     await dao.deleteAll();
     await rdao.deleteAll();
     await udao.deleteAll();

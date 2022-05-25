@@ -151,7 +151,7 @@ function testResult_dao(){
     this.deleteAll = () => {
         const sql = "DELETE FROM testResults";
         return new Promise((resolve, reject) => {
-            db.run(sql,[], (err) => {
+            testResultDB.run(sql,[], (err) => {
             if (err) {
               reject(503);
             } else {
