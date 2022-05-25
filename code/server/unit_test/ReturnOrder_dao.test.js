@@ -2,19 +2,36 @@
 const ReturnOrder_dao = require("../modules/dao/ReturnOrders_dao");
 const dao = new ReturnOrder_dao();
 
+const RestockOrder_dao = require("../modules/dao/RestockOrders_dao");
+const rdao = new RestockOrder_dao();
+
+const User_dao = require("../modules/dao/User_dao");
+const udao = new User_dao();
+
+const Item_dao = require("../modules/dao/item_dao");
+const idao = new Item_dao();
+
+const skuitem_dao = require("../modules/dao/SKU_item_dao");
+const sidao = new skuitem_dao();
+
+
+const sku_dao = require("../modules/dao/SKU_dao");
+const sdao = new sku_dao();
+
+
 /** */
 describe("getReturn", () => {
   beforeEach(async () => {
     await dao.deleteAll();
+    await rdao.deleteAll();
+    await rdao.addNewROForTest(999, "2021-11-28 08:11", [1, 234, 25], 1)
     await dao.createNewReturnOrder(
       {
-        "returnDate":"2021-11-29 09:11",
+        "returnDate":"2021-11-28 08:11",
         "products": [{"SKUId":3,"description":"sku","price":10.99,
         "RFID":"12345678901234567890123456789016"}],
-        "restockOrderId" : 6
+        "restockOrderId" : 10
     }
-
-      
     );
   });
   testgetReturn(

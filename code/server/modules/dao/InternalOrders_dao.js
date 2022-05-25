@@ -293,6 +293,18 @@ function InternalOrders_dao() {
             })
         })
     }
+    this.deleteAll = () => {
+        const sql = "DELETE FROM internalOrders";
+        return new Promise((resolve, reject) => {
+          db.run(sql,[], (err) => {
+            if (err) {
+              reject(503);
+            } else {
+              resolve(204);
+            }
+          });
+        });
+      };
 }
 
 

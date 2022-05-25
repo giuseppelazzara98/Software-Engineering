@@ -120,6 +120,18 @@ function TestDescriptor_dao() {
             })
         })
     }
+    this.deleteAll = () => {
+        const sql = "DELETE FROM testDescriptors";
+        return new Promise((resolve, reject) => {
+            db.run(sql,[], (err) => {
+            if (err) {
+              reject(503);
+            } else {
+              resolve(204);
+            }
+          });
+        });
+      };
 }
 
 module.exports = TestDescriptor_dao;

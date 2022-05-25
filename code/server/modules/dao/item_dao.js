@@ -141,7 +141,18 @@ function item_dao(){
             });
         });
     }
-
+    this.deleteAll = () => {
+        const sql = "DELETE FROM items";
+        return new Promise((resolve, reject) => {
+            itemDB.run(sql,[], (err) => {
+            if (err) {
+              reject(503);
+            } else {
+              resolve(204);
+            }
+          });
+        });
+      };
 }
 
 module.exports= item_dao;
