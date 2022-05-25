@@ -24,15 +24,15 @@ async function testSKU(id) {
   test("getSKUID", async () => {
     let res = await sku_dao.getSKUsID(id)
     if (res) {
-      expect(res[0]).toEqual({
-        description: res[0].description,
-        weight:res[0].weight,
-        volume:res[0].volume,
-        notes:res[0].notes,
-        position:res[0].position,
-        availableQuantity:res[0].availableQuantity,
-        price: res[0].price,
-        testDescriptors:res[0].testDescriptors
+      expect(res).toEqual({
+        description: res.description,
+        weight:res.weight,
+        volume:res.volume,
+        notes:res.notes,
+        position:res.position,
+        availableQuantity:res.availableQuantity,
+        price: res.price,
+        testDescriptors:res.testDescriptors
       });
     }
   });

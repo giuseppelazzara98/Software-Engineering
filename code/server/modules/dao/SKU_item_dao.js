@@ -98,19 +98,23 @@ function SKU_item_dao() {
       this.getSKUItemsRFID=(rfid) =>{
         return new Promise((resolve, reject) => {
             const sql = 'SELECT * FROM SKUItems WHERE RFID=?';
-            SKUDB.all(sql, [rfid], (err, rows) => {
+            SKUDB.get(sql, [rfid], (err, r) => {
                 if (err) {
                     reject(new Promise( (resolve,reject)=> reject(500)));
                     return;
                 }
-                const skuitemsRFID = rows.map((r) => (
+                if (r===undefined){
+                    reject(new Promise( (resolve,reject)=> reject(404)));
+                    return;
+                }
+                const skuitemsRFID = 
                     {  
                        RFID:r.RFID,
                        SKUId:r.SKUId,
                        Available:r.Available,
                        DateOfStock:r.DateOfStock
                     }
-                ));
+                ;
                 resolve(skuitemsRFID);
             });
         });

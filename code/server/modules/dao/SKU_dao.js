@@ -43,12 +43,16 @@ function SKU_dao() {
     this.getSKUsID=(id)=>{
         return new Promise((resolve, reject) => {
             const sql = 'SELECT * FROM SKUs WHERE id=?';
-            SKUDB.all(sql, [id], (err, rows) => {
+            SKUDB.get(sql, [id], (err, r) => {
                 if (err) {
                     reject(new Promise( (resolve,reject)=> reject(500)));
                     return;
                 }
-                const sku = rows.map((r) => (
+                if (r===undefined){
+                    reject(new Promise( (resolve,reject)=> reject(404)));
+                    return;
+                } 
+                const sku =
                     {  
                        description:r.description,
                        weight:r.weight,
@@ -59,7 +63,7 @@ function SKU_dao() {
                        price:r.price,
                        testDescriptors:r.testDescriptors
                     }
-                ));
+                ;
                 resolve(sku);
             });
         });

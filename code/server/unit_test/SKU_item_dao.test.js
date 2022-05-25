@@ -32,11 +32,11 @@ async function testSKU(rfid) {
   test("getSKU_itemID", async () => {
     let res = await skuit_dao.getSKUItemsRFID(rfid);
     if (res) {
-      expect(res[0]).toEqual({
-        RFID:res[0].RFID,
-        SKUId:res[0].SKUId,
-        Available:res[0].Available,
-        DateOfStock:res[0].DateOfStock
+      expect(res).toEqual({
+        RFID:res.RFID,
+        SKUId:res.SKUId,
+        Available:res.Available,
+        DateOfStock:res.DateOfStock
       });
     }
   });
