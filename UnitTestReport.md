@@ -507,6 +507,105 @@ Version:
 | T | T | F | Valid | Connection to DB failed | test('delete TD') in TestDescriptor_service_mockDao.js |
 
 
+------******
+### **Class Return Order Service - method *getAllReturnOrders***
+**Criteria for method *getAllReturnOrders*:**
+ - C1: Return Orders
+ - C2: connection to DB
+  
+**Predicates for method *getAllReturnOrders*:**
+| Criteria | Predicate |
+| :--------: | --------- |
+| C1    | Returned Orders are correct = T |
+|       | Returned Order are not correct = F |
+| C2    | connection to DB works = T |
+|       | connection to DB does not work = F |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | Jest test case |
+|:------: | :--------: | :-------: | :-------: | :-------: |
+| T | T | Valid | *getAllReturnOrders* is correct | test('get all returned orders') in ReturnOrder.js |
+| F | T | Invalid | *getAllReturnOrders* is not correct | test('get all Return Order') in ReturnOrder_service_mockDao.js |
+| T | F | Invalid | connection to DB failed | test('get all ReturnOrder') in ReturnOrder_service_mockDao.js |
+
+
+
+
+### **Class Return Order Service - method *getReturnOrderById***
+**Criteria for method *getReturnOrderById*:**
+ - C1: Internal Order by id
+ - C2: connection to DB
+  
+**Predicates for method *getIO*:**
+| Criteria | Predicate |
+| :--------: | --------- |
+| C1    | Returned Order by id is correct = T |
+|       | Returned Order by id is not correct = F |
+| C2    | connection to DB works = T |
+|       | connection to DB does not work = F |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | Jest test case |
+|:------: | :--------: | :-------: | :-------: | :-------: |
+| T | T | Valid | *getReturnOrderById* is correct | test('getReturnOrderById') in ReturnOrder_service_mockDao.js |
+| F | T | Invalid | *getReturnOrderById* is not correct | test('getReturnOrderById') in ReturnOrder_service_mockDao.js |
+| T | F | Invalid | connection to DB failed | test('getReturnOrderById') in ReturnOrder_service_mockDao.js |
+
+
+### **Class Return Order Service - method *createNewReturnOrder***
+**Criteria for method *createNewReturnOrder*:**
+ - C1: body 
+ - C2: connection to DB
+  
+**Predicates for method *createNewReturnOrder*:**
+
+| Criteria | Predicate |
+| :--------: | --------- |
+| C1    | Body contains correct attributes = T |
+|       | Body does not contain correct attributes = F |
+| C2    | connection to DB works = T |
+|       | connection to DB does not work = F |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | Jest test case |
+| :--------: | :------: | :-------: | :-------: | :-------: |
+| T | T | Valid | *createNewReturnOrder* is correct | test('createNewReturnOrder') in ReturnOrder_service_mockDao.js |
+| F | T | Invalid | *createNewReturnOrder* is not correct | test('createNewReturnOrder') in ReturnOrder_service_mockDao.js |
+| T | F | Invalid | connection to DB failed | test('createNewReturnOrder') in ReturnOrder_service_mockDao.js |
+
+
+### **Class Return Order Service - method *deleteReturnOrderById***
+**Criteria for method *deleteReturnOrderById*:**
+ - C1: Return Order by id
+ - C2: body
+ - C3: connection to DB
+  
+**Predicates for method *deleteReturnOrderById*:**
+| Criteria | Predicate |
+| :--------: | --------- |
+| C1    | Returned Order by id is correct = T  |
+|       | Returned  Order by id is not correct = F |
+| C2    | Body contains correct attributes = T |
+|       | Body does not contain correct attributes = F |
+| C3    | connection to DB works = T |
+|       | connection to DB does not work = F |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Criteria 3 | Valid / Invalid | Description of the test case | Jest test case |
+| :----: | :---: | :-------: | :------: | :-------: | :-------: |
+| T | T | T | Valid | *deleteReturnOrderById* is correct  | test('deleteReturnOrderById') in ReturnOrder_service_mockDao.js |
+| F | T | T | Invalid | ReturnOrder by id does not exist | ReturnOrder_service_mockDao/updateIO |
+| F | T | T | Invalid | Attributes are incorrect | test('deleteReturnOrderById') in ReturnOrder_service_mockDao.js |
+| T | T | F | Invalid | connection to DB failed | test('deleteReturnOrderById') in ReturnOrder_service_mockDao.js |
+
+
+
+
+
+
+
+
+
 ---
 ---
 ---
