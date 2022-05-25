@@ -11,10 +11,7 @@ describe("getUser", () => {
         "surname" : "user1",
         "password" : "testpassword",
         "type" : "clerk"
-
-    }
-
-      
+    } 
     );
   });
   testUser("user1@ezwh.com", "farzad", "user1", "testpassword", "clerk");
