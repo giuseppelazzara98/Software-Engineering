@@ -18,9 +18,7 @@ describe("getUser", () => {
     );
   });
   testUser("user1@ezwh.com", "farzad", "user1", "testpassword", "clerk");
-  // testUser("Dav", "dav", "user4@ezwh.com", "testpassword"); //fails
-  // testUser("farzad", "farzad", "user@ezwh.com", "testpassword"); //fails
-  // testUser("farzad", "farzad", "user2@ezwh.com", " "); //fails
+  
 });
 
 async function testUser(name, surname, username, type, password) {

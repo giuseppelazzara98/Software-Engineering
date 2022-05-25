@@ -71,7 +71,9 @@ function ReturnOrders_dao() {
     });
   };
   this.createNewReturnOrder = (order) => {
+    // const restockOrderId = order.restockOrderId;
     const restockOrderId = order.restockOrderId;
+    console.log(order.restockOrderId)
     return new Promise((resolve, reject) => {
       const query = "SELECT * FROM restockOrders WHERE id=?";
       reDB.get(query, [restockOrderId], (err, row) => {
