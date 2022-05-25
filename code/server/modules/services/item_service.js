@@ -46,7 +46,7 @@ class item_service{
   }
   putItem= async (item, id)=>{
     try{
-    const check = await item_dao.getItemsById(id);
+    const check = await item_dao.getItemsById2(id);
     if (check.length===0){
       return new Promise( (resolve,reject)=> reject(404));
     }
@@ -59,6 +59,10 @@ class item_service{
   }
   deleteItem=async(id)=>{
     try{
+      const check = await item_dao.getItemsById2(id);
+      if (check.length===0){
+        return new Promise( (resolve,reject)=> reject(404));
+      }
       await item_dao.deleteItem(id);
       return new Promise( (resolve,reject)=> resolve(204));
     }
