@@ -50,7 +50,6 @@ function SKU_dao() {
                 }
                 const sku = rows.map((r) => (
                     {  
-                       id:r.id,
                        description:r.description,
                        weight:r.weight,
                        volume:r.volume,
