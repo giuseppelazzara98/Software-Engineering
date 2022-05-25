@@ -16,64 +16,12 @@ Version:
 
 # Black Box Unit Tests
 
-    <Define here criteria, predicates and the combination of predicates for each function of each class.
-    Define test cases to cover all equivalence classes and boundary conditions.
-    In the table, report the description of the black box test case and (traceability) the correspondence with the Jest test case writing the 
-    class and method name that contains the test case>
-    <Jest tests  must be in code/server/unit_test  >
-
- ### **Class *class_name* - method *name***
-
-
-
-**Criteria for method *name*:**
-	
-
- - 
- - 
-
-
-
-
-
-**Predicates for method *name*:**
-
-| Criteria | Predicate |
-| -------- | --------- |
-|          |           |
-|          |           |
-|          |           |
-|          |           |
-
-
-
-
-
-**Boundaries**:
-
-| Criteria | Boundary values |
-| -------- | --------------- |
-|          |                 |
-|          |                 |
-
-
-
-**Combination of predicates**:
-
-
-| Criteria 1 | Criteria 2 | ... | Valid / Invalid | Description of the test case | Jest test case |
-|-------|-------|-------|-------|-------|-------|
-|||||||
-|||||||
-|||||||
-|||||||
-|||||||
 
 ### **Class Restock Order Service - method *getAllIO***
 **Criteria for method *getAllIO*:**
  - C1: Internal Orders
  - C2: connection to DB
-  
+
 **Predicates for method *getAllIO*:**
 | Criteria | Predicate |
 | :--------: | --------- |
@@ -94,7 +42,7 @@ Version:
 **Criteria for method *getAllIOIssued*:**
  - C1: Internal Orders issued
  - C2: connection to DB
-  
+
 **Predicates for method *getAllIOIssued*:**
 | Criteria | Predicate |
 | :--------: | --------- |
@@ -115,7 +63,7 @@ Version:
 **Criteria for method *getAllIOAccepted*:**
  - C1: Internal Orders issued
  - C2: connection to DB
-  
+
 **Predicates for method *getAllIOAccepted*:**
 | Criteria | Predicate |
 | :--------: | --------- |
@@ -136,7 +84,7 @@ Version:
 **Criteria for method *getIO*:**
  - C1: Internal Order by id
  - C2: connection to DB
-  
+
 **Predicates for method *getIO*:**
 | Criteria | Predicate |
 | :--------: | --------- |
@@ -157,7 +105,7 @@ Version:
 **Criteria for method *addIO*:**
  - C1: body 
  - C2: connection to DB
-  
+
 **Predicates for method *addIO*:**
 
 | Criteria | Predicate |
@@ -180,7 +128,7 @@ Version:
  - C1: Internal Order by id
  - C2: body
  - C3: connection to DB
-  
+
 **Predicates for method *updateStateIO*:**
 | Criteria | Predicate |
 | :--------: | --------- |
@@ -205,7 +153,7 @@ Version:
 **Criteria for method *getAllRO*:**
  - C1: Restock Orders
  - C2: connection to DB
-  
+
 **Predicates for method *getAllRO*:**
 | Criteria | Predicate |
 | :--------: | --------- |
@@ -226,7 +174,7 @@ Version:
 **Criteria for method *getAllROIssued*:**
  - C1: Restock Orders issued
  - C2: connection to DB
-  
+
 **Predicates for method *getAllROIssued*:**
 | Criteria | Predicate |
 | :--------: | --------- |
@@ -247,7 +195,7 @@ Version:
 **Criteria for method *getRO*:**
  - C1: Restock Order by id
  - C2: connection to DB
-  
+
 **Predicates for method *getRO*:**
 | Criteria | Predicate |
 | :--------: | --------- |
@@ -269,7 +217,7 @@ Version:
  - C1: Restock Order by id
  - C2: Restock Order state 
  - C3: connection to DB
-  
+
 **Predicates for method *getROReturnedItems*:**
 | Criteria | Predicate |
 | :--------: | --------- |
@@ -293,7 +241,7 @@ Version:
 **Criteria for method *addRO*:**
  - C1: body 
  - C2: connection to DB
-  
+
 **Predicates for method *addRO*:**
 
 | Criteria | Predicate |
@@ -342,7 +290,7 @@ Version:
  - C2: Restock Order state 
  - C3: body
  - C4: connection to DB
-  
+
 **Predicates for method *addSkuItems*:**
 | Criteria | Predicate |
 | :--------: | :--------- |
@@ -371,7 +319,7 @@ Version:
  - C2: Restock Order state 
  - C3: body
  - C4: connection to DB
-  
+
 **Predicates for method *addTransportNote*:**
 | Criteria   | Predicate |
 | :--------: | --------- |
@@ -399,7 +347,7 @@ Version:
 **Criteria for method *getAllTD*:**
  - C1: Test descriptors
  - C2: connection to DB
-  
+
 **Predicates for method *getAllTD*:**
 | Criteria | Predicate |
 | :--------: | --------- |
@@ -420,7 +368,7 @@ Version:
 **Criteria for method *getTD*:**
  - C1: Test descriptors by id
  - C2: connection to DB
-  
+
 **Predicates for method *getTD*:**
 | Criteria | Predicate |
 | :--------: | --------- |
@@ -441,7 +389,7 @@ Version:
 **Criteria for method *addTD*:**
  - C1: SKU by id
  - C2: connection to DB
-  
+
 **Predicates for method *addTD*:**
 | Criteria | Predicate |
 | :--------: | --------- |
@@ -463,7 +411,7 @@ Version:
  - C1: Test descriptors by id
  - C2: SKU by id
  - C3: connection to DB
-  
+
 **Predicates for method *modifyTD*:**
 | Criteria | Predicate |
 | :--------: | --------- |
@@ -487,7 +435,7 @@ Version:
  - C1: Test descriptors by id
  - C2: SKU by id
  - C3: connection to DB
-  
+
 **Predicates for method *deleteTD*:**
 | Criteria | Predicate |
 | :--------: | --------- |
@@ -507,13 +455,14 @@ Version:
 | T | T | F | Valid | Connection to DB failed | test('delete TD') in TestDescriptor_service_mockDao.js |
 
 
-------******
-### **Class Return Order Service - method *getAllReturnOrders***
+
+### **Class Return Order Dao - method *getAllReturnOrders***
 **Criteria for method *getAllReturnOrders*:**
  - C1: Return Orders
  - C2: connection to DB
-  
+
 **Predicates for method *getAllReturnOrders*:**
+
 | Criteria | Predicate |
 | :--------: | --------- |
 | C1    | Returned Orders are correct = T |
@@ -524,18 +473,18 @@ Version:
 **Combination of predicates**:
 | Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | Jest test case |
 |:------: | :--------: | :-------: | :-------: | :-------: |
-| T | T | Valid | *getAllReturnOrders* is correct | test('get all returned orders') in ReturnOrder.js |
-| F | T | Invalid | *getAllReturnOrders* is not correct | test('get all Return Order') in ReturnOrder_service_mockDao.js |
-| T | F | Invalid | connection to DB failed | test('get all ReturnOrder') in ReturnOrder_service_mockDao.js |
+| T | T | Valid | *getAllReturnOrders* is correct | test('get all returned orders') in ReturnOrder.test.js |
+| F | T | Invalid | *getAllReturnOrders* is not correct | test('get all Return Order') in ReturnOrder.test.js |
+| T | F | Invalid | connection to DB failed | test('get all ReturnOrder') in ReturnOrder.test.js |
 
 
 
 
-### **Class Return Order Service - method *getReturnOrderById***
+### **Class Return Order Dao - method *getReturnOrderById***
 **Criteria for method *getReturnOrderById*:**
  - C1: Internal Order by id
  - C2: connection to DB
-  
+
 **Predicates for method *getIO*:**
 | Criteria | Predicate |
 | :--------: | --------- |
@@ -547,16 +496,16 @@ Version:
 **Combination of predicates**:
 | Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | Jest test case |
 |:------: | :--------: | :-------: | :-------: | :-------: |
-| T | T | Valid | *getReturnOrderById* is correct | test('getReturnOrderById') in ReturnOrder_service_mockDao.js |
-| F | T | Invalid | *getReturnOrderById* is not correct | test('getReturnOrderById') in ReturnOrder_service_mockDao.js |
-| T | F | Invalid | connection to DB failed | test('getReturnOrderById') in ReturnOrder_service_mockDao.js |
+| T | T | Valid | *getReturnOrderById* is correct | test('getReturnOrderById') in ReturnOrder.test.js |
+| F | T | Invalid | *getReturnOrderById* is not correct | test('getReturnOrderById') in ReturnOrder.test.js |
+| T | F | Invalid | connection to DB failed | test('getReturnOrderById') in ReturnOrder.test.js |
 
 
-### **Class Return Order Service - method *createNewReturnOrder***
+### **Class Return Order Dao - method *createNewReturnOrder***
 **Criteria for method *createNewReturnOrder*:**
  - C1: body 
  - C2: connection to DB
-  
+
 **Predicates for method *createNewReturnOrder*:**
 
 | Criteria | Predicate |
@@ -569,17 +518,18 @@ Version:
 **Combination of predicates**:
 | Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | Jest test case |
 | :--------: | :------: | :-------: | :-------: | :-------: |
-| T | T | Valid | *createNewReturnOrder* is correct | test('createNewReturnOrder') in ReturnOrder_service_mockDao.js |
-| F | T | Invalid | *createNewReturnOrder* is not correct | test('createNewReturnOrder') in ReturnOrder_service_mockDao.js |
-| T | F | Invalid | connection to DB failed | test('createNewReturnOrder') in ReturnOrder_service_mockDao.js |
+| T | T | Valid | *createNewReturnOrder* is correct | test('createNewReturnOrder') in ReturnOrder.test.js |
+| F | T | Invalid | *createNewReturnOrder* is not correct | test('createNewReturnOrder') in ReturnOrder.test.js |
+| T | F | Invalid | connection to DB failed | test('createNewReturnOrder') in ReturnOrder.test.js |
 
 
-### **Class Return Order Service - method *deleteReturnOrderById***
+### **Class Return Order Dao - method *deleteReturnOrderById***
 **Criteria for method *deleteReturnOrderById*:**
+
  - C1: Return Order by id
  - C2: body
  - C3: connection to DB
-  
+
 **Predicates for method *deleteReturnOrderById*:**
 | Criteria | Predicate |
 | :--------: | --------- |
@@ -593,14 +543,174 @@ Version:
 **Combination of predicates**:
 | Criteria 1 | Criteria 2 | Criteria 3 | Valid / Invalid | Description of the test case | Jest test case |
 | :----: | :---: | :-------: | :------: | :-------: | :-------: |
-| T | T | T | Valid | *deleteReturnOrderById* is correct  | test('deleteReturnOrderById') in ReturnOrder_service_mockDao.js |
+| T | T | T | Valid | *deleteReturnOrderById* is correct  | test('deleteReturnOrderById') in ReturnOrder.test.js |
 | F | T | T | Invalid | ReturnOrder by id does not exist | ReturnOrder_service_mockDao/updateIO |
-| F | T | T | Invalid | Attributes are incorrect | test('deleteReturnOrderById') in ReturnOrder_service_mockDao.js |
-| T | T | F | Invalid | connection to DB failed | test('deleteReturnOrderById') in ReturnOrder_service_mockDao.js |
+| F | T | T | Invalid | Attributes are incorrect | test('deleteReturnOrderById') in ReturnOrder.test.js |
+| T | T | F | Invalid | connection to DB failed | test('deleteReturnOrderById') in ReturnOrder.test.js |
 
 
 
+### **Class UserDao - method *getAllSuppliers***
 
+**Criteria for method *getAllSuppliers*:**
+
+ - C1: Return suppliers
+
+**Predicates for method *getAllSuppliers*:**
+
+| Criteria | Predicate                     |
+| :------: | ----------------------------- |
+|    C1    | Suppliers are correct = T     |
+|          | Suppliers are not correct = F |
+
+**Combination of predicates**:
+
+| Criteria 1 | Valid / Invalid |   Description of the test case   |              Jest test case               |
+| :--------: | :-------------: | :------------------------------: | :---------------------------------------: |
+|     T      |      Valid      |   *getAllSuppliers* is correct   | test(' getsuppliers') in User_dao.test.js |
+|     F      |     Invalid     | *getAllSuppliers* is not correct | test(' getsuppliers') in User_dao.test.js |
+
+
+
+### **Class UserDao - method **updateUserByUsername****
+
+**Criteria for method *updateUserByUsername*:**
+
+ - C1: validity of username
+ - C2: validity of newType
+ - C3: validity of oldType
+
+**Predicates for method *updateUserByUsername*:**
+
+| Criteria | Predicate                  |
+| :------: | -------------------------- |
+|    C1    | Username is correct = T    |
+|          | Username is false = F      |
+|    C2    | newType is valid = T       |
+|          | newType is not valid  =  F |
+|    C3    | oldType is valid =  T      |
+|          | oldType is not valid = F   |
+
+**Combination of predicates**:
+
+| Criteria 1 | Criteria 2 | Criteria 3 | Valid / Invalid |     Description of the test case      |             Jest test case              |
+| :--------: | ---------- | ---------- | :-------------: | :-----------------------------------: | :-------------------------------------: |
+|     T      | T          | T          |      Valid      |   *updateUserByUsername* is correct   | test(' UpdateUser') in User_dao.test.js |
+|     *      | *          | F          |     Invalid     | *updateUserByUsername* is not correct | test(' UpdateUser') in User_dao.test.js |
+|     *      | F          | *          |     Invalid     | *updateUserByUsername* is not correct | test(' UpdateUser') in User_dao.test.js |
+|     F      | *          | *          |     Invalid     | *updateUserByUsername* is not correct | test(' UpdateUser') in User_dao.test.js |
+
+
+
+### **Class UserDao - method deleteUserByUsernameAndType**
+
+**Criteria for method *deleteUserByUsernameAndType*:**
+
+ - C1: validity of username
+ - C2: validity of type
+
+**Predicates for method *deleteUserByUsernameAndType*:**
+
+| Criteria | Predicate               |
+| :------: | ----------------------- |
+|    C1    | Username is correct = T |
+|          | Username is false = F   |
+|    C2    | Type is valid = T       |
+|          | Type is not valid  = F  |
+
+**Combination of predicates**:
+
+| Criteria 1 | Criteria 2 | Valid / Invalid |         Description of the test case         |             Jest test case              |
+| :--------: | ---------- | :-------------: | :------------------------------------------: | :-------------------------------------: |
+|     T      | T          |      Valid      |   *deleteUserByUsernameAndType* is correct   | test(' deleteuser') in User_dao.test.js |
+|     *      | F          |     Invalid     | *deleteUserByUsernameAndType* is not correct | test(' deleteuser') in User_dao.test.js |
+|     F      | *          |     Invalid     | *deleteUserByUsernameAndType* is not correct | test(' deleteuser') in User_dao.test.js |
+
+
+
+### **Class PositionDao - method *validatePositionID***
+
+**Criteria for method *validatePositionID*:**
+
+ - C1: values of positionId, aisleId, row, col
+
+**Predicates for method *validatePositionID*:**
+
+| Criteria | Predicate                                           |
+| :------: | --------------------------------------------------- |
+|    C1    | values of positionId, aisleId, row, col are correct |
+
+**Combination of predicates**:
+
+| Criteria 1 | Valid / Invalid |  Description of the test case   |                     Jest test case                      |
+| :--------: | :-------------: | :-----------------------------: | :-----------------------------------------------------: |
+|     T      |      Valid      | *validatePositionID* is correct | test(' tes validatePositionID') in Position_dao.test.js |
+
+
+
+### **Class PositionDao - method *getAllPositions***
+
+**Criteria for method *getAllPositions*:**
+
+ - C1: Return suppliers
+
+**Predicates for method *getAllPositions*:**
+
+| Criteria | Predicate                     |
+| :------: | ----------------------------- |
+|    C1    | Positions are correct = T     |
+|          | Positions are not correct = F |
+
+**Combination of predicates**:
+
+| Criteria 1 | Valid / Invalid |   Description of the test case   |                Jest test case                |
+| :--------: | :-------------: | :------------------------------: | :------------------------------------------: |
+|     T      |      Valid      |   *getAllPositions* is correct   | test(' getPosition') in position_dao.test.js |
+|     F      |     Invalid     | *getAllPositions* is not correct | test(' getPosition') in position_dao.test.js |
+
+
+
+### **Class PositionDao - method createNewPosition**
+
+**Criteria for method *createNewPosition*:**
+
+ - C1: validity of parameters
+
+**Predicates for method *createNewPosition*:**
+
+| Criteria | Predicate                             |
+| :------: | ------------------------------------- |
+|    C1    | validity of parameters is correct = T |
+|          | validity of parameters is false = F   |
+
+**Combination of predicates**:
+
+| Criteria 1 | Valid / Invalid |    Description of the test case    |                 Jest test case                  |
+| :--------: | :-------------: | :--------------------------------: | :---------------------------------------------: |
+|     T      |      Valid      |   *createNewPosition* is correct   | test(' createPosition') in Position_dao.test.js |
+|     *      |     Invalid     | *createNewPosition* is not correct | test(' createPosition') in Position_dao.test.js |
+
+
+
+### **Class PositionDao - method createNewPosition**
+
+**Criteria for method *updatePositionByPosId*:**
+
+ - C1: validity of parameters
+
+**Predicates for method *updatePositionByPosId*:**
+
+| Criteria | Predicate                             |
+| :------: | ------------------------------------- |
+|    C1    | validity of parameters is correct = T |
+|          | validity of parameters is false = F   |
+
+**Combination of predicates**:
+
+| Criteria 1 | Valid / Invalid |      Description of the test case      |                     Jest test case                     |
+| :--------: | :-------------: | :------------------------------------: | :----------------------------------------------------: |
+|     T      |      Valid      |   *updatePositionByPosId* is correct   | test(' updatePositionByPosId') in Position_dao.test.js |
+|     *      |     Invalid     | *updatePositionByPosId* is not correct | test(' updatePositionByPosId') in Position_dao.test.js |
 
 
 
@@ -612,37 +722,12 @@ Version:
 # White Box Unit Tests
 
 ### Test cases definition
-    
-    
-    <Report here all the created Jest test cases, and the units/classes under test >
-    <For traceability write the class and method name that contains the test case>
-
 
 | Unit name | Jest test case |
 | :--- | :--- |
 | TestDescriptor_service | TestDescriptor_service_mockdao |
-| TestDescriptor_dao | TestDescriptor_daotest |
 | RestockOrder_service | RestockOrder_service_mockdao |
-| RestockOrder_dao | RestockOrder_daotest |
 | InternalOrder_service | InternalOrder_service_mockdao |
-| InternalOrder_dao | InternalOrder_daotest |
-||||
 
 ### Code coverage report
-
-    <Add here the screenshot report of the statement and branch coverage obtained using
-    the coverage tool. >
-
-
-### Loop coverage analysis
-
-    <Identify significant loops in the units and reports the test cases
-    developed to cover zero, one or multiple iterations >
-
-|Unit name | Loop rows | Number of iterations | Jest test case |
-|---|---|---|---|
-|||||
-|||||
-||||||
-
-
+![Unit Test coverage](Images/unitTest_coverage.png)
