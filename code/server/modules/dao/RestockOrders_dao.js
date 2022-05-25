@@ -350,7 +350,32 @@ function RestockOrders_dao() {
             })
         })
     }
+    this.addNewROForTest = async (id, date, IDs, supplierId) => {
+        return new Promise((resolve, reject) => {
+          const query =
+            'INSERT INTO restockOrders(id, issueDate, state, products, supplierID) VALUES(?,?, "COMPLETEDRETURN", ?, ?)';
+            db.run(query, [id, date, IDs, supplierId], (err) => {
+            if (err) {
+              reject();
+            } else {
+              resolve();
+            }
+          });
+        });
+      };
 
+      this.deleteAll = () => {
+        const sql = "DELETE FROM restockOrders";
+        return new Promise((resolve, reject) => {
+          db.run(sql,[], (err) => {
+            if (err) {
+              reject(503);
+            } else {
+              resolve(204);
+            }
+          });
+        });
+      };
 }
 
 

@@ -171,9 +171,20 @@ function SKU_dao() {
                 resolve(true);
             });
         });
-
-
     }
+    this.deleteAll = () => {
+        const sql = "DELETE FROM SKUs";
+        return new Promise((resolve, reject) => {
+            SKUDB.run(sql,[], (err) => {
+            if (err) {
+              reject(503);
+            } else {
+              resolve(204);
+            }
+          });
+        });
+      };
+    
 }
 
 module.exports= SKU_dao;

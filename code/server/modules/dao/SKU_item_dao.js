@@ -152,7 +152,18 @@ function SKU_item_dao() {
             });
         });
       }
-
+      this.deleteAll = () => {
+        const sql = "DELETE FROM SKUItems";
+        return new Promise((resolve, reject) => {
+            SKUDB.run(sql,[], (err) => {
+            if (err) {
+              reject(503);
+            } else {
+              resolve(204);
+            }
+          });
+        });
+      };
 }
 
 module.exports= SKU_item_dao;
