@@ -66,13 +66,15 @@ routerSKU_item.get("/skuitems", async (req, res) => {
       skuitem === undefined ||
       skuitem.RFID === undefined ||
       skuitem.SKUId === undefined ||
-      skuitem.DateOfStock===undefined//validazione data
+      skuitem.DateOfStock===undefined
     ) {
       return res.status(422).send("422 Unprocessable Entity"); 
     }
-    if(!(dayjs(skuitem.DateOfStock,"YYYY/MM/DD",true).isValid()||dayjs(skuitem.DateOfStock,"YYYY/MM/DD HH:MM",true).isValid()||skuitem.DateOfStock==null)){
-      return res.status(422).send("422 Unprocessable Entity"); 
-    }
+    if ((skuitem.DateOfStock !== null && skuitem.DateOfStock !== undefined && skuitem.DateOfStock !== "") &&
+            !(dayjs(skuitem.DateOfStock, ['YYYY/MM/DD', 'YYYY/MM/DD HH:mm'], true).isValid())) {
+            console.log("Invalid date");
+            return res.status(422).send("422 Unprocessable Entity"); 
+        }
     try{
     await SKU_item_service.postSkuItem(skuitem);
     return res.status(201).send("201 Created");

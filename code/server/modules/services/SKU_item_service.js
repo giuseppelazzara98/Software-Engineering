@@ -59,7 +59,7 @@ class SKU_item_service{
         return new Promise( (resolve,reject)=> reject(404));
       }
       await SKU_item_dao.putSkuItem(skuitem,rfid);
-      return new Promise( (resolve,reject)=> resolve(201));
+      return new Promise( (resolve,reject)=> resolve(200));
     }
     catch(err){
       return err;
