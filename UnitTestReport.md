@@ -507,6 +507,296 @@ Version:
 | T | T | F | Valid | Connection to DB failed | test('delete TD') in TestDescriptor_service_mockDao.js |
 
 
+------******
+### **Class Return Order Service - method *getAllReturnOrders***
+**Criteria for method *getAllReturnOrders*:**
+ - C1: Return Orders
+ - C2: connection to DB
+  
+**Predicates for method *getAllReturnOrders*:**
+| Criteria | Predicate |
+| :--------: | --------- |
+| C1    | Returned Orders are correct = T |
+|       | Returned Order are not correct = F |
+| C2    | connection to DB works = T |
+|       | connection to DB does not work = F |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | Jest test case |
+|:------: | :--------: | :-------: | :-------: | :-------: |
+| T | T | Valid | *getAllReturnOrders* is correct | test('get all returned orders') in ReturnOrder.js |
+| F | T | Invalid | *getAllReturnOrders* is not correct | test('get all Return Order') in ReturnOrder_service_mockDao.js |
+| T | F | Invalid | connection to DB failed | test('get all ReturnOrder') in ReturnOrder_service_mockDao.js |
+
+
+
+
+### **Class Return Order Service - method *getReturnOrderById***
+**Criteria for method *getReturnOrderById*:**
+ - C1: Internal Order by id
+ - C2: connection to DB
+  
+**Predicates for method *getIO*:**
+| Criteria | Predicate |
+| :--------: | --------- |
+| C1    | Returned Order by id is correct = T |
+|       | Returned Order by id is not correct = F |
+| C2    | connection to DB works = T |
+|       | connection to DB does not work = F |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | Jest test case |
+|:------: | :--------: | :-------: | :-------: | :-------: |
+| T | T | Valid | *getReturnOrderById* is correct | test('getReturnOrderById') in ReturnOrder_service_mockDao.js |
+| F | T | Invalid | *getReturnOrderById* is not correct | test('getReturnOrderById') in ReturnOrder_service_mockDao.js |
+| T | F | Invalid | connection to DB failed | test('getReturnOrderById') in ReturnOrder_service_mockDao.js |
+
+
+### **Class Return Order Service - method *createNewReturnOrder***
+**Criteria for method *createNewReturnOrder*:**
+ - C1: body 
+ - C2: connection to DB
+  
+**Predicates for method *createNewReturnOrder*:**
+
+| Criteria | Predicate |
+| :--------: | --------- |
+| C1    | Body contains correct attributes = T |
+|       | Body does not contain correct attributes = F |
+| C2    | connection to DB works = T |
+|       | connection to DB does not work = F |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | Jest test case |
+| :--------: | :------: | :-------: | :-------: | :-------: |
+| T | T | Valid | *createNewReturnOrder* is correct | test('createNewReturnOrder') in ReturnOrder_service_mockDao.js |
+| F | T | Invalid | *createNewReturnOrder* is not correct | test('createNewReturnOrder') in ReturnOrder_service_mockDao.js |
+| T | F | Invalid | connection to DB failed | test('createNewReturnOrder') in ReturnOrder_service_mockDao.js |
+
+
+### **Class Return Order Service - method *deleteReturnOrderById***
+**Criteria for method *deleteReturnOrderById*:**
+ - C1: Return Order by id
+ - C2: body
+ - C3: connection to DB
+  
+**Predicates for method *deleteReturnOrderById*:**
+| Criteria | Predicate |
+| :--------: | --------- |
+| C1    | Returned Order by id is correct = T  |
+|       | Returned  Order by id is not correct = F |
+| C2    | Body contains correct attributes = T |
+|       | Body does not contain correct attributes = F |
+| C3    | connection to DB works = T |
+|       | connection to DB does not work = F |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Criteria 3 | Valid / Invalid | Description of the test case | Jest test case |
+| :----: | :---: | :-------: | :------: | :-------: | :-------: |
+| T | T | T | Valid | *deleteReturnOrderById* is correct  | test('deleteReturnOrderById') in ReturnOrder_service_mockDao.js |
+| F | T | T | Invalid | ReturnOrder by id does not exist | ReturnOrder_service_mockDao/updateIO |
+| F | T | T | Invalid | Attributes are incorrect | test('deleteReturnOrderById') in ReturnOrder_service_mockDao.js |
+| T | T | F | Invalid | connection to DB failed | test('deleteReturnOrderById') in ReturnOrder_service_mockDao.js |
+
+
+
+### **Class Restock Order Service - method *getAllRO***
+**Criteria for method *getAllRO*:**
+ - C1: Restock Orders
+ - C2: connection to DB
+  
+**Predicates for method *getAllRO*:**
+| Criteria | Predicate |
+| :--------: | --------- |
+| C1    | Returned Restock Orders are correct = T |
+|       | Returned Restock Order are not correct = F |
+| C2    | connection to DB works = T |
+|       | connection to DB does not work = F |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | Jest test case |
+| :------: | :--------: | :-------: | :-------: | :-------: |
+| T | T | Valid | *getAllRO* is correct | test('get all restock orders') in RestockOrder_service_mockDao.js |
+| F | T | Invalid | *getAllRO* is not correct | test('get all restock orders') in RestockOrder_service_mockDao.js |
+| T | F | Invalid | connection to DB failed | test('get all restock orders') in RestockOrder_service_mockDao.js |
+
+
+### **Class Restock Order Service - method *getAllROIssued***
+**Criteria for method *getAllROIssued*:**
+ - C1: Restock Orders issued
+ - C2: connection to DB
+  
+**Predicates for method *getAllROIssued*:**
+| Criteria | Predicate |
+| :--------: | --------- |
+| C1    | Returned Restock Orders issued are correct = T |
+|       | Returned Restock Order issued are not correct = F |
+| C2    | connection to DB works = T |
+|       | connection to DB does not work = F |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | Jest test case |
+|:------: | :--------: | :-------: | :-------: | :-------: |
+| T | T | Valid | *getAllROIssued* is correct | test('get issued restock orders') in RestockOrder_service_mockDao.js |
+| F | T | Invalid | *getAllROIssued* is not correct | test('get issued restock orders') in RestockOrder_service_mockDao.js |
+| T | F | Invalid | connection to DB failed | test('get issued restock orders') in RestockOrder_service_mockDao.js |
+
+
+### **Class Restock Order Service - method *getRO***
+**Criteria for method *getRO*:**
+ - C1: Restock Order by id
+ - C2: connection to DB
+  
+**Predicates for method *getRO*:**
+| Criteria | Predicate |
+| :--------: | --------- |
+| C1    | Returned Restock Order by id is correct = T |
+|       | Returned Restock Order by id is not correct = F |
+| C2    | connection to DB works = T |
+|       | connection to DB does not work = F |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | Jest test case |
+|:------: | :--------: | :-------: | :-------: | :-------: |
+| T | T | Valid | *getRO* is correct | test('getRO') in RestockOrder_service_mockDao.js |
+| F | T | Invalid | *getRO* is not correct | test('getRO') in RestockOrder_service_mockDao.js |
+| T | F | Invalid | connection to DB failed | test('getRO') in RestockOrder_service_mockDao.js |
+
+
+### **Class Restock Order Service - method *getROReturnedItems***
+**Criteria for method *getROReturnedItems*:**
+ - C1: Restock Order by id
+ - C2: Restock Order state 
+ - C3: connection to DB
+  
+**Predicates for method *getROReturnedItems*:**
+| Criteria | Predicate |
+| :--------: | --------- |
+| C1    | Returned Restock Order by id is correct = T |
+|       | Returned Restock Order by id is not correct = F |
+| C2    | Returned Restock Order state correct = T |
+|       | Returned Restock Order state is not correct = F |
+| C3    | connection to DB works = T |
+|       | connection to DB does not work = F |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Criteria 3 | Valid / Invalid | Description of the test case | Jest test case |
+| :----: | :---: | :-------: | :------: | :-------: | :-------: |
+| T | T | T | Valid | *getROReturnedItems* is correct  | test('get return items by roID') in RestockOrder_service_mockDao.js |
+| F | T | T | Invalid | RestockOrder by id does not exist | test('get return items by roID') in RestockOrder_service_mockDao.js |
+| T | F | T | Invalid | RestockOrder by id have incorrect state | test('get return items by roID') in RestockOrder_service_mockDao.js |
+| T | T | F | Invalid | connection to DB failed | test('get return items by roID') in RestockOrder_service_mockDao.js |
+
+
+### **Class Restock Order Service - method *addRO***
+**Criteria for method *addRO*:**
+ - C1: body 
+ - C2: connection to DB
+  
+**Predicates for method *addRO*:**
+
+| Criteria | Predicate |
+| :--------: | --------- |
+| C1    | Body contains correct attributes = T |
+|       | Body does not contain correct attributes = F |
+| C2    | connection to DB works = T |
+|       | connection to DB does not work = F |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Valid / Invalid | Description of the test case | Jest test case |
+| :--------: | :------: | :-------: | :-------: | :-------: |
+| T | T | Valid | *addRO* is correct | test('insert RO') in RestockOrder_service_mockDao.js |
+| F | T | Invalid | *addRO* is not correct | test('insert RO') in RestockOrder_service_mockDao.js |
+| T | F | Invalid | *addRO* is not correct | test('insert RO') in RestockOrder_service_mockDao.js |
+
+
+### **Class Restock Order Service - method *updateStateRO***
+**Criteria for method *updateStateRO*:**
+ - C1: Restock Order by id
+ - C2: body
+ - C3: connection to DB
+
+**Predicates for method *updateStateRO*:**
+| Criteria | Predicate |
+| :--------: | --------- |
+| C1    | Returned Restock Order by id is correct = T |
+|       | Returned Restock Order by id is not correct = F |
+| C2    | Body contains correct attributes = T |
+|       | Body does not contain correct attributes = F |
+| C3    | connection to DB works = T |
+|       | connection to DB does not work = F |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Criteria 3 | Valid / Invalid | Description of the test case | Jest test case |
+| :----: | :-----: | :-----: | :-------: | :-------: | :-------: |
+| T | T | T | Valid | *updateStateRO* is correct | test('update RO state') in RestockOrder_service_mockDao.js |
+| F | T | T | Invalid | RestockOrder by id does not exist | test('update RO state') in RestockOrder_service_mockDao.js |
+| T | F | T | Invalid | Attributes are incorrect | test('update RO state') in RestockOrder_service_mockDao.js |
+| T | T | F | Invalid | Connection to DB failed | test('update RO state') in RestockOrder_service_mockDao.js |
+
+
+### **Class Restock Order Service - method *addSkuItems***
+**Criteria for method *addSkuItems*:**
+ - C1: Restock Order by id
+ - C2: Restock Order state 
+ - C3: body
+ - C4: connection to DB
+  
+**Predicates for method *addSkuItems*:**
+| Criteria | Predicate |
+| :--------: | :--------- |
+| C1    | Returned Restock Order by id is correct = T |
+|       | Returned Restock Order by id is not correct = F |
+| C2    | Returned Restock Order state correct = T |
+|       | Returned Restock Order state is not correct = F |
+| C3    | Body contains correct attributes = T |
+|       | Body does not contain correct attributes = F |
+| C4    | connection to DB works = T |
+|       | connection to DB does not work = F |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Criteria 3 | Criteria 4 | Valid / Invalid | Description of the test case | Jest test case |
+| :------: | :---: | :-----: | :---: | :-------: | :-------: | :-------: |
+| T | T | T | T | Valid | *addSkuItems* is correct | test('update RO skuItems') in RestockOrder_service_mockDao.js |
+| F | T | T | T | Invalid | RestockOrder by id does not exist | test('update RO skuItems') in RestockOrder_service_mockDao.js |
+| T | F | T | T | Invalid | RestockOrder state is not correct | test('update RO skuItems') in RestockOrder_service_mockDao.js |
+| T | T | F | T | Invalid | Attributes are incorrect | test('update RO skuItems') in RestockOrder_service_mockDao.js |
+| T | T | T | F | Invalid | Connection to DB failed | test('update RO skuItems') in RestockOrder_service_mockDao.js |
+
+
+### **Class Restock Order Service - method *addTransportNote***
+**Criteria for method *addTransportNote*:**
+ - C1: Restock Order by id
+ - C2: Restock Order state 
+ - C3: body
+ - C4: connection to DB
+  
+**Predicates for method *addTransportNote*:**
+| Criteria   | Predicate |
+| :--------: | --------- |
+| C1    | Returned Restock Order by id is correct = T |
+|       | Returned Restock Order by id is not correct = F |
+| C2    | Returned Restock Order state correct = T |
+|       | Returned Restock Order state is not correct = F |
+| C3    | Body contains correct attributes = T |
+|       | Body does not contain correct attributes = F |
+| C4    | connection to DB works = T |
+|       | connection to DB does not work = F |
+
+**Combination of predicates**:
+| Criteria 1 | Criteria 2 | Criteria 3 | Criteria 4 | Valid / Invalid | Description of the test case | Jest test case |
+| :------: | :---: | :-----: | :---: | :-------: | :-------: | :-------: |
+| T | T | T | T | Valid | *addSkuItems* is correct | test('update RO skuItems') in RestockOrder_service_mockDao.js |
+| F | T | T | T | Invalid | RestockOrder by id does not exist | test('update RO transportNote') in RestockOrder_service_mockDao.js |
+| T | F | T | T | Invalid | RestockOrder state is not correct | test('update RO transportNote') in RestockOrder_service_mockDao.js |
+| T | T | F | T | Invalid | Attributes are incorrect | test('update RO transportNote') in RestockOrder_service_mockDao.js |
+| T | T | T | F | Invalid | Connection to DB failed | test('update RO transportNote') in RestockOrder_service_mockDao.js |
+
+
+
+
+
+
 ---
 ---
 ---
