@@ -20,7 +20,7 @@ CREATE TABLE restockOrders (id INTEGER PRIMARY KEY , issueDate TEXT NOT NULL, st
 
 -- Table: SKUItems
 DROP TABLE IF EXISTS SKUItems;
-CREATE TABLE SKUItems (rowID INTEGER PRIMARY KEY AUTOINCREMENT, RFID TEXT, SKUId INTEGER, Available INTEGER, DateOfStock TEXT);
+CREATE TABLE SKUItems (rowID INTEGER PRIMARY KEY , RFID TEXT, SKUId INTEGER, Available INTEGER, DateOfStock TEXT);
 
 -- Table: SKUs
 DROP TABLE IF EXISTS SKUs;
@@ -32,7 +32,7 @@ CREATE TABLE testDescriptors (id INTEGER PRIMARY KEY, name TEXT, procedureDescri
 
 -- Table: test Results
 DROP TABLE IF EXISTS testResults;
-CREATE TABLE testResults (id INTEGER PRIMARY KEY AUTOINCREMENT, rfid TEXT, idTestDescriptor INTEGER, Date TEXT, Result INTEGER);
+CREATE TABLE testResults (id INTEGER PRIMARY KEY , rfid TEXT, idTestDescriptor INTEGER, Date TEXT, Result INTEGER);
 
 -- Table: Users
 DROP TABLE IF EXISTS user;

@@ -82,7 +82,7 @@ function TestDescriptor_service(dao) {
         return dao.getTD(id).then(
             (row) => {
                 if (row === undefined) {
-                    return new Promise((resolve, reject) => reject(422));
+                    return new Promise((resolve, reject) => reject(404));
                 } else {
                     //update SKU table: delete test descriptor from the field
                     return dao.getSKU(row.idSKU);
