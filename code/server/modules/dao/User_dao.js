@@ -29,12 +29,28 @@ function User_dao() {
       });
     });
   };
+  this.getAllUsers = () => {
+    return new Promise((resolve, reject) => {
+      const sql = "SELECT * from user";
+      userDB.all(sql, (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          const users = rows.map((s) =>
+            this.convertResultSetToDomainModelUser(s)
+          );
+          resolve(users);
+        }
+      });
+    });
+  };
   this.convertResultSetToDomainModelUser = (row) => {
     return {
       id: row.id,
       name: row.name,
       surname: row.surname,
       email: row.username,
+      type:row.type
     };
   };
 
@@ -160,6 +176,19 @@ function User_dao() {
         }
       })
   
+    });
+  };
+
+  this.deleteAll = () => {
+    const sql = "DELETE FROM USER";
+    return new Promise((resolve, reject) => {
+      userDB.run(sql,[], (err) => {
+        if (err) {
+          reject(503);
+        } else {
+          resolve(200);
+        }
+      });
     });
   };
 

@@ -61,7 +61,7 @@ INSERT INTO testDescriptors (name, procedureDescription, idSKU) VALUES ('test de
 
 -- Table: test Results
 DROP TABLE IF EXISTS testResults;
-CREATE TABLE testResults (id INTEGER PRIMARY KEY AUTOINCREMENT, idTestDescriptor INTEGER, Date TEXT, Result INTEGER);
+CREATE TABLE testResults (id INTEGER PRIMARY KEY AUTOINCREMENT,rfid TEXT, idTestDescriptor INTEGER, Date TEXT, Result INTEGER);
 
 -- Table: Users
 DROP TABLE IF EXISTS user;
