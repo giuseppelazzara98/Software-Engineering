@@ -50,11 +50,11 @@ async function testTestResult(rfid,id) {
   test("getTestResultRFID_ID", async () => {
     let res = await dao.getTestResultsById(rfid, id);
     if (res) {
-      expect(res[0]).toEqual({
+      expect(res).toEqual({
         id: id,
-        idTestDescriptor: res[0].idTestDescriptor,
-        Date: res[0].Date,
-        Result: res[0].Result
+        idTestDescriptor: res.idTestDescriptor,
+        Date: res.Date,
+        Result: res.Result
       });
     }
   });

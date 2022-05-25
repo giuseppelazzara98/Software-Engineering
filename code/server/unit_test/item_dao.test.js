@@ -35,12 +35,12 @@ async function testItem(id) {
   test("getItemID", async () => {
     let res = await dao.getItemsById(id)
     if (res) {
-      expect(res[0]).toEqual({
+      expect(res).toEqual({
         id: id,
-        description: res[0].description,
-        price: res[0].price,
-        SKUId: res[0].SKUId,
-        supplierId: res[0].supplierId
+        description: res.description,
+        price: res.price,
+        SKUId: res.SKUId,
+        supplierId: res.supplierId
       });
     }
   });

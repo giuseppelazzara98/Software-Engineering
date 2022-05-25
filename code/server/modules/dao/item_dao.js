@@ -38,12 +38,15 @@ function item_dao(){
       this.getItemsById=(id)=>{
         return new Promise((resolve, reject) => {
             const sql = 'SELECT * FROM items WHERE ID=?';
-            itemDB.all(sql, [id], (err, rows) => {
+            itemDB.get(sql, [id], (err, r) => {
                 if (err) {
                     reject(new Promise( (resolve,reject)=> reject(500)));
                     return;
                 }
-                const items = rows.map((r) => (
+                if (r===undefined){
+                    reject(new Promise( (resolve,reject)=> reject(404)));
+                    return;}
+                const items = 
                     {  
                         id:r.id,
                         description:r.description,
@@ -51,7 +54,7 @@ function item_dao(){
                         SKUId:r.SKUId,
                         supplierId:r.supplierId
                     }
-                ));
+                ;
                 resolve(items);
             });
         });

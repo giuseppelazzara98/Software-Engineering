@@ -36,19 +36,22 @@ function testResult_dao(){
       this.getTestResultsById=(rfid,id)=>{
         return new Promise((resolve, reject) => {
             const sql = 'SELECT id, idTestDescriptor, Date, Result FROM testResults WHERE RFID=? AND ID=?';
-            testResultDB.all(sql, [rfid,id], (err, rows) => {
+            testResultDB.get(sql, [rfid,id], (err, r) => {
                 if (err) {
                     reject(new Promise( (resolve,reject)=> reject(500)));
                     return;
                 }
-                const testResults = rows.map((r) => (
+                if (r===undefined){
+                    reject(new Promise( (resolve,reject)=> reject(404)));
+                    return;}
+                const testResults = 
                     {  
                        id:r.id,
                        idTestDescriptor:r.idTestDescriptor,
                        Date:r.Date,
                        Result:Boolean(r.Result)
                     }
-                ));
+                ;
                 resolve(testResults);
             });
         });
