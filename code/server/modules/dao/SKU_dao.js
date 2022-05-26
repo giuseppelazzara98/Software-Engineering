@@ -10,25 +10,8 @@ function SKU_dao() {
             console.log("Error connecting to DB");
             throw err;
         }
-
-  const query4d = 'DROP TABLE IF EXISTS SKUs;';
-  SKUDB.run(query4d, (err) => {
-    if (err) {
-      console.log('Some Error Occured');
-    } else {
-      console.log('Table Created');
     }
-  });
-  const query4 = 'CREATE TABLE SKUs (id INTEGER PRIMARY KEY , description TEXT, weight NUMERIC, volume NUMERIC, notes TEXT, position INTEGER, availableQuantity INTEGER, price NUMERIC, testDescriptors TEXT);';
-  SKUDB.run(query4, (err) => {
-    if (err) {
-      console.log('Some Error Occured');
-    } else {
-      console.log('Table Created');
-    }
-  });
-
-    });
+);
     this.getSKUs=()=>{
         return new Promise((resolve, reject) => {
             const sql = 'SELECT * FROM SKUs';
