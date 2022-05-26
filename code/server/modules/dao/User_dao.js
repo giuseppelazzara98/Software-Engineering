@@ -11,23 +11,6 @@ function User_dao() {
         console.log("Error connecting to DB");
         throw err;
       }
-      const query7d = 'DROP TABLE IF EXISTS user;';
-      userDB.run(query7d, (err) => {
-        if (err) {
-          console.log('Some Error Occured');
-        } else {
-          console.log('Table Created');
-        }
-      });
-      const query7 = 'CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT, name TEXT, surname TEXT, type TEXT);';
-      userDB.run(query7, (err) => {
-        if (err) {
-          console.log('Some Error Occured');
-        } else {
-          console.log('Table Created');
-        }
-      });
-
     }
   );
   this.getAllSuppliers = () => {

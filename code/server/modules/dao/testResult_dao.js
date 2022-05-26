@@ -8,23 +8,6 @@ function testResult_dao() {
             console.log("Error connecting to DB");
             throw err;
         }
-        const query6d = 'DROP TABLE IF EXISTS testResults;';
-        testResultDB.run(query6d, (err) => {
-            if (err) {
-                console.log('Some Error Occured');
-            } else {
-                console.log('Table Created');
-            }
-        });
-        const query6 = 'CREATE TABLE testResults (id INTEGER PRIMARY KEY , rfid TEXT, idTestDescriptor INTEGER, Date TEXT, Result INTEGER);';
-        testResultDB.run(query6, (err) => {
-            if (err) {
-                console.log('Some Error Occured');
-            } else {
-                console.log('Table Created');
-            }
-        });
-
     });
 
     this.getTestResultsByRFID = (rfid) => {
