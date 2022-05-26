@@ -11,6 +11,22 @@ function item_dao(){
         }
 
     });
+    const query1d = 'DROP TABLE IF EXISTS items;';
+    itemDB.run(query1d, (err) => {
+      if (err) {
+        console.log('Some Error Occured');
+      } else {
+        console.log('Table Created');
+      }
+    });
+    const query1 = 'CREATE TABLE items (id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT, price NUMERIC, SKUid INTEGER, supplierId INTEGER);';
+    itemDB.run(query1, (err) => {
+      if (err) {
+        console.log('Some Error Occured');
+      } else {
+        console.log('Table Created');
+      }
+    });
 
     this.getItems=()=>{
         return new Promise((resolve, reject) => {
