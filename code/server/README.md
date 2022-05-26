@@ -1,1 +1,1 @@
-Run node server.js one time to create the db
+the db is already defined empty
