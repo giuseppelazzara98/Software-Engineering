@@ -7,7 +7,22 @@ function TestDescriptor_dao() {
             console.log("Error connecting to DB");
             throw err;
         }
-
+        const query5d = 'DROP TABLE IF EXISTS testDescriptors;';
+        db.run(query5d, (err) => {
+            if (err) {
+                console.log('Some Error Occured');
+            } else {
+                console.log('Table Created');
+            }
+        });
+        const query5 = 'CREATE TABLE testDescriptors (id INTEGER PRIMARY KEY, name TEXT, procedureDescription TEXT, idSKU INTEGER);';
+        db.run(query5, (err) => {
+            if (err) {
+                console.log('Some Error Occured');
+            } else {
+                console.log('Table Created');
+            }
+        });
     });
 
     this.getAllTD = () => {
@@ -123,15 +138,15 @@ function TestDescriptor_dao() {
     this.deleteAll = () => {
         const sql = "DELETE FROM testDescriptors";
         return new Promise((resolve, reject) => {
-            db.run(sql,[], (err) => {
-            if (err) {
-              reject(503);
-            } else {
-              resolve(204);
-            }
-          });
+            db.run(sql, [], (err) => {
+                if (err) {
+                    reject(503);
+                } else {
+                    resolve(204);
+                }
+            });
         });
-      };
+    };
 }
 
 module.exports = TestDescriptor_dao;

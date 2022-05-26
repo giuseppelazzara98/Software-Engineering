@@ -9,7 +9,23 @@ function ReturnOrders_dao() {
       console.log("Error connecting to DB");
       throw err;
     }
-    console.log("RE: Connected to DB");
+    const query8d = 'DROP TABLE IF EXISTS returnOrder;';
+    reDB.run(query8d, (err) => {
+      if (err) {
+        console.log('Some Error Occured');
+      } else {
+        console.log('Table Drop');
+      }
+    });
+    const query8 = 'CREATE TABLE returnOrder (id INTEGER PRIMARY KEY AUTOINCREMENT, returnDate TEXT, products TEXT, restockOrderId INTEGER REFERENCES restockOrders (id) ON DELETE CASCADE ON UPDATE CASCADE);';
+    reDB.run(query8, (err) => {
+      if (err) {
+        console.log('Some Error Occured');
+      } else {
+        console.log('Table Created');
+      }
+    });
+
   });
 
   this.getAllReturnOrders = () => {
@@ -81,7 +97,8 @@ function ReturnOrders_dao() {
           reject(500);
         } else {
           if (row == undefined) {
-            reject(404);}
+            reject(404);
+          }
           else {
             if (row.state != "COMPLETEDRETURN") reject(404);
             resolve(row.state);
@@ -133,7 +150,7 @@ function ReturnOrders_dao() {
   this.deleteAll = () => {
     const sql = "DELETE FROM returnOrder";
     return new Promise((resolve, reject) => {
-      reDB.run(sql,[], (err) => {
+      reDB.run(sql, [], (err) => {
         if (err) {
           reject(503);
         } else {

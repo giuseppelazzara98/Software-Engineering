@@ -11,7 +11,23 @@ function User_dao() {
         console.log("Error connecting to DB");
         throw err;
       }
-      console.log("User: Connected to DB");
+      const query7d = 'DROP TABLE IF EXISTS user;';
+      userDB.run(query7d, (err) => {
+        if (err) {
+          console.log('Some Error Occured');
+        } else {
+          console.log('Table Created');
+        }
+      });
+      const query7 = 'CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT, name TEXT, surname TEXT, type TEXT);';
+      userDB.run(query7, (err) => {
+        if (err) {
+          console.log('Some Error Occured');
+        } else {
+          console.log('Table Created');
+        }
+      });
+
     }
   );
   this.getAllSuppliers = () => {
@@ -50,7 +66,7 @@ function User_dao() {
       name: row.name,
       surname: row.surname,
       email: row.username,
-      type:row.type
+      type: row.type
     };
   };
 
@@ -105,7 +121,7 @@ function User_dao() {
     return new Promise((resolve, reject) => {
       // const sql1 = "SELECT username,type,COUNT(*) FROM user GROUP BY username, type HAVING COUNT(*) = 0"
       const sql1 = "SELECT id FROM user WHERE username = ? AND type = ?"
-      userDB.get(sql1, [newUser.username,newUser.type], (err, row) => {
+      userDB.get(sql1, [newUser.username, newUser.type], (err, row) => {
         if (err) reject(503);
         else if (!(row === undefined || row.length == 0)) reject(409);
         else {
@@ -125,46 +141,19 @@ function User_dao() {
 
     });
   };
-  this.updateUserByUsername = (username,type) => {
+  this.updateUserByUsername = (username, type) => {
 
-  return new Promise((resolve, reject) => {
-    const sql1 = "SELECT id FROM user WHERE type=? AND username=? ";
-    userDB.all(sql1, [type.oldType,username], (err, rows) => {
-      if (err) reject(503);
-      else if (rows === undefined || rows.length == 0) reject(404);
-      else {
-        const sql =
-        "UPDATE user SET type=? where id=? and type=?"
-        userDB.run(
-          sql,
-          [type.newType, rows[0].id, type.oldType],
-          (err) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(200);
-            }
-          }
-        );
-      }
-    })
-
-  });
-  };
-
-  this.deleteUserByUsernameAndType = (username,type) => {
     return new Promise((resolve, reject) => {
-      const sql1 = "SELECT * FROM user WHERE type=? AND username=? ";
-      userDB.all(sql1, [type,username], (err, rows) => {
+      const sql1 = "SELECT id FROM user WHERE type=? AND username=? ";
+      userDB.all(sql1, [type.oldType, username], (err, rows) => {
         if (err) reject(503);
         else if (rows === undefined || rows.length == 0) reject(404);
         else {
           const sql =
-          "DELETE FROM USER where username=? and type=?"
-          console.log(rows[0].type)
+            "UPDATE user SET type=? where id=? and type=?"
           userDB.run(
             sql,
-            [rows[0].username,rows[0].type],
+            [type.newType, rows[0].id, type.oldType],
             (err) => {
               if (err) {
                 reject(err);
@@ -175,14 +164,41 @@ function User_dao() {
           );
         }
       })
-  
+
+    });
+  };
+
+  this.deleteUserByUsernameAndType = (username, type) => {
+    return new Promise((resolve, reject) => {
+      const sql1 = "SELECT * FROM user WHERE type=? AND username=? ";
+      userDB.all(sql1, [type, username], (err, rows) => {
+        if (err) reject(503);
+        else if (rows === undefined || rows.length == 0) reject(404);
+        else {
+          const sql =
+            "DELETE FROM USER where username=? and type=?"
+          console.log(rows[0].type)
+          userDB.run(
+            sql,
+            [rows[0].username, rows[0].type],
+            (err) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(200);
+              }
+            }
+          );
+        }
+      })
+
     });
   };
 
   this.deleteAll = () => {
     const sql = "DELETE FROM USER";
     return new Promise((resolve, reject) => {
-      userDB.run(sql,[], (err) => {
+      userDB.run(sql, [], (err) => {
         if (err) {
           reject(503);
         } else {

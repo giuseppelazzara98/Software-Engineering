@@ -10,6 +10,23 @@ function RestockOrders_dao() {
             console.log("Error connecting to DB");
             throw err;
         }
+
+        const query10d = 'DROP TABLE IF EXISTS transportNote;';
+        db.run(query10d, (err) => {
+            if (err) {
+                console.log('Some Error Occured');
+            } else {
+                console.log('Table Drop');
+            }
+        });
+        const query10 = 'CREATE TABLE transportNote (id INTEGER PRIMARY KEY , deliveryDate TEXT);';
+        db.run(query10, (err) => {
+            if (err) {
+                console.log('Some Error Occured');
+            } else {
+                console.log('Table Created');
+            }
+        });
     });
 
     this.getAllRO = () => {
@@ -163,7 +180,7 @@ function RestockOrders_dao() {
         return new Promise((resolve, reject) => {
             const query = 'SELECT * FROM restockOrders WHERE id=?';
             db.get(query, [id], (err, row) => {
-                if(err){
+                if (err) {
                     reject(500);
                 } else {
                     resolve(row);
@@ -178,7 +195,7 @@ function RestockOrders_dao() {
             db.get(query, [id], (err, row) => {
                 if (err) {
                     reject(500);
-                } else if(row === undefined){
+                } else if (row === undefined) {
                     reject(404);
                 } else {
                     const ro = new Promise(async (resolve, reject) => {
@@ -253,7 +270,7 @@ function RestockOrders_dao() {
                     resolve(skuItems);
                 }
             })
-            
+
         })
     }
 
@@ -352,30 +369,30 @@ function RestockOrders_dao() {
     }
     this.addNewROForTest = async (id, date, IDs, supplierId) => {
         return new Promise((resolve, reject) => {
-          const query =
-            'INSERT INTO restockOrders(id, issueDate, state, products, supplierID) VALUES(?,?, "COMPLETEDRETURN", ?, ?)';
+            const query =
+                'INSERT INTO restockOrders(id, issueDate, state, products, supplierID) VALUES(?,?, "COMPLETEDRETURN", ?, ?)';
             db.run(query, [id, date, IDs, supplierId], (err) => {
-            if (err) {
-              reject();
-            } else {
-              resolve();
-            }
-          });
+                if (err) {
+                    reject();
+                } else {
+                    resolve();
+                }
+            });
         });
-      };
+    };
 
-      this.deleteAll = () => {
+    this.deleteAll = () => {
         const sql = "DELETE FROM restockOrders";
         return new Promise((resolve, reject) => {
-          db.run(sql,[], (err) => {
-            if (err) {
-              reject(503);
-            } else {
-              resolve(204);
-            }
-          });
+            db.run(sql, [], (err) => {
+                if (err) {
+                    reject(503);
+                } else {
+                    resolve(204);
+                }
+            });
         });
-      };
+    };
 }
 
 

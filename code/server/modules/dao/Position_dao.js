@@ -8,7 +8,22 @@ function Position_dao() {
       console.log("Error connecting to DB");
       throw err;
     }
-    //  console.log("PO: Connected to DB");
+    const query9d = 'DROP TABLE IF EXISTS position;';
+    poDB.run(query9d, (err) => {
+      if (err) {
+        console.log('Some Error Occured');
+      } else {
+        console.log('Table Drop');
+      }
+    });
+    const query9 = 'CREATE TABLE position (id INTEGER PRIMARY KEY AUTOINCREMENT, positionID TEXT, aisleID TEXT, row TEXT, col TEXT, maxWeight INTEGER, maxVolume INTEGER, occupiedWeight INTEGER, occupiedVolume INTEGER);';
+    poDB.run(query9, (err) => {
+      if (err) {
+        console.log('Some Error Occured');
+      } else {
+        console.log('Table Created');
+      }
+    });
   });
 
   this.getAllPositions = () => {
@@ -192,7 +207,7 @@ function Position_dao() {
   this.deleteAll = () => {
     const sql = "DELETE FROM position";
     return new Promise((resolve, reject) => {
-      poDB.run(sql,[], (err) => {
+      poDB.run(sql, [], (err) => {
         if (err) {
           reject(503);
         } else {
