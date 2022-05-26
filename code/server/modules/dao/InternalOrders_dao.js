@@ -10,23 +10,9 @@ function InternalOrders_dao() {
             console.log("Error connecting to DB");
             throw err;
         }
-    });
-    const queryd = 'DROP TABLE IF EXISTS internalOrders;';
-    db.run(queryd, (err) => {
-     if (err) {
-       console.log('Some Error Occured');
-     } else {
-       console.log('Table int ord created');
-     }
-   });
-   const query = 'CREATE TABLE internalOrders (id INTEGER PRIMARY KEY , issueDate TEXT NOT NULL, state TEXT NOT NULL, products TEXT, customerID INTEGER NOT NULL);';
-   db.run(query, (err) => {
-     if (err) {
-       console.log('Some Error Occured');
-     } else {
-       console.log('Table Created');
-     }
-   });
+    }
+);
+
 
     this.getAllIO = () => {
         return new Promise((resolve, reject) => {
