@@ -10,23 +10,9 @@ function RestockOrders_dao() {
             console.log("Error connecting to DB");
             throw err;
         }
-    });
-    const query2d = 'DROP TABLE IF EXISTS restockOrders;';
-    db.run(query2d, (err) => {
-      if (err) {
-        console.log('Some Error Occured');
-      } else {
-        console.log('Table Created');
-      }
-    });
-    const query2 = 'CREATE TABLE restockOrders (id INTEGER PRIMARY KEY , issueDate TEXT NOT NULL, state TEXT NOT NULL, products TEXT, supplierID INTEGER NOT NULL, transportNoteID INTEGER, skuItems TEXT);';
-    db.run(query2, (err) => {
-      if (err) {
-        console.log('Some Error Occured');
-      } else {
-        console.log('Table Created');
-      }
-    });
+    }
+);
+
 
     this.getAllRO = () => {
         return new Promise((resolve, reject) => {
