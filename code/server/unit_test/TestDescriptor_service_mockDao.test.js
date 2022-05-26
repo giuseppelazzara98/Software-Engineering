@@ -370,7 +370,7 @@ describe('delete TD', () => {
             try {
                 await td_service.deleteTD(id);
             } catch (e) {
-                expect(e).toEqual(422)
+                expect(e).toEqual(404)
             }
 
             try {
