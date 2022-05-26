@@ -12,22 +12,7 @@ function SKU_item_dao() {
         }
 
     });
-    const query3d = 'DROP TABLE IF EXISTS SKUItems;';
-    SKUDB.run(query3d, (err) => {
-      if (err) {
-        console.log('Some Error Occured');
-      } else {
-        console.log('Table Created');
-      }
-    });
-    const query3 = 'CREATE TABLE SKUItems (rowID INTEGER PRIMARY KEY , RFID TEXT, SKUId INTEGER, Available INTEGER, DateOfStock TEXT);';
-    SKUDB.run(query3, (err) => {
-      if (err) {
-        console.log('Some Error Occured');
-      } else {
-        console.log('Table Created');
-      }
-    });
+
 
     this.deleteSKUItem=(rfid)=> {
         return new Promise((resolve, reject)  => {
