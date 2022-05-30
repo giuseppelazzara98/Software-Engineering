@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id" : "http://www.my-schema.com/user_schema.json",
+    "title": "user",
+    "description": "JSON Schema for user objects",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "username": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "surname": {
+        "type": "string"
+      },
+      "password": {
+        "type": "string",
+        "minLength": 8
+      },
+      "type": {
+        "type": "string",
+        "enum": ["customer", "qualityEmployee", "clerk", "deliveryEmployee", "supplier"]
+     }
+    },
+    "required": ["username", "name", "surname", "password", "type"]
+  }

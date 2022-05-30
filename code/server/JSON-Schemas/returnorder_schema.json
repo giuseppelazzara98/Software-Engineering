@@ -1,0 +1,35 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id" : "http://www.my-schema.com/returnorder_schema.json",
+    "title": "returnorder",
+    "description": "JSON Schema for returnorder objects",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "returnDate": {
+        "type": "string"
+      },
+      "aisleID": {
+        "type": "string",
+        "maxLength": 4,
+        "minLength": 4
+      },
+      "row": {
+        "type": "string",
+        "maxLength": 4,
+        "minLength": 4
+      },
+      "col": {
+        "type": "string",
+        "maxLength": 4,
+        "minLength": 4
+      },
+      "maxWeight": {
+        "type": "integer"
+     },
+      "maxVolume": {
+        "type": "integer"
+      }
+    },
+    "required": ["returnorderID", "aisleID", "row", "col", "maxWeight", "maxVolume"]
+  }

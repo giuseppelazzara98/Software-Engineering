@@ -8,7 +8,18 @@ Version:
 
 - [Dependency graph](#dependency graph)
 
-- [Integration approach](#integration)
+- [Integration and API Test Report](#integration-and-api-test-report)
+- [Contents](#contents)
+- [Dependency graph](#dependency-graph)
+- [Integration approach](#integration-approach)
+- [Integration Tests](#integration-tests)
+  - [Step 1](#step-1)
+  - [Step 2](#step-2)
+  - [Step n](#step-n)
+- [API testing - Scenarios](#api-testing---scenarios)
+  - [Scenario UCx.y](#scenario-ucxy)
+- [Coverage of Scenarios and FR](#coverage-of-scenarios-and-fr)
+- [Coverage of Non Functional Requirements](#coverage-of-non-functional-requirements)
 
 - [Tests](#tests)
 
@@ -21,15 +32,16 @@ Version:
 
 # Dependency graph 
 
-     <report the here the dependency graph of the classes in EzWH, using plantuml or other tool>
+![depgraph](Images/dependencygraph.jpg)
      
 # Integration approach
+We used a bottom up integration approach since we had already completed unit tests, supposing we've already fixed the majority of failures on them. That means we started from test individual units (dao), then proceeded with services testing  methods integration until the top (API).
 
-    <Write here the integration sequence you adopted, in general terms (top down, bottom up, mixed) and as sequence
-    (ex: step1: class A, step 2: class A+B, step 3: class A+B+C, etc)> 
-    <Some steps may  correspond to unit testing (ex step1 in ex above), presented in other document UnitTestReport.md>
-    <One step will  correspond to API testing>
-    
+Step1: Unit Testing (see UnitTestReport.md) dao
+
+Step2: dao + service
+
+Step3: EzWH (API testing)
 
 
 #  Integration Tests
@@ -98,14 +110,11 @@ Report also for each of the scenarios the (one or more) API Mocha tests that cov
 
 
 # Coverage of Non Functional Requirements
-
-
-<Report in the following table the coverage of the Non Functional Requirements of the application - only those that can be tested with automated testing frameworks.>
-
-
-### 
-
+ 
 | Non Functional Requirement | Test name |
 | -------------------------- | --------- |
-|                            |           |
+| NFR4 - Position ID is the unique identifier of a position, 12 digits, and is derived from aisle (4digits) row (4 digits) col (4 digits), 4 first digits for aisle, middle 4 for row, last 4 for col        |  positionTest  |
+|NFR5 - SKU.id is a string of 12 digits| SKUIDStringLenghtTest|
+|NFR6 - RFID is a string of 32 digits|  RFIDStringLenghtTest  |
+|NFR9 - Date Format is YYYY/MM/GG HH:MM| DatevalidationTest with dayjs|
 

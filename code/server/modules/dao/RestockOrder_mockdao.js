@@ -1,0 +1,15 @@
+exports.getAllRO = jest.fn();
+exports.getProduct = jest.fn();
+exports.getSKUItem = jest.fn();
+exports.getTransportNote = jest.fn();
+exports.getAllROIssued = jest.fn();
+exports.ROexists = jest.fn();
+exports.getRO = jest.fn();
+exports.getROReturnedItems = jest.fn();
+exports.insertRO = jest.fn();
+exports.updateStateRO = jest.fn();
+exports.addSkuItems = jest.fn();
+exports.insertTransportNote = jest.fn();
+exports.getTransportNoteID = jest.fn();
+exports.updateSKUNote = jest.fn();
+exports.deleteRO = jest.fn();
