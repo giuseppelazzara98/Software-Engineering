@@ -40,7 +40,6 @@ function RestockOrders_dao() {
                                         price: p.price,
                                         qty: prod.qty
                                     }
-                                    // console.log(obj);
                                     return obj;
                                 }).catch(e => undefined);
                                 return product;
@@ -264,7 +263,6 @@ function RestockOrders_dao() {
                         skuItems = await Promise.all(SKUItemsIDs.map(async (rfid) => {
                             const skuItem = this.getDefectiveSKUitem(rfid).then(i => {
                                 if(i === undefined) return;
-                                console.log(i);
                                 return {
                                     "SKUId": i.SKUId,
                                     "RFID": i.rfid
@@ -285,10 +283,8 @@ function RestockOrders_dao() {
             const query = "SELECT * FROM SKUItems INNER JOIN testResults on SKUItems.RFID=testResults.rfid WHERE SKUItems.RFID=? AND testResults.Result=0";
             db.get(query, [rfid], (err, row) => {
                 if(err){
-                    console.log(err);
                     reject(503)
                 } else {
-                    console.log(row);
                     resolve(row);
                 }
             })
@@ -296,10 +292,6 @@ function RestockOrders_dao() {
     }
 
     this.insertRO = async (date, IDs, supplierId) => {
-        console.log("-------------------------------------------------------");
-        console.log(date);
-        console.log("-------------------------------------------------------");
-        
         return new Promise((resolve, reject) => {
             const query = 'INSERT INTO restockOrders(issueDate, state, products, supplierID) VALUES(?, "ISSUED", ?, ?)';
             db.run(query, [date, IDs, supplierId], (err) => {

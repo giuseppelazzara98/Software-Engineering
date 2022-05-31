@@ -58,7 +58,6 @@ function TestDescriptor_dao() {
             const query_add = 'INSERT into testDescriptors(name, procedureDescription, idSKU) VALUES(?, ?, ?)';
             db.run(query_add, [name, procedure, idSKU], (err) => {
                 if (err) {
-                    console.log(err);
                     reject(503);
                 } else {
                     resolve(201);
