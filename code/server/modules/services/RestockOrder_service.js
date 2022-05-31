@@ -32,10 +32,10 @@ function RestockOrders_service(dao) {
     }
 
     this.addRO = (body) => {
-        if(!dayjs(body.issueDate,"YYYY/MM/DD HH:MM", true).isValid()){
+        if(!dayjs(body.issueDate,"YYYY/MM/DD hh:mm", true).isValid()){
             return Promise.reject(422);
         }
-        const date = dayjs(body.issueDate).format("YYYY-MM-DD HH:MM").toString();
+        const date = dayjs(body.issueDate).format("YYYY-MM-DD HH:mm").toString();
         const supplierId = body.supplierId;
         const products = [...body.products];
         var IDs = Array();
