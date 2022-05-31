@@ -79,33 +79,34 @@ function TestDescriptor_service(dao) {
     }
 
     this.deleteTD = (id) => {
-        return dao.getTD(id).then(
-            (row) => {
-                if (row === undefined) {
-                    return new Promise((resolve, reject) => reject(404));
-                } else {
-                    //update SKU table: delete test descriptor from the field
-                    return dao.getSKU(row.idSKU);
-                }
-            }
-        ).then(
-            (row) => {
-                if (row === undefined) {  //sku does not exist
-                    return new Promise((resolve, reject) => reject(422));
-                } else {
-                    const IDs = row.testDescriptors.split(',').map(e => parseInt(e)).filter(e => e != id).toString();
-                    return dao.updateSKUTestDescriptors(row.id, IDs);
-                }
-            }
-        ).then(
-            () => {
-                return dao.deleteTD(id);
-            }
-        ).catch(
-            (err) => {
-                return new Promise((resolve, reject) => reject(err));
-            }
-        );
+        return dao.deleteTD(id);
+        // return dao.getTD(id).then(
+        //     (row) => {
+        //         if (row === undefined) {
+        //             return new Promise((resolve, reject) => reject(404));
+        //         } else {
+        //             //update SKU table: delete test descriptor from the field
+        //             return dao.getSKU(row.idSKU);
+        //         }
+        //     }
+        // ).then(
+        //     (row) => {
+        //         if (row === undefined) {  //sku does not exist
+        //             return new Promise((resolve, reject) => reject(422));
+        //         } else {
+        //             const IDs = row.testDescriptors.split(',').map(e => parseInt(e)).filter(e => e != id).toString();
+        //             return dao.updateSKUTestDescriptors(row.id, IDs);
+        //         }
+        //     }
+        // ).then(
+        //     () => {
+        //         return dao.deleteTD(id);
+        //     }
+        // ).catch(
+        //     (err) => {
+        //         return new Promise((resolve, reject) => reject(err));
+        //     }
+        // );
     }
 
 }
