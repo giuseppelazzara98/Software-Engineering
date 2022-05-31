@@ -168,7 +168,7 @@ function User_dao() {
               if (err) {
                 reject(err);
               } else {
-                resolve(200);
+                resolve(204);
               }
             }
           );

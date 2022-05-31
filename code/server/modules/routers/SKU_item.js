@@ -117,7 +117,7 @@ routerSKU_item.get("/skuitems", async (req, res) => {
     }
       const rfid=req.params.rfid;
       await SKU_item_service.putSkuItem(skuitem,rfid);
-      return res.status(201).send("201 Created");
+      return res.status(200).end();
   }
     catch (err){
       return res.status(err).end();

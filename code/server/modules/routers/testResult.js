@@ -115,7 +115,7 @@ routertestResult.put("/skuitems/:rfid/testResult/:id",
       }
       
       await testResult_service.putTestResult(testResult, rfid, id);
-      return res.status(201).send("200 OK");
+      return res.status(200).send("200 OK");
     }
     catch (err) {
       return res.status(err).end();
