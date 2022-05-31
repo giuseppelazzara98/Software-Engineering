@@ -13,7 +13,6 @@ function RestockOrders_dao() {
     }
 );
 
-
     this.getAllRO = () => {
         return new Promise((resolve, reject) => {
             const query = 'SELECT * FROM restockOrders';
