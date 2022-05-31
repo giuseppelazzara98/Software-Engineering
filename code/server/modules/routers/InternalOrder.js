@@ -57,10 +57,11 @@ routerIO.get('/internalOrders/:id', param('id').isInt(), (req, res) => {
 // POST
 routerIO.post('/internalOrders',
     body('products').isArray({min:1}),
+    body('issueDate').isString(),
     body('customerId').isLength({min:1}).isInt(),
     (req, res) => {
         const errors = validationResult(req);
-        if (!errors.isEmpty() || !dayjs(req.body.issueDate, 'YYYY/MM/DD HH:MM', true).isValid()) {
+        if (!errors.isEmpty() || !dayjs(req.body.issueDate, 'YYYY/MM/DD HH:mm', true).isValid()) {
             return res.status(422).end();
         }
         internalOrder_service.addIO(req.body).then(

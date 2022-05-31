@@ -32,14 +32,18 @@ function RestockOrders_service(dao) {
     }
 
     this.addRO = (body) => {
-        if(!dayjs(body.issueDate,"YYYY/MM/DD hh:mm", true).isValid()){
+        if(!dayjs(body.issueDate,"YYYY/MM/DD HH:mm", true).isValid()){
             return Promise.reject(422);
         }
         const date = dayjs(body.issueDate).format("YYYY-MM-DD HH:mm").toString();
         const supplierId = body.supplierId;
         const products = [...body.products];
         var IDs = Array();
-        products.forEach(p => IDs.push(p.SKUId));
+        products.forEach(p => {
+            const pair = p.SKUId + ":" + p.qty;
+            IDs.push(pair)
+        });
+        // console.log(IDs);
         IDs = IDs.toString();
 
         return dao.insertRO(date, IDs, supplierId);
