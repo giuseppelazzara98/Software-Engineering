@@ -2,6 +2,9 @@
 const itemDao = require('../dao/item_dao');
 
 const item_dao = new itemDao();
+const SKU_DAO = require('../dao/SKU_dao');
+const sku_dao = new SKU_DAO();
+
 class item_service{
   getItems = async()=>{
     try{
@@ -28,6 +31,16 @@ class item_service{
   }
   postItem=async (item)=>{
     try{
+      const check = await sku_dao.getSKUsID(item.SKUId);
+      if (check===undefined){
+        return new Promise( (resolve,reject)=> reject(404));
+      }
+    }
+    catch(err){
+      return err;
+
+    }
+    try{ 
       const check1 = await item_dao.checkSKUId(item.supplierId,item.SKUId);
     if (check1.length!==0){
       return new Promise( (resolve,reject)=> reject(422));

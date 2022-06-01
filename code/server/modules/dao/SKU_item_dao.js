@@ -30,8 +30,8 @@ function SKU_item_dao() {
     this.postSkuItem=(data)=>{
         return new Promise((resolve, reject) => {
             console.log(data.DateOfStock);
-            const sql = 'INSERT INTO SKUItems(RFID,SKUId,DateOfStock) VALUES(?,?,?)';
-            SKUDB.run(sql, [data.RFID, data.SKUId, data.DateOfStock], (err) => {
+            const sql = 'INSERT INTO SKUItems(RFID,SKUId,DateOfStock,Available) VALUES(?,?,?,?)';
+            SKUDB.run(sql, [data.RFID, data.SKUId, data.DateOfStock,0], (err) => {
                 if (err) {
                   reject(new Promise( (resolve,reject)=> reject(503)));
                   return;

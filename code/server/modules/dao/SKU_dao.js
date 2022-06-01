@@ -89,6 +89,10 @@ function SKU_dao() {
                     reject(new Promise( (resolve,reject)=> reject(503)));
                     return;
                 }
+                if (rows===undefined){
+                    reject(new Promise( (resolve,reject)=> reject(404)));
+                    return;
+                } 
                 const info = 
                     {  
                        maxWeight:rows.maxWeight,

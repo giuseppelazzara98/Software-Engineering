@@ -38,18 +38,17 @@ class SKU_service{
   }
   putSku=async(sku,id)=>{
     try{
-
       const volume= sku.newVolume * sku.newAvailableQuantity;
       const weight= Number(sku.newWeight) * Number(sku.newAvailableQuantity);
-      const info= await sku_dao.checkPosition(id);
-      if ( (Number(info.maxWeight) - Number(info.occupiedWeight)) > weight && (Number(info.maxVolume) - Number(info.occupiedVolume)) > volume ){
+      //const info= await sku_dao.checkPosition(id);
+      //if ( (Number(info.maxWeight) - Number(info.occupiedWeight)) > weight && (Number(info.maxVolume) - Number(info.occupiedVolume)) > volume ){
         await sku_dao.updatePosition(weight,volume,info.positionID);
         await sku_dao.putSku(sku,id);
         return new Promise( (resolve,reject)=> resolve(200));
-    }
-    else {
+    //}
+   // else {
       return new Promise( (resolve,reject)=> reject(422));
-    }
+    //}
     }
     catch(err){
       return err;

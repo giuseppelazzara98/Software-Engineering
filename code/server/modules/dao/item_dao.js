@@ -45,6 +45,12 @@ function item_dao(){
                 if (r===undefined){
                     reject(new Promise( (resolve,reject)=> reject(404)));
                     return;}
+                    if (r.SKUId==undefined||r.SKUId==null){
+                        r.SKUId=1;
+                    }
+                    if (r.supplierId==undefined||r.supplierId==null){
+                        r.supplierId=1;
+                    }
                 const items = 
                     {  
                         id:r.id,
@@ -52,6 +58,28 @@ function item_dao(){
                         price:r.price,
                         SKUId:r.SKUId,
                         supplierId:r.supplierId
+                    }
+                ;
+                resolve(items);
+            });
+        });
+      }
+      this.getItemsById2=(id)=>{
+        return new Promise((resolve, reject) => {
+            const sql = 'SELECT * FROM items WHERE ID=?';
+            itemDB.all(sql, [id], (err, r) => {
+                if (err) {
+                    reject(new Promise( (resolve,reject)=> reject(500)));
+                    return;
+                }
+                
+                const items = 
+                    {  
+                        id:r[0].id,
+                        description:r[0].description,
+                        price:r[0].price,
+                        SKUId:r[0].SKUId,
+                        supplierId:r[0].supplierId
                     }
                 ;
                 resolve(items);

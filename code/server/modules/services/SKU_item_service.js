@@ -2,6 +2,8 @@
 const res = require('express/lib/response');
 const SKU_itemDao= require('../dao/SKU_item_dao');
 const SKU_item_dao= new SKU_itemDao();
+const SKU_DAO=require('../dao/SKU_dao');
+const sku_dao = new SKU_DAO();
 
 class SKU_item_service{
   getSKUItems=async()=>{
@@ -15,10 +17,11 @@ class SKU_item_service{
   }
   getSKUItemsID=async(id)=>{
     try{
-      const sku_item=await SKU_item_dao.getSKUItemsID(id);
-      if (sku_item.length===0){
+      const sku=await sku_dao.getSKUsID(id);
+      if (sku.length===0){
         return new Promise( (resolve,reject)=> reject(404));
       }
+      const sku_item= await SKU_item_dao.getSKUItemsID(id);
       return sku_item;
     }
     catch(err){
