@@ -42,6 +42,14 @@ routerUser.get("/suppliers", /*isLoggedIn,*/ (req, res) => {
     });
 });
 
+routerUser.get('/users', (req, res) => {
+  dao.getAllUsers().then(
+    (users) => {
+      return res.status(200).json(users);
+    }
+  ).catch(e => res.status(500).end())
+})
+
 routerUser.post(
   "/newUser",
   validate({ body: userSchema }),
