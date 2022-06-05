@@ -22,16 +22,21 @@
         "minLength": 4
       },
       "newMaxWeight": {
-        "type": "integer"
+        "type": "integer",
+        "minimum" : 0
      },
       "newMaxVolume": {
-        "type": "integer"
+        "type": "integer",
+        "minimum" : 0
       }, 
       "newOccupiedWeight" : {
-        "type": "integer"
+        "type": "integer",
+        "minimum" : 0
       }, 
       "newOccupiedVolume" :{
-        "type": "integer"
+        "type": "integer",
+        "minimum" : 0
       }
-    }
+    },
+    "required": ["newAisleID", "newRow", "newCol"]
   }
