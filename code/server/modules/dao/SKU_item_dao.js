@@ -43,13 +43,13 @@ function SKU_item_dao() {
 
     this.putSkuItem=(data,rfid)=> {
         return new Promise((resolve, reject) => {
-            const sql = 'UPDATE SKUItems SET RFID=?,SKUId=?,DateOfStock=? WHERE RFID=?';
+            const sql = 'UPDATE SKUItems SET RFID=?,Available=?,DateOfStock=? WHERE RFID=?';
             SKUDB.run(sql, [data.newRFID, data.newAvailable, data.newDateOfStock, rfid], (err) => {
                 if (err) {
                   reject(new Promise( (resolve,reject)=> reject(503)));
                   return;
                 }
-                resolve(this.lastID);
+                resolve(true);
             });
         });
     }
