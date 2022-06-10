@@ -70,8 +70,8 @@ function SKU_dao() {
     }
     this.postSku=(data)=>{
         return new Promise((resolve, reject) => {
-            const sql = 'INSERT INTO SKUs(id,description,weight,volume,notes,position,price,availableQuantity,testDescriptors) VALUES(?,?, ?, ?, ?, ?, ?,?,?)';
-            SKUDB.run(sql, [data.id,data.description, data.weight, data.volume,data.notes,0,data.price,data.availableQuantity,''], (err) => {
+            const sql = 'INSERT INTO SKUs(description,weight,volume,notes,position,price,availableQuantity,testDescriptors) VALUES(?, ?, ?, ?, ?, ?,?,?)';
+            SKUDB.run(sql, [data.description, data.weight, data.volume,data.notes,0,data.price,data.availableQuantity,''], (err) => {
                 if (err) {
                   reject(new Promise( (resolve,reject)=> reject(503)));
                   return;
@@ -89,6 +89,10 @@ function SKU_dao() {
                     reject(new Promise( (resolve,reject)=> reject(503)));
                     return;
                 }
+                if (rows===undefined){
+                    reject(new Promise( (resolve,reject)=> reject(404)));
+                    return;
+                } 
                 const info = 
                     {  
                        maxWeight:rows.maxWeight,

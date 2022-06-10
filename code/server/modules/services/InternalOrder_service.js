@@ -24,10 +24,13 @@ function InternalOrder_service(dao) {
         if(!body.issueDate){
             return Promise.reject(422);
         }
-        const date = dayjs(body.issueDate).format("YYYY-MM-DD HH:MM").toString(); //date is in ISO8601 format supported by SQLite 
+        const date = dayjs(body.issueDate).format("YYYY-MM-DD HH:mm").toString(); //date is in ISO8601 format supported by SQLite 
         const products = [...body.products];
         var IDs = Array();
-        products.forEach(p => IDs.push(p.SKUId));
+        products.forEach(p =>{
+            const pair = p.SKUId + ":" + p.qty;
+            IDs.push(pair);
+        });
         IDs = IDs.toString();
         const customerID = body.customerId;
         return dao.insertIO(date, IDs, customerID);
@@ -35,11 +38,14 @@ function InternalOrder_service(dao) {
 
     this.updateStateIO = (id, body) => {
         const newState = body.newState;
-        var IDs = "";
+        var IDs = new Array();
         if(body.products){
-            
             const products = [...body.products];
-            IDs = products.map(e => e.SkuID).toString();
+            products.forEach(p =>{
+                const pair = p.SKUId + ":" + p.qty;
+                IDs.push(pair);
+            });
+            IDs = IDs.toString();
         }
         
         return new Promise(async (resolve, reject) => {

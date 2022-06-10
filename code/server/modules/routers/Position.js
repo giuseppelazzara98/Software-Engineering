@@ -40,7 +40,7 @@ routerPO.post("/position", validate({ body: positionSchema }), (req, res) => {
       req.body.aisleID,
       req.body.row,
       req.body.col
-    )
+        )
   )
     return res.status(422).end();
   dao
@@ -141,7 +141,7 @@ routerPO.delete(
 
 routerPO.use(function (err, req, res, next) {
   if (err instanceof ValidationError || err instanceof validationResult) {
-    res.status(422).end();
+      res.status(422).end();
   } else next(err);
 });
 module.exports = routerPO;

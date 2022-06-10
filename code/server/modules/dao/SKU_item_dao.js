@@ -30,8 +30,8 @@ function SKU_item_dao() {
     this.postSkuItem=(data)=>{
         return new Promise((resolve, reject) => {
             console.log(data.DateOfStock);
-            const sql = 'INSERT INTO SKUItems(RFID,SKUId,DateOfStock) VALUES(?,?,?)';
-            SKUDB.run(sql, [data.RFID, data.SKUId, data.DateOfStock], (err) => {
+            const sql = 'INSERT INTO SKUItems(RFID,SKUId,DateOfStock,Available) VALUES(?,?,?,?)';
+            SKUDB.run(sql, [data.RFID, data.SKUId, data.DateOfStock,0], (err) => {
                 if (err) {
                   reject(new Promise( (resolve,reject)=> reject(503)));
                   return;
@@ -43,13 +43,13 @@ function SKU_item_dao() {
 
     this.putSkuItem=(data,rfid)=> {
         return new Promise((resolve, reject) => {
-            const sql = 'UPDATE SKUItems SET RFID=?,SKUId=?,DateOfStock=? WHERE RFID=?';
+            const sql = 'UPDATE SKUItems SET RFID=?,Available=?,DateOfStock=? WHERE RFID=?';
             SKUDB.run(sql, [data.newRFID, data.newAvailable, data.newDateOfStock, rfid], (err) => {
                 if (err) {
                   reject(new Promise( (resolve,reject)=> reject(503)));
                   return;
                 }
-                resolve(this.lastID);
+                resolve(true);
             });
         });
     }

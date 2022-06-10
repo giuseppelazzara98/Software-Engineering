@@ -153,29 +153,39 @@ function User_dao() {
 
   this.deleteUserByUsernameAndType = (username, type) => {
     return new Promise((resolve, reject) => {
-      const sql1 = "SELECT * FROM user WHERE type=? AND username=? ";
-      userDB.all(sql1, [type, username], (err, rows) => {
-        if (err) reject(503);
-        else if (rows === undefined || rows.length == 0) reject(404);
-        else {
-          const sql =
-            "DELETE FROM USER where username=? and type=?"
-          console.log(rows[0].type)
-          userDB.run(
-            sql,
-            [rows[0].username, rows[0].type],
-            (err) => {
-              if (err) {
-                reject(err);
-              } else {
-                resolve(200);
-              }
-            }
-          );
+      const query = 'DELETE FROM User WHERE username=? AND type=?';
+      userDB.run(query, [username, type], (err) => {
+        if(err){
+          reject(500);
+        } else{
+          resolve(204);
         }
       })
+    })
+    // return new Promise((resolve, reject) => {
+    //   const sql1 = "SELECT * FROM user WHERE type=? AND username=? ";
+    //   userDB.all(sql1, [type, username], (err, rows) => {
+    //     if (err) reject(503);
+    //     else if (rows === undefined || rows.length == 0) reject(404);
+    //     else {
+    //       const sql =
+    //         "DELETE FROM USER where username=? and type=?"
+    //       console.log(rows[0].type)
+    //       userDB.run(
+    //         sql,
+    //         [rows[0].username, rows[0].type],
+    //         (err) => {
+    //           if (err) {
+    //             reject(err);
+    //           } else {
+    //             resolve(204);
+    //           }
+    //         }
+    //       );
+    //     }
+    //   })
 
-    });
+    // });
   };
 
   this.deleteAll = () => {

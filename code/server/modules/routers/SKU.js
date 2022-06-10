@@ -36,10 +36,14 @@ routerSKU.get("/skus", async (req, res) => {
   routerSKU.post("/sku",
   body("availableQuantity").isInt(),
   body("weight").isNumeric(),
+  body("weight").isInt(),
+  body("volume").isInt(),
   body("price").isNumeric(),
   body("volume").isNumeric(),
   body("notes").isString(),
+  body("notes").isLength({min:1}),
   body("description").isString(),
+  body("description").isLength({min:1}),
   async (req, res) => {
     try{
       const errors=validationResult(req);
@@ -53,7 +57,7 @@ routerSKU.get("/skus", async (req, res) => {
     if (
       req.body === undefined || req.body.description === undefined || req.body.weight === undefined || req.body.volume === undefined
       ||req.body.notes === undefined || req.body.price===undefined||req.body.availableQuantity === undefined 
-      || Number(req.body.weight)<=0|| Number(req.body.volume)<=0 || Number(req.body.price)<=0
+      || Number(req.body.weight)<=0|| Number(req.body.volume)<=0 || Number(req.body.price)<=0 || Number(req.body.availableQuantity)<=0
     ) {
        return res.status(422).send("422 Unprocessable Entity"); 
     }

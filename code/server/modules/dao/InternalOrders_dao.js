@@ -31,16 +31,22 @@ function InternalOrders_dao() {
                         //each row must retrieve the products
                         var products = [];
                         if (row.products) {
-                            const IDs = row.products.split(',').map(e => parseInt(e)); //array of INT of product IDs
+                            const prods = row.products.split(',').map( e => {
+                                const prod = {
+                                    id : e.split(":")[0],
+                                    qty : e.split(":")[1]
+                                }
+                                return prod;
+                            });
                             //retrieve the array of products
-                            products = await Promise.all(IDs.map(async (id) => {
-                                const product = this.getProduct(id, row.state).then(p => {
+                            products = await Promise.all(prods.map(async (prod) => {
+                                const product = this.getProduct(prod.id, row.state).then(p => {
                                     if (row.state !== 'COMPLETED') {
                                         return {
                                             SKUId: p.id,
                                             description: p.description,
                                             price: p.price,
-                                            qty: p.availableQuantity
+                                            qty: prod.qty
                                         }
                                     } else {
                                         return {
@@ -55,7 +61,7 @@ function InternalOrders_dao() {
                             }));
                             return {
                                 "id": row.id,
-                                "issueDate": dayjs(row.issueDate).format("YYYY/MM/DD HH:MM").toString(),
+                                "issueDate": dayjs(row.issueDate).format("YYYY/MM/DD HH:mm").toString(),
                                 "state": row.state,
                                 "products": products.filter(p => p !== undefined),
                                 "customerID": row.customerID
@@ -100,22 +106,28 @@ function InternalOrders_dao() {
                         //each row must retrieve the products
                         var products = [];
                         if (row.products) {
-                            const IDs = row.products.split(',').map(e => parseInt(e)); //array of INT of product IDs
+                            const prods = row.products.split(',').map( e => {
+                                const prod = {
+                                    id : e.split(":")[0],
+                                    qty : e.split(":")[1]
+                                }
+                                return prod;
+                            });
                             //retrieve the array of products
-                            products = await Promise.all(IDs.map(async (id) => {
-                                const product = this.getProduct(id, row.state).then(p => {
+                            products = await Promise.all(prods.map(async (prod) => {
+                                const product = this.getProduct(prod.id, row.state).then(p => {
                                     return {
                                         SKUId: p.id,
                                         description: p.description,
                                         price: p.price,
-                                        qty: p.availableQuantity
+                                        qty: prod.qty
                                     }
                                 }).catch(e => undefined);
                                 return product;
                             }));
                             return {
                                 "id": row.id,
-                                "issueDate": dayjs(row.issueDate).format("YYYY/MM/DD HH:MM").toString(),
+                                "issueDate": dayjs(row.issueDate).format("YYYY/MM/DD HH:mm").toString(),
                                 "state": row.state,
                                 "products": products.filter(p => p !== undefined),
                                 "customerID": row.customerID
@@ -146,22 +158,28 @@ function InternalOrders_dao() {
                         //each row must retrieve the products
                         var products = [];
                         if (row.products) {
-                            const IDs = row.products.split(',').map(e => parseInt(e)); //array of INT of product IDs
+                            const prods = row.products.split(',').map( e => {
+                                const prod = {
+                                    id : e.split(":")[0],
+                                    qty : e.split(":")[1]
+                                }
+                                return prod;
+                            });
                             //retrieve the array of products
-                            products = await Promise.all(IDs.map(async (id) => {
-                                const product = this.getProduct(id, row.state).then(p => {
+                            products = await Promise.all(prods.map(async (prod) => {
+                                const product = this.getProduct(prod.id, row.state).then(p => {
                                     return {
                                         SKUId: p.id,
                                         description: p.description,
                                         price: p.price,
-                                        qty: p.availableQuantity
+                                        qty: prod.qty
                                     }
                                 }).catch(e => undefined);
                                 return product;
                             }));
                             return {
                                 "id": row.id,
-                                "issueDate": dayjs(row.issueDate).format("YYYY/MM/DD HH:MM").toString(),
+                                "issueDate": dayjs(row.issueDate).format("YYYY/MM/DD HH:mm").toString(),
                                 "state": row.state,
                                 "products": products.filter(p => p !== undefined),
                                 "customerID": row.customerID
@@ -194,16 +212,22 @@ function InternalOrders_dao() {
                         const io = new Promise(async (resolve, reject) => {
                             var products = [];
                             if (row.products) {
-                                const IDs = row.products.split(',').map(e => parseInt(e)); //array of INT of product IDs
+                                const prods = row.products.split(',').map( e => {
+                                    const prod = {
+                                        id : e.split(":")[0],
+                                        qty : e.split(":")[1]
+                                    }
+                                    return prod;
+                                });
                                 //retrieve the array of products
-                                products = await Promise.all(IDs.map(async (SKUid) => {
-                                    const product = this.getProduct(SKUid, row.state).then(p => {
+                                products = await Promise.all(prods.map(async (prod) => {
+                                    const product = this.getProduct(prod.SKUid, row.state).then(p => {
                                         if (row.state !== 'COMPLETED') {
                                             return {
                                                 SKUId: p.id,
                                                 description: p.description,
                                                 price: p.price,
-                                                qty: p.availableQuantity
+                                                qty: prod.qty
                                             }
                                         } else {
                                             return {
@@ -219,7 +243,7 @@ function InternalOrders_dao() {
                             }
                             resolve({
                                 "id": row.id,
-                                "issueDate": dayjs(row.issueDate).format("YYYY/MM/DD HH:MM").toString(),
+                                "issueDate": dayjs(row.issueDate).format("YYYY/MM/DD HH:mm").toString(),
                                 "state": row.state,
                                 "products": products.filter(p => p !== undefined),
                                 "customerID": row.customerID

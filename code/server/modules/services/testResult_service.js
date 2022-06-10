@@ -2,16 +2,22 @@
 const testResultDao = require('../dao/testResult_dao');
 
 const testResult_dao = new testResultDao();
+const SKU_ITEM_DAO = require('../dao/SKU_item_dao');
+const sku_item_dao = new SKU_ITEM_DAO();
+
 class testResult_service{
 
 
  getTestResultsByRFID = async(rfid)=> {
   try {
-    const testResults = await testResult_dao.getTestResultsByRFID(rfid);
-    if (testResults.length === 0) {
+    const skuitem = await sku_item_dao.checkSKUItemsRFID(rfid);
+    if (skuitem.length === 0) {
       return new Promise( (resolve,reject)=> reject(404));
     }
-    else return testResults;
+
+    else {
+      const testResult = await testResult_dao.getTestResultsByRFID(rfid);
+      return testResult;}
 }
   catch(err){
   return err;

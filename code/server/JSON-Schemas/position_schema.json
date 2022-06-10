@@ -27,10 +27,20 @@
         "minLength": 4
       },
       "maxWeight": {
-        "type": "integer"
+        "type": "integer",
+        "minimum" : 0
      },
       "maxVolume": {
-        "type": "integer"
+        "type": "integer",
+        "minimum" : 0
+      },
+      "occupiedWeight":{
+        "type": "integer",
+        "minimum" : 0
+      },
+      "occupiedVolume":{
+        "type": "integer",
+        "minimum" : 0
       }
     },
     "required": ["positionID", "aisleID", "row", "col", "maxWeight", "maxVolume"]

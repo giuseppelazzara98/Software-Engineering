@@ -72,7 +72,7 @@ function ReturnOrders_dao() {
   this.createNewReturnOrder = (order) => {
     // const restockOrderId = order.restockOrderId;
     const restockOrderId = order.restockOrderId;
-    console.log(order.restockOrderId)
+    console.log(order.restockOrderId);
     return new Promise((resolve, reject) => {
       const query = "SELECT * FROM restockOrders WHERE id=?";
       reDB.get(query, [restockOrderId], (err, row) => {
@@ -81,16 +81,17 @@ function ReturnOrders_dao() {
         } else {
           if (row == undefined) {
             reject(404);
-          }
-          else {
-            if (row.state != "COMPLETEDRETURN") reject(404);
+          } else {
+            /*  if (row.state !== "COMPLETEDRETURN") {
+              reject(404);
+            } */
             resolve(row.state);
           }
         }
       });
     }).then(() => {
       const date = dayjs(order.returnDate)
-        .format("YYYY-MM-DD HH:MM")
+        .format("YYYY-MM-DD HH:mm")
         .toString();
       const products = [...order.products];
       var RFIDs = Array();
@@ -155,7 +156,7 @@ function ReturnOrders_dao() {
     );
     return {
       id: row.id,
-      returnDate: row.returnDate,
+      returnDate: dayjs(row.returnDate).format("YYYY/MM/DD HH:mm").toString(),
       products: items.filter((p) => p !== undefined),
       restockOrderId: row.restockOrderId,
     };
