@@ -34,10 +34,10 @@ function item_dao(){
         });
       }
     
-      this.getItemsById=(id)=>{
+      this.getItemsById=(id,supplierId)=>{
         return new Promise((resolve, reject) => {
-            const sql = 'SELECT * FROM items WHERE ID=?';
-            itemDB.get(sql, [id], (err, r) => {
+            const sql = 'SELECT * FROM items WHERE id=? AND supplierId=?';
+            itemDB.get(sql, [id,supplierId], (err, r) => {
                 if (err) {
                     reject(new Promise( (resolve,reject)=> reject(500)));
                     return;
@@ -146,10 +146,10 @@ function item_dao(){
     
     
     
-    this.putItem=(data,id)=>{
+    this.putItem=(data, id, supplierId)=>{
         return new Promise((resolve, reject) => {
-        const sql = 'UPDATE items SET description=?,price=? WHERE id=?';
-        itemDB.run(sql, [ data.newDescription,data.newPrice, id], (err) => {
+        const sql = 'UPDATE items SET description=?,price=? WHERE id=? AND supplierId = ?';
+        itemDB.run(sql, [ data.newDescription,data.newPrice, id, supplierId], (err) => {
             if (err) {
               reject(new Promise( (resolve,reject)=> reject(503)));
               return;
@@ -159,10 +159,10 @@ function item_dao(){
     });
     }
     
-    this.deleteItem=(id)=>{
+    this.deleteItem=(id, supplierId)=>{
         return new Promise((resolve, reject)  => {
-            const sql = 'DELETE FROM items WHERE id=?';
-            itemDB.run(sql,[id], (err) => {
+            const sql = 'DELETE FROM items WHERE id=? AND supplierId = ?';
+            itemDB.run(sql,[id, supplierId], (err) => {
                 if (err) {
                     reject(new Promise( (resolve,reject)=> reject(503)));
                     return;

@@ -15,14 +15,13 @@ class item_service{
       return err;
     }
   }
-  getItemsById= async(id)=>{
+  getItemsById= async(id, supplierId)=>{
     try{
-      const items = await item_dao.getItemsById(id);
+      const items = await item_dao.getItemsById(id,supplierId);
       if (items.length===0){
         return new Promise( (resolve,reject)=> reject(404));
       }
       return items;
-
     }
     catch(err){
       return err;
@@ -57,26 +56,22 @@ class item_service{
       return err;
     }
   }
-  putItem= async (item, id)=>{
+  putItem= async (item, id, supplierId)=>{
     try{
     const check = await item_dao.getItemsById2(id);
     if (check.length===0){
       return new Promise( (resolve,reject)=> reject(404));
     }
-    await item_dao.putItem(item,id);
+    await item_dao.putItem(item,id,supplierId);
     return new Promise( (resolve,reject)=> resolve(200));
     }
     catch(err){
       return err;
     }
   }
-  deleteItem=async(id)=>{
+  deleteItem=async(id, supplierId)=>{
     try{
-      const check = await item_dao.getItemsById2(id);
-      if (check.length===0){
-        return new Promise( (resolve,reject)=> reject(404));
-      }
-      await item_dao.deleteItem(id);
+      await item_dao.deleteItem(id, supplierId);
       return new Promise( (resolve,reject)=> resolve(204));
     }
     catch(err){
