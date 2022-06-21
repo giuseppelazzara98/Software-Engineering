@@ -34,7 +34,7 @@ function RestockOrders_dao() {
                                 return prod;
                             });
                             products = await Promise.all(prods.map(async (prod) => {
-                                const product = this.getProduct(prod.id, prod.itemID, row.supplierID).then(p => {
+                                const product = this.getProduct(prod.skuID, prod.itemID, row.supplierID).then(p => {
                                     const obj = {
                                         SKUId: prod.skuID,
                                         itemId: prod.itemID,
@@ -63,7 +63,7 @@ function RestockOrders_dao() {
                                     return {
                                         "SKUId": s.skuID,
                                         "itemId": s.itemID,
-                                        "RFID": i.rfid
+                                        "RFID": i.RFID
                                     };
                                 }).catch(e => undefined);
                                 return skuItem;
@@ -112,7 +112,7 @@ function RestockOrders_dao() {
 
     this.getSKUItem = (rfid, supplierID) => {
         return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM items INNER JOIN SKUites on items.SKUid=SKUItems.SKUId WHERE rfid=? AND supplierId=?";
+            const query = "SELECT * FROM items INNER JOIN SKUitems on items.SKUid=SKUItems.SKUId WHERE rfid=? AND supplierId=?";
             db.get(query, [rfid, supplierID], (err, row) => {
                 if (err) {
                     reject(500);
@@ -156,7 +156,7 @@ function RestockOrders_dao() {
                                 return prod;
                             });
                             products = await Promise.all(prods.map(async (prod) => {
-                                const product = this.getProduct(prod.id, prod.itemID, row.supplierID).then(p => {
+                                const product = this.getProduct(prod.skuID, prod.itemID, row.supplierID).then(p => {
                                     const obj = {
                                         SKUId: prod.skuID,
                                         itemId: prod.itemID,
@@ -220,7 +220,7 @@ function RestockOrders_dao() {
                             });
                             //retrieve the array of products
                             products = await Promise.all(prods.map(async (prod) => {
-                                const product = this.getProduct(prod.id, prod.itemID, row.supplierID).then(p => {
+                                const product = this.getProduct(prod.skuID, prod.itemID, row.supplierID).then(p => {
                                     const obj = {
                                         SKUId: prod.skuID,
                                         itemId: prod.itemID,
