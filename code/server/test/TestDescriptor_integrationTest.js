@@ -13,14 +13,15 @@ describe('Integration Test Descriptor', () => {
     
     testPOSTDescriptor(404, 'test', 'proc', 1);
     testGETdescriptor(1, 404)
-    testDELETEDescriptor(1, 422);
+    testDELETEDescriptor("a", 422);
+    testDELETEDescriptor(1, 204);
 
     testPOSTDescriptor(422, 1, 'proc', 1);
-    testDELETEDescriptor(5, 422);
+    testDELETEDescriptor(5, 204);
 
     testPOSTDescriptor(404, 'a', 'a', 1);
     testGETdescriptor(1, 404)
-    testDELETEDescriptor(1, 422);
+    testDELETEDescriptor(1, 204);
     
 })
 
