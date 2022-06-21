@@ -28,7 +28,7 @@ describe('Integration Test Descriptor', () => {
 /*************************************************************************/
 
 function testGETdescriptor(id, HTTPresponse){
-    it('get by id', async () => {
+    it('get TD by id', async () => {
         var result = await agent.get('/api/testDescriptors/' + id);
 
         result.should.have.status(HTTPresponse);
@@ -48,7 +48,7 @@ function testGETdescriptor(id, HTTPresponse){
 
 
 function testPOSTDescriptor(HTTPresponse, name, procedure, idSKU) {
-    it('post', async () => {
+    it('post TD', async () => {
         const td = {
             'name': name,
             'procedureDescription': procedure,
@@ -62,7 +62,7 @@ function testPOSTDescriptor(HTTPresponse, name, procedure, idSKU) {
 }
 
 function testDELETEDescriptor(id, HTTPresponse){
-    it('delete by id', async() => {
+    it('delete TD by id', async() => {
         const res = await agent.delete('/api/testDescriptor/' + id);
         res.should.have.status(HTTPresponse);
     })    
@@ -72,7 +72,7 @@ function testDELETEDescriptor(id, HTTPresponse){
 
 
 function testPUTDescriptor(HTTPresponse, id, newName, newProcedure, newIdSKU){
-    it('modify td', async () => {
+    it('modify TD', async () => {
         var res = await agent.put('/api/testDescriptor/' + id)
             .set('content-type', 'application/json')
             .send({

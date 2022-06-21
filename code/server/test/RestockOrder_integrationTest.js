@@ -8,12 +8,30 @@ chai.should();
 
 const app = require('../server')
 var agent = chai.request.agent(app);
+const products = [{ "SKUId": 1, "description": "a product", "price": 10.99, "qty": 3 },
+    { "SKUId": 2, "description": "another product", "price": 11.99, "qty": 3 }]
+const skuitem1 = {
+    RFID: "12345678901234567890123456789010",
+    SKUId: 1,
+    DateOfStock: "2021/11/29 12:30"
+}
+const skuitem2 = {
+    RFID: "12345678901234567890123456789020",
+    SKUId: 2,
+    DateOfStock: "2021/11/29 11:30"
+}
+const skuItems = [skuitem1, skuitem2]
 
 describe('Integration Restock Orders', () => {
-    products = [{ "SKUId": 1, "description": "a product", "price": 10.99, "qty": 3 },
-    { "SKUId": 2, "description": "another product", "price": 11.99, "qty": 3 }]
+    
+    
+
     testPOSTro(201, '2010/12/12', products, 1);
     testGETro(1, 200);
+
+    testPUTroState(200, 1, "DELIVERED")
+
+
     testDELETEro(1, 204);
     testPOSTro(422, 'a', products, 1);
     testPOSTro(422, '2010/12/12', '', 1);
@@ -25,7 +43,7 @@ describe('Integration Restock Orders', () => {
 
 
 function testGETro(id, HTTPresponse) {
-    it('get by id', async () => {
+    it('get RO by id', async () => {
         var result = await agent.get('/api/restockOrders/' + id);
         // console.log(id);
         result.should.have.status(HTTPresponse);
@@ -38,7 +56,7 @@ function testGETro(id, HTTPresponse) {
 
 
 function testPOSTro(HTTPresponse, issueDate, products, supplierId) {
-    it('post', async () => {
+    it('post RO', async () => {
         const ro = {
             'issueDate': issueDate,
             'products': products,
@@ -52,7 +70,7 @@ function testPOSTro(HTTPresponse, issueDate, products, supplierId) {
 }
 
 function testDELETEro(id, HTTPresponse) {
-    it('delete by id', async () => {
+    it('delete RO by id', async () => {
         const res = await agent.delete('/api/restockOrder/' + id);
         res.should.have.status(HTTPresponse);
     })
@@ -61,7 +79,7 @@ function testDELETEro(id, HTTPresponse) {
 /*************************************************************************/
 
 function testPUTroState(HTTPresponse, id, newState) {
-    it('modify ro state', async () => {
+    it('modify RO state', async () => {
         var res = await agent.put('/api/restockOrder/' + id)
             .set('content-type', 'application/json')
             .send({
@@ -78,7 +96,7 @@ function testPUTroState(HTTPresponse, id, newState) {
 }
 
 function testPUTroskuItems(HTTPresponse, id, skuItems) {
-    it('modify ro skuItems', async () => {
+    it('modify RO skuItems', async () => {
         var res = await agent.put('/api/restockOrder/' + id + '/skuItems')
             .set('content-type', 'application/json')
             .send({

@@ -66,6 +66,7 @@ function RestockOrders_service(dao) {
     }
 
     this.addSkuItems = (id, body) => {
+        console.log(body);
         const skuItems = [...body.skuItems]
         var RFIDs = Array();
         skuItems.forEach(p => {
