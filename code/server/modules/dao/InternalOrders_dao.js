@@ -33,7 +33,8 @@ function InternalOrders_dao() {
                         if (row.products) {
                             const prods = row.products.split(',').map( e => {
                                 const prod = {
-                                    id : e.split(":")[0],
+                                    id : e.split("-")[0],
+                                    rfid: e.split("-")[1].split(":")[0],
                                     qty : e.split(":")[1]
                                 }
                                 return prod;
@@ -53,7 +54,7 @@ function InternalOrders_dao() {
                                             SKUId: p.id,
                                             description: p.description,
                                             price: p.price,
-                                            RFID: p.RFID
+                                            RFID: p.rfid
                                         }
                                     }
                                 }).catch(e => undefined);

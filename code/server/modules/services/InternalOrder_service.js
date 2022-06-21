@@ -28,7 +28,7 @@ function InternalOrder_service(dao) {
         const products = [...body.products];
         var IDs = Array();
         products.forEach(p =>{
-            const pair = p.SKUId + ":" + p.qty;
+            const pair = p.SKUId + "-0" + ":" + p.qty;
             IDs.push(pair);
         });
         IDs = IDs.toString();
@@ -42,7 +42,7 @@ function InternalOrder_service(dao) {
         if(body.products){
             const products = [...body.products];
             products.forEach(p =>{
-                const pair = p.SKUId + ":" + p.qty;
+                const pair = p.SKUId + "-"  + p.RFID + ":" + p.qty;
                 IDs.push(pair);
             });
             IDs = IDs.toString();
