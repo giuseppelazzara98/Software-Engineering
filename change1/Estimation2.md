@@ -16,10 +16,10 @@ Report effort figures from the timesheet, compute size from the source code.
 
 ## New development (release 1  -- march 22 to may 25)
 | Measure| Value |
-|---|---|
-|effort E (report here effort in person hours, for all activities in the period, from your timesheet)  ||
+|---| :---: |
+|effort E (report here effort in person hours, for all activities in the period, from your timesheet)  | 245 |
 |size S (report here size in LOC of all code written, excluding test cases)  |3600 |
-|productivity P = S/E ||
+|productivity P = S/E | 14.5 |
 |defects before release D_before (number of defects found and fixed before may 25) | non tracked |
 
 
@@ -27,14 +27,14 @@ Report effort figures from the timesheet, compute size from the source code.
 ## Corrective Maintenance (release 2 -- may 26 to june 8)
 
 | Measure | Value|
-|---|---|
-| effort for non-quality ENQ (effort for all activities in release 2, or effort to fix defects found when running official acceptance tests) ||
-| effort for non quality, relative = ENQ / E ||
+|---| :---: |
+| effort for non-quality ENQ (effort for all activities in release 2, or effort to fix defects found when running official acceptance tests) | 200 |
+| effort for non quality, relative = ENQ / E | 0.47 |
 |defects after release D (number of defects found running official acceptance tests and  fixed in release 2) |92|
 | defects before release vs defects after release = D/D_before | - |
-|DD = defect density = D/S||
-|D_fix = average effort to fix a defect = ENQ / D ||
-|overall productivity OP = S/(E + ENQ)||
+|DD = defect density = D/S| 0.025 |
+|D_fix = average effort to fix a defect = ENQ / D | 0.44 |
+|overall productivity OP = S/(E + ENQ)| 8 |
 
 ## Second estimation
 
@@ -45,7 +45,7 @@ Now it is possible to repeat the estimate using values from the past. We can als
 | NC =  Estimated number of classes to be developed | 30 |             
 |  A = Estimated average size per class, in LOC | 120 | 
 | S_e = Estimated size of project, in LOC (= NC * A) | 3600 |
-| E = Estimated effort, in person hours (here use overall productivity OP) | |   
-| C = Estimated cost, in euro (here use 1 person hour cost = 30 euro)                   |         | 
-| D_e = Estimated number of defects = DD * S_e||
-| Estimated effort for non quality = D_e * D_fix ||
+| E = Estimated effort, in person hours (here use overall productivity OP) | 450 |   
+| C = Estimated cost, in euro (here use 1 person hour cost = 30 euro)                   |     13500    | 
+| D_e = Estimated number of defects = DD * S_e| 90 |
+| Estimated effort for non quality = D_e * D_fix | 39.6 |
