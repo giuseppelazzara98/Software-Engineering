@@ -14,14 +14,15 @@ routeritem.get("/items", async (req, res) => {
     }
   });
   
-  routeritem.get("/items/:id", param('id').isInt(),async (req, res) => {
+  routeritem.get("/items/:id/:supplierId", param('id').isInt(), param('supplierId').isInt(),async (req, res) => {
     try {
       const errors=validationResult(req);
       if(!errors.isEmpty()){
         return res.status(422).send("422 Unprocessable Entity");
       }
       const id = req.params.id;
-      const items = await item_service.getItemsById(id);
+      const supplierId =req.params.supplierId;
+      const items = await item_service.getItemsById(id,supplierId);
       return res.status(200).json(items);
     } catch (err) {
         res.status(err).end();
@@ -63,8 +64,9 @@ routeritem.get("/items", async (req, res) => {
   }
   });
   
-  routeritem.put("/item/:id", 
+  routeritem.put("/item/:id/:supplierId", 
   param('id').isInt(),
+  param('supplierId').isInt(),
   body('newDescription').isString(),
   body('newPrice').isNumeric(), 
   async (req, res) => {
@@ -78,6 +80,7 @@ routeritem.get("/items", async (req, res) => {
     }
     let item = req.body;
     let id = req.params.id;
+    let supplierId = req.params.supplierId;
     if (
       item === undefined ||
       item.newDescription === undefined ||
@@ -87,7 +90,7 @@ routeritem.get("/items", async (req, res) => {
       return res.status(422).send("422 Unprocessable Entity");
     }
     
-    await item_service.putItem(item, id);
+    await item_service.putItem(item, id, supplierId);
     return res.status(200).send("OK");
   }
   catch(err){
@@ -95,8 +98,9 @@ routeritem.get("/items", async (req, res) => {
   }
   });
   
-  routeritem.delete("/items/:id",
-  param('id').isInt(), 
+  routeritem.delete("/items/:id/:supplierId",
+  param('id').isInt(),
+  param('supplierId').isInt(), 
   async(req, res) => {
     try {
       const errors=validationResult(req);
@@ -104,7 +108,8 @@ routeritem.get("/items", async (req, res) => {
         return res.status(422).send("422 Unprocessable Entity");
       }
       const id = req.params.id;
-      await item_service.deleteItem(id);
+      const supplierId = req.params.supplierId;
+      await item_service.deleteItem(id, supplierId);
       return res.status(204).end();
     } catch (err) {
        res.status(err).end();

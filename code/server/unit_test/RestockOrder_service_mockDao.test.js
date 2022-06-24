@@ -2,698 +2,143 @@ const Ro_service = require('../modules/services/RestockOrder_service');
 const dao = require('../modules/dao/RestockOrder_mockdao');
 const ro_service = new Ro_service(dao);
 
+const product1 = {
+    SKUId: 1,
+    itemId: 10,
+    description: "a new sku",
+    price: 10.99,
+    qty: 10
+}
+const skuItem1 = {
+    SKUId: 1,
+    itemId: 10,
+    rfid: "12345678901234567890123456789011"
+}
+const skuItem2 = {
+    SKUId: 1,
+    itemId: 10,
+    rfid: "12345678901234567890123456789012"
+}
+
+
+const product2 = {
+    SKUId: 2,
+    itemId: 11,
+    description: "a new sku",
+    price: 9.99,
+    qty: 5
+}
+const skuItem3 = {
+    SKUId: 2,
+    itemId: 11,
+    rfid: "12345678901234567890123456789021"
+}
+
+const skuItem4 = {
+    SKUId: 2,
+    itemId: 11,
+    rfid: "12345678901234567890123456789022"
+}
+
+
+const product3 = {
+    SKUId: 3,
+    itemId: 31,
+    description: "a new sku",
+    price: 5.99,
+    qty: 1
+}
+const skuItem5 = {
+    SKUId: 3,
+    itemId: 31,
+    rfid: "12345678901234567890123456789031"
+}
+const skuItem6 = {
+    SKUId: 3,
+    itemId: 31,
+    rfid: "12345678901234567890123456789032"
+}
+
+const ro1 = {
+    id: 1,
+    issueDate: "2021/11/11 09:11",
+    state: "ISSUED",
+    products: [product1, product2],
+    supplierId: 1,
+    // transportNote: { deliveryDate: "2021/12/29" },
+    skuItems: []
+};
+
+const ro2 = {
+    id: 2,
+    issueDate: "2022/01/22 09:11",
+    state: "DELIVERY",
+    products: [product1, product2],
+    supplierId: 1,
+    transportNote: { deliveryDate: "2021/12/29" },
+    skuItems: []
+};
+
+const ro3 = {
+    id: 3,
+    issueDate: "2021/11/11 11:11",
+    state: "DELIVERED",
+    products: [product2],
+    supplierId: 1,
+    transportNote: { deliveryDate: "2021/12/29" },
+    skuItems: [skuItem3]
+};
+
+const ro4 = {
+    id: 4,
+    issueDate: "2021/10/21 11:10",
+    state: "TESTED",
+    products: [product1, product2],
+    supplierId: 1,
+    transportNote: { deliveryDate: "2021/10/29" },
+    skuItems: [skuItem1, skuItem2, skuItem3]
+};
+
+const ro5 = {
+    id: 5,
+    issueDate: "2021/10/21 12:14",
+    state: "COMPLETED",
+    products: [product1, product3],
+    supplierId: 1,
+    transportNote: { deliveryDate: "2021/09/22" },
+    skuItems: [skuItem1, skuItem2, skuItem5]
+};
+
+const ro6 = {
+    id: 6,
+    issueDate: "2021/10/21 15:12",
+    state: "COMPLETEDRETURN",
+    products: [product2, product3],
+    supplierId: 1,
+    transportNote: { deliveryDate: "2021/11/02" },
+    skuItems: [skuItem3, skuItem4, skuItem6]
+};
+
+
+
 describe('Get all restock orders', () => {
     beforeEach(() => {
         dao.getAllRO.mockReset();
         dao.getAllRO
-            .mockResolvedValueOnce([
-                {
-                    "id": 1,
-                    "issueDate": "2021/11/11 09:11",
-                    "state": "ISSUED",
-                    "products": [
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "qty": 50
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        }
-                    ],
-                    "supplierId": 1,
-                    "skuItems": []
-                },
-                {
-                    "id": 2,
-                    "issueDate": "2022/01/22 09:01",
-                    "state": "DELIVERY",
-                    "products": [
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "qty": 50
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        }
-                    ],
-                    "supplierId": 2,
-                    "transportNote": {
-                        "transportDate": "2022/01/11"
-                    },
-                    "skuItems": []
-                },
-                {
-                    "id": 3,
-                    "issueDate": "2021/11/11 11:11",
-                    "state": "DELIVERED",
-                    "products": [
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "qty": 50
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        },
-                        {
-                            "SKUId": 4,
-                            "description": "sku sku",
-                            "price": 19.99,
-                            "qty": 12
-                        }
-                    ],
-                    "supplierId": 3,
-                    "transportNote": {
-                        "transportDate": "2021/12/21"
-                    },
-                    "skuItems": [
-                        {
-                            "SKUId": 2,
-                            "RFID": "12345678901234567890123456789014"
-                        },
-                        {
-                            "SKUId": 1,
-                            "RFID": "12345678901234567890123456789015"
-                        }
-                    ]
-                },
-                {
-                    "id": 4,
-                    "issueDate": "2021/10/21 21:10",
-                    "state": "TESTED",
-                    "products": [
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        },
-                        {
-                            "SKUId": 4,
-                            "description": "sku sku",
-                            "price": 19.99,
-                            "qty": 12
-                        }
-                    ],
-                    "supplierId": 2,
-                    "transportNote": {
-                        "transportDate": "2021/10/31"
-                    },
-                    "skuItems": [
-                        {
-                            "SKUId": 2,
-                            "RFID": "12345678901234567890123456789014"
-                        }
-                    ]
-                },
-                {
-                    "id": 5,
-                    "issueDate": "2021/04/06 19:04",
-                    "state": "COMPLETED",
-                    "products": [
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        },
-                        {
-                            "SKUId": 4,
-                            "description": "sku sku",
-                            "price": 19.99,
-                            "qty": 12
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        }
-                    ],
-                    "supplierId": 1,
-                    "transportNote": {
-                        "transportDate": "2021/09/11"
-                    },
-                    "skuItems": [
-                        {
-                            "SKUId": 3,
-                            "RFID": "12345678901234567890123456789016"
-                        },
-                        {
-                            "SKUId": 2,
-                            "RFID": "12345678901234567890123456789014"
-                        },
-                        {
-                            "SKUId": 1,
-                            "RFID": "12345678901234567890123456789017"
-                        }
-                    ]
-                },
-                {
-                    "id": 6,
-                    "issueDate": "2020/04/22 12:04",
-                    "state": "COMPLETEDRETURN",
-                    "products": [
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "qty": 50
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        }
-                    ],
-                    "supplierId": 1,
-                    "transportNote": {
-                        "transportDate": "2021/11/01"
-                    },
-                    "skuItems": [
-                        {
-                            "SKUId": 1,
-                            "RFID": "12345678901234567890123456789015"
-                        },
-                        {
-                            "SKUId": 1,
-                            "RFID": "12345678901234567890123456789015"
-                        },
-                        {
-                            "SKUId": 1,
-                            "RFID": "12345678901234567890123456789012"
-                        }
-                    ]
-                }
-            ])
+            .mockResolvedValueOnce([ro1, ro2, ro3, ro4, ro5, ro6])
             .mockRejectedValueOnce(500)
-            .mockResolvedValue([
-                {
-                    "id": 1,
-                    "issueDate": "2021/11/11 09:11",
-                    "state": "ISSUED",
-                    "products": [
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "qty": 50
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        }
-                    ],
-                    "supplierId": 1,
-                    "skuItems": []
-                },
-                {
-                    "id": 2,
-                    "issueDate": "2022/01/22 09:01",
-                    "state": "DELIVERY",
-                    "products": [
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "qty": 50
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        }
-                    ],
-                    "supplierId": 2,
-                    "transportNote": {
-                        "transportDate": "2022/01/11"
-                    },
-                    "skuItems": []
-                },
-                {
-                    "id": 3,
-                    "issueDate": "2021/11/11 11:11",
-                    "state": "DELIVERED",
-                    "products": [
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "qty": 50
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        },
-                        {
-                            "SKUId": 4,
-                            "description": "sku sku",
-                            "price": 19.99,
-                            "qty": 12
-                        }
-                    ],
-                    "supplierId": 3,
-                    "transportNote": {
-                        "transportDate": "2021/12/21"
-                    },
-                    "skuItems": [
-                        {
-                            "SKUId": 2,
-                            "RFID": "12345678901234567890123456789014"
-                        },
-                        {
-                            "SKUId": 1,
-                            "RFID": "12345678901234567890123456789015"
-                        }
-                    ]
-                },
-                {
-                    "id": 4,
-                    "issueDate": "2021/10/21 21:10",
-                    "state": "TESTED",
-                    "products": [
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        },
-                        {
-                            "SKUId": 4,
-                            "description": "sku sku",
-                            "price": 19.99,
-                            "qty": 12
-                        }
-                    ],
-                    "supplierId": 2,
-                    "transportNote": {
-                        "transportDate": "2021/10/31"
-                    },
-                    "skuItems": [
-                        {
-                            "SKUId": 2,
-                            "RFID": "12345678901234567890123456789014"
-                        }
-                    ]
-                },
-                {
-                    "id": 5,
-                    "issueDate": "2021/04/06 19:04",
-                    "state": "COMPLETED",
-                    "products": [
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        },
-                        {
-                            "SKUId": 4,
-                            "description": "sku sku",
-                            "price": 19.99,
-                            "qty": 12
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        }
-                    ],
-                    "supplierId": 1,
-                    "transportNote": {
-                        "transportDate": "2021/09/11"
-                    },
-                    "skuItems": [
-                        {
-                            "SKUId": 3,
-                            "RFID": "12345678901234567890123456789016"
-                        },
-                        {
-                            "SKUId": 2,
-                            "RFID": "12345678901234567890123456789014"
-                        },
-                        {
-                            "SKUId": 1,
-                            "RFID": "12345678901234567890123456789017"
-                        }
-                    ]
-                },
-                {
-                    "id": 6,
-                    "issueDate": "2020/04/22 12:04",
-                    "state": "COMPLETEDRETURN",
-                    "products": [
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "qty": 50
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        }
-                    ],
-                    "supplierId": 1,
-                    "transportNote": {
-                        "transportDate": "2021/11/01"
-                    },
-                    "skuItems": [
-                        {
-                            "SKUId": 1,
-                            "RFID": "12345678901234567890123456789015"
-                        },
-                        {
-                            "SKUId": 1,
-                            "RFID": "12345678901234567890123456789015"
-                        },
-                        {
-                            "SKUId": 1,
-                            "RFID": "12345678901234567890123456789012"
-                        }
-                    ]
-                }
-            ])
+            .mockResolvedValue([ro1, ro2, ro3, ro4, ro5, ro6])
 
         dao.getAllROIssued.mockReset();
         dao.getAllROIssued
-            .mockResolvedValueOnce([
-                {
-                    "id": 1,
-                    "issueDate": "2021/11/11 09:11",
-                    "state": "ISSUED",
-                    "products": [
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "qty": 50
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        }
-                    ],
-                    "supplierId": 1,
-                    "skuItems": []
-                }
-            ])
+            .mockResolvedValueOnce([ro1])
             .mockRejectedValueOnce(500)
-            .mockResolvedValue([
-                {
-                    "id": 1,
-                    "issueDate": "2021/11/11 09:11",
-                    "state": "ISSUED",
-                    "products": [
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "qty": 50
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        }
-                    ],
-                    "supplierId": 1,
-                    "skuItems": []
-                }
-            ])
+            .mockResolvedValue([ro1])
     })
 
     test('get all restock orders', async () => {
         var res = await ro_service.getAllRO();
-        expect(res).toEqual([
-            {
-                "id": 1,
-                "issueDate": "2021/11/11 09:11",
-                "state": "ISSUED",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    },
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    }
-                ],
-                "supplierId": 1,
-                "skuItems": []
-            },
-            {
-                "id": 2,
-                "issueDate": "2022/01/22 09:01",
-                "state": "DELIVERY",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    }
-                ],
-                "supplierId": 2,
-                "transportNote": {
-                    "transportDate": "2022/01/11"
-                },
-                "skuItems": []
-            },
-            {
-                "id": 3,
-                "issueDate": "2021/11/11 11:11",
-                "state": "DELIVERED",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    },
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    },
-                    {
-                        "SKUId": 4,
-                        "description": "sku sku",
-                        "price": 19.99,
-                        "qty": 12
-                    }
-                ],
-                "supplierId": 3,
-                "transportNote": {
-                    "transportDate": "2021/12/21"
-                },
-                "skuItems": [
-                    {
-                        "SKUId": 2,
-                        "RFID": "12345678901234567890123456789014"
-                    },
-                    {
-                        "SKUId": 1,
-                        "RFID": "12345678901234567890123456789015"
-                    }
-                ]
-            },
-            {
-                "id": 4,
-                "issueDate": "2021/10/21 21:10",
-                "state": "TESTED",
-                "products": [
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    },
-                    {
-                        "SKUId": 4,
-                        "description": "sku sku",
-                        "price": 19.99,
-                        "qty": 12
-                    }
-                ],
-                "supplierId": 2,
-                "transportNote": {
-                    "transportDate": "2021/10/31"
-                },
-                "skuItems": [
-                    {
-                        "SKUId": 2,
-                        "RFID": "12345678901234567890123456789014"
-                    }
-                ]
-            },
-            {
-                "id": 5,
-                "issueDate": "2021/04/06 19:04",
-                "state": "COMPLETED",
-                "products": [
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    },
-                    {
-                        "SKUId": 4,
-                        "description": "sku sku",
-                        "price": 19.99,
-                        "qty": 12
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    }
-                ],
-                "supplierId": 1,
-                "transportNote": {
-                    "transportDate": "2021/09/11"
-                },
-                "skuItems": [
-                    {
-                        "SKUId": 3,
-                        "RFID": "12345678901234567890123456789016"
-                    },
-                    {
-                        "SKUId": 2,
-                        "RFID": "12345678901234567890123456789014"
-                    },
-                    {
-                        "SKUId": 1,
-                        "RFID": "12345678901234567890123456789017"
-                    }
-                ]
-            },
-            {
-                "id": 6,
-                "issueDate": "2020/04/22 12:04",
-                "state": "COMPLETEDRETURN",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    }
-                ],
-                "supplierId": 1,
-                "transportNote": {
-                    "transportDate": "2021/11/01"
-                },
-                "skuItems": [
-                    {
-                        "SKUId": 1,
-                        "RFID": "12345678901234567890123456789015"
-                    },
-                    {
-                        "SKUId": 1,
-                        "RFID": "12345678901234567890123456789015"
-                    },
-                    {
-                        "SKUId": 1,
-                        "RFID": "12345678901234567890123456789012"
-                    }
-                ]
-            }
-        ])
+        expect(res).toEqual([ro1, ro2, ro3, ro4, ro5, ro6])
 
         try {
             res = await ro_service.getAllRO();
@@ -703,247 +148,13 @@ describe('Get all restock orders', () => {
         }
 
         res = await ro_service.getAllRO();
-        expect(res).toEqual([
-            {
-                "id": 1,
-                "issueDate": "2021/11/11 09:11",
-                "state": "ISSUED",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    },
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    }
-                ],
-                "supplierId": 1,
-                "skuItems": []
-            },
-            {
-                "id": 2,
-                "issueDate": "2022/01/22 09:01",
-                "state": "DELIVERY",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    }
-                ],
-                "supplierId": 2,
-                "transportNote": {
-                    "transportDate": "2022/01/11"
-                },
-                "skuItems": []
-            },
-            {
-                "id": 3,
-                "issueDate": "2021/11/11 11:11",
-                "state": "DELIVERED",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    },
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    },
-                    {
-                        "SKUId": 4,
-                        "description": "sku sku",
-                        "price": 19.99,
-                        "qty": 12
-                    }
-                ],
-                "supplierId": 3,
-                "transportNote": {
-                    "transportDate": "2021/12/21"
-                },
-                "skuItems": [
-                    {
-                        "SKUId": 2,
-                        "RFID": "12345678901234567890123456789014"
-                    },
-                    {
-                        "SKUId": 1,
-                        "RFID": "12345678901234567890123456789015"
-                    }
-                ]
-            },
-            {
-                "id": 4,
-                "issueDate": "2021/10/21 21:10",
-                "state": "TESTED",
-                "products": [
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    },
-                    {
-                        "SKUId": 4,
-                        "description": "sku sku",
-                        "price": 19.99,
-                        "qty": 12
-                    }
-                ],
-                "supplierId": 2,
-                "transportNote": {
-                    "transportDate": "2021/10/31"
-                },
-                "skuItems": [
-                    {
-                        "SKUId": 2,
-                        "RFID": "12345678901234567890123456789014"
-                    }
-                ]
-            },
-            {
-                "id": 5,
-                "issueDate": "2021/04/06 19:04",
-                "state": "COMPLETED",
-                "products": [
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    },
-                    {
-                        "SKUId": 4,
-                        "description": "sku sku",
-                        "price": 19.99,
-                        "qty": 12
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    }
-                ],
-                "supplierId": 1,
-                "transportNote": {
-                    "transportDate": "2021/09/11"
-                },
-                "skuItems": [
-                    {
-                        "SKUId": 3,
-                        "RFID": "12345678901234567890123456789016"
-                    },
-                    {
-                        "SKUId": 2,
-                        "RFID": "12345678901234567890123456789014"
-                    },
-                    {
-                        "SKUId": 1,
-                        "RFID": "12345678901234567890123456789017"
-                    }
-                ]
-            },
-            {
-                "id": 6,
-                "issueDate": "2020/04/22 12:04",
-                "state": "COMPLETEDRETURN",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    }
-                ],
-                "supplierId": 1,
-                "transportNote": {
-                    "transportDate": "2021/11/01"
-                },
-                "skuItems": [
-                    {
-                        "SKUId": 1,
-                        "RFID": "12345678901234567890123456789015"
-                    },
-                    {
-                        "SKUId": 1,
-                        "RFID": "12345678901234567890123456789015"
-                    },
-                    {
-                        "SKUId": 1,
-                        "RFID": "12345678901234567890123456789012"
-                    }
-                ]
-            }
-        ])
+        expect(res).toEqual([ro1, ro2, ro3, ro4, ro5, ro6])
 
     })
 
     test('get ro issued', async () => {
         var res = await ro_service.getAllROIssued();
-        expect(res).toEqual([
-            {
-                "id": 1,
-                "issueDate": "2021/11/11 09:11",
-                "state": "ISSUED",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    },
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    }
-                ],
-                "supplierId": 1,
-                "skuItems": []
-            }
-        ])
+        expect(res).toEqual([ro1])
         try {
             res = await ro_service.getAllROIssued();
         } catch (e) {
@@ -951,35 +162,7 @@ describe('Get all restock orders', () => {
         }
 
         res = await ro_service.getAllROIssued();
-        expect(res).toEqual([
-            {
-                "id": 1,
-                "issueDate": "2021/11/11 09:11",
-                "state": "ISSUED",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    },
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    }
-                ],
-                "supplierId": 1,
-                "skuItems": []
-            }
-        ])
+        expect(res).toEqual([ro1])
     })
 
 })
@@ -988,180 +171,16 @@ describe('get ro by ID', () => {
     beforeEach(() => {
         dao.getRO.mockReset();
         dao.getRO
-            .mockResolvedValueOnce({
-                "issueDate": "2021/11/11 11:11",
-                "state": "DELIVERED",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    },
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    },
-                    {
-                        "SKUId": 4,
-                        "description": "sku sku",
-                        "price": 19.99,
-                        "qty": 12
-                    }
-                ],
-                "supplierId": 3,
-                "transportNote": {
-                    "transportDate": "2021/12/21"
-                },
-                "skuItems": [
-                    {
-                        "SKUId": 2,
-                        "RFID": "12345678901234567890123456789014"
-                    },
-                    {
-                        "SKUId": 1,
-                        "RFID": "12345678901234567890123456789015"
-                    }
-                ]
-            })
+            .mockResolvedValueOnce(ro3)
             .mockRejectedValueOnce(404)
-            .mockResolvedValueOnce({
-                "issueDate": "2022/01/22 09:01",
-                "state": "DELIVERY",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    }
-                ],
-                "supplierId": 2,
-                "transportNote": {
-                    "transportDate": "2022/01/11"
-                },
-                "skuItems": [
-                    {
-                        "SKUId": 1,
-                        "RFID": "12345678901234567890123456789017"
-                    },
-                    {
-                        "SKUId": 3,
-                        "RFID": "12345678901234567890123456789016"
-                    },
-                    {
-                        "SKUId": 2,
-                        "RFID": "12345678901234567890123456789014"
-                    }
-                ]
-            })
-            .mockResolvedValue({
-                "issueDate": "2021/11/11 11:11",
-                "state": "DELIVERED",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    },
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    },
-                    {
-                        "SKUId": 4,
-                        "description": "sku sku",
-                        "price": 19.99,
-                        "qty": 12
-                    }
-                ],
-                "supplierId": 3,
-                "transportNote": {
-                    "transportDate": "2021/12/21"
-                },
-                "skuItems": [
-                    {
-                        "SKUId": 2,
-                        "RFID": "12345678901234567890123456789014"
-                    },
-                    {
-                        "SKUId": 1,
-                        "RFID": "12345678901234567890123456789015"
-                    }
-                ]
-            })
+            .mockResolvedValueOnce(ro2)
+            .mockResolvedValue(ro3)
     })
 
     test('getRO', async () => {
         let id = 3;
         var res = await ro_service.getRO(id);
-        expect(res).toEqual({
-            "issueDate": "2021/11/11 11:11",
-            "state": "DELIVERED",
-            "products": [
-                {
-                    "SKUId": 1,
-                    "description": "a new sku",
-                    "price": 10.99,
-                    "qty": 50
-                },
-                {
-                    "SKUId": 2,
-                    "description": "another sku",
-                    "price": 10.99,
-                    "qty": 55
-                },
-                {
-                    "SKUId": 3,
-                    "description": "sku",
-                    "price": 10.99,
-                    "qty": 45
-                },
-                {
-                    "SKUId": 4,
-                    "description": "sku sku",
-                    "price": 19.99,
-                    "qty": 12
-                }
-            ],
-            "supplierId": 3,
-            "transportNote": {
-                "transportDate": "2021/12/21"
-            },
-            "skuItems": [
-                {
-                    "SKUId": 2,
-                    "RFID": "12345678901234567890123456789014"
-                },
-                {
-                    "SKUId": 1,
-                    "RFID": "12345678901234567890123456789015"
-                }
-            ]
-        });
+        expect(res).toEqual(ro3);
 
         id = 9999;
         try {
@@ -1172,42 +191,7 @@ describe('get ro by ID', () => {
 
         id = 2;
         res = await ro_service.getRO(id);
-        expect(res).toEqual({
-            "issueDate": "2022/01/22 09:01",
-            "state": "DELIVERY",
-            "products": [
-                {
-                    "SKUId": 1,
-                    "description": "a new sku",
-                    "price": 10.99,
-                    "qty": 50
-                },
-                {
-                    "SKUId": 2,
-                    "description": "another sku",
-                    "price": 10.99,
-                    "qty": 55
-                }
-            ],
-            "supplierId": 2,
-            "transportNote": {
-                "transportDate": "2022/01/11"
-            },
-            "skuItems": [
-                {
-                    "SKUId": 1,
-                    "RFID": "12345678901234567890123456789017"
-                },
-                {
-                    "SKUId": 3,
-                    "RFID": "12345678901234567890123456789016"
-                },
-                {
-                    "SKUId": 2,
-                    "RFID": "12345678901234567890123456789014"
-                }
-            ]
-        })
+        expect(res).toEqual(ro2)
     })
 })
 
@@ -1215,96 +199,39 @@ describe('get return items by roID', () => {
     beforeEach(() => {
         dao.ROexists.mockReset();
         dao.ROexists
-            .mockResolvedValueOnce({ "id": 1 })
+            .mockResolvedValueOnce({ "id": 6 })
             .mockResolvedValueOnce(undefined)
-            .mockResolvedValue({ "id": 1 })
+            .mockResolvedValue({ "id": 6 })
 
         dao.getROReturnedItems.mockReset();
         dao.getROReturnedItems
-            .mockResolvedValueOnce([
-                {
-                    "SKUId": 1,
-                    "RFID": "12345678901234567890123456789015"
-                },
-                {
-                    "SKUId": 1,
-                    "RFID": "12345678901234567890123456789015"
-                },
-                {
-                    "SKUId": 1,
-                    "RFID": "12345678901234567890123456789012"
-                }
-            ])
+            .mockResolvedValueOnce([skuItem3, skuItem4, skuItem6])
             .mockRejectedValueOnce(422)
-            .mockResolvedValue([
-                {
-                    "SKUId": 1,
-                    "RFID": "12345678901234567890123456789015"
-                },
-                {
-                    "SKUId": 1,
-                    "RFID": "12345678901234567890123456789015"
-                },
-                {
-                    "SKUId": 1,
-                    "RFID": "12345678901234567890123456789012"
-                }
-            ])
+            .mockResolvedValue([skuItem3, skuItem4, skuItem6])
     })
 
     test('get RO items', async () => {
         let id = 6;
-        var res = await ro_service.getROReturnedItems();
-        expect(res).toEqual([
-            {
-                "SKUId": 1,
-                "RFID": "12345678901234567890123456789015"
-            },
-            {
-                "SKUId": 1,
-                "RFID": "12345678901234567890123456789015"
-            },
-            {
-                "SKUId": 1,
-                "RFID": "12345678901234567890123456789012"
-            }
-        ])
+        var res = await ro_service.getROReturnedItems(id);
+        expect(res).toEqual([skuItem3, skuItem4, skuItem6])
 
         id = 9999;
         try {
-            res = await ro_service.getROReturnedItems();
+            res = await ro_service.getROReturnedItems(id);
         } catch (e) {
             expect(e).toEqual(404);
-        }
-
-        id = 9999;
-        try {
-            res = await ro_service.getROReturnedItems();
-        } catch (e) {
-            expect(e).toEqual(422);
         }
 
         id = 6;
         try {
             res = await ro_service.getROReturnedItems();
-            expect(res).toEqual([
-                {
-                    "SKUId": 1,
-                    "RFID": "12345678901234567890123456789015"
-                },
-                {
-                    "SKUId": 1,
-                    "RFID": "12345678901234567890123456789015"
-                },
-                {
-                    "SKUId": 1,
-                    "RFID": "12345678901234567890123456789012"
-                }
-            ])
+            expect(res).toEqual([skuItem3, skuItem4, skuItem6])
         } catch (e) {
-            expect(e).toEqual(404);
+            expect(e).toEqual(422);
         }
 
+        res = await ro_service.getROReturnedItems();
+        expect(res).toEqual([skuItem3, skuItem4, skuItem6])
     })
 })
 
@@ -1321,8 +248,8 @@ describe('insert new RO', () => {
     test('insert RO', async () => {
         const body = {
             "issueDate": "2021/11/29 09:33",
-            "products": [{ "SKUId": 12, "description": "a product", "price": 10.99, "qty": 30 },
-            { "SKUId": 180, "description": "another product", "price": 11.99, "qty": 20 }],
+            "products": [{ "SKUId": 12, "itemId": 10, "description": "a product", "price": 10.99, "qty": 30 },
+            { "SKUId": 180, "itemId": 18, "description": "another product", "price": 11.99, "qty": 20 }],
             "supplierId": 1
         }
 
@@ -1411,8 +338,7 @@ describe('update RO', () => {
     test('update RO skuItems', async () => {
         let id = 1;
         const body = {
-            skuItems: [{ "SKUId": 12, "rfid": "12345678901234567890123456789016" },
-            { "SKUId": 12, "rfid": "12345678901234567890123456789017" }]
+            skuItems: [skuItem1, skuItem2]
         }
 
         var res = await ro_service.addSkuItems(id, body);
@@ -1446,7 +372,7 @@ describe('note', () => {
     beforeEach(() => {
         dao.ROexists.mockReset();
         dao.ROexists
-            .mockResolvedValueOnce({ "id": 1, 'state': 'DELIVERY', 'issueDate': '2022-03-02'})
+            .mockResolvedValueOnce({ "id": 1, 'state': 'DELIVERY', 'issueDate': '2022-03-02' })
             .mockResolvedValueOnce(undefined)
             .mockResolvedValueOnce({ "id": 1, 'state': 'COMPLETED', 'issueDate': '2022-03-02' })
             .mockResolvedValue({ "id": 1, 'state': 'DELIVERY', 'issueDate': '2022-03-02' })

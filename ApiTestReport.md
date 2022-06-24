@@ -15,7 +15,7 @@ Version:
 - [Integration Tests](#integration-tests)
   - [Step 1](#step-1)
   - [Step 2](#step-2)
-  - [Step n](#step-n)
+  - [Step 3](#step-3)
 - [API testing - Scenarios](#api-testing---scenarios)
   - [Scenario UCx.y](#scenario-ucxy)
 - [Coverage of Scenarios and FR](#coverage-of-scenarios-and-fr)
@@ -52,21 +52,34 @@ Step3: EzWH (API testing)
 ## Step 1
 | Classes  | mock up used |Jest test cases |
 |--|--|--|
-||||
+| InternalOrder_service | InternalOrder_mockdao | InternalOrder_service_mockdao.test |
+| RestockOrder_service | RestockOrder_mockdao | RestockOrder_service_mockdao.test |
+| RestockOrder_dao | | RestockOrder_dao.test |
+| TestDescriptor_service | TestDescriptor_mockdao | TestDescriptor_service_mockdao.test |
 
 
 ## Step 2
-| Classes  | mock up used |Jest test cases |
-|--|--|--|
-||||
+| Classes | Jest test cases |
+| -- | -- |
+| RestockOrder_service_mockdao + RestockOrder_dao.test | |
 
 
-## Step n 
-
+## Step 3
    
-| Classes  | mock up used |Jest test cases |
-|--|--|--|
-||||
+| Classes |Jest test cases |
+|--|--|
+| Restock Order | POST restock order |
+| | GET restock order |
+| | PUT restock order |
+| | DELETE restock order |
+| Internal Order | POST internal order |
+| | GET internal order |
+| | PUT internal order |
+| | DELETE internal order |
+| Test Descriptor | POST test descriptor |
+| | GET test descriptor |
+| | PUT test descriptor |
+| | DELETE test descriptor |
 
 
 
@@ -100,12 +113,38 @@ Report also for each of the scenarios the (one or more) API Mocha tests that cov
 
 | Scenario ID | Functional Requirements covered | Mocha  Test(s) | 
 | ----------- | ------------------------------- | ----------- | 
-|  ..         | FRx                             |             |             
-|  ..         | FRy                             |             |             
-| ...         |                                 |             |             
-| ...         |                                 |             |             
-| ...         |                                 |             |             
-| ...         |                                 |             |             
+| 1-1         | FR2.1, FR2.3                    |             |             
+| 1-2         | FR2.1, FR2.4                    |             |             
+| 1-3         | FR2.1, FR2.4                    |             |
+| 2-1         | FR2.1.1                         |             |
+| 2-2         | FR3.1.1                         |             |
+| 2-3         | FR3.1.4, FR3.1.3                |             |
+| 2-4         | FR3.1.4                         |             |
+| 2-5         | FR3.1.2                         |             |
+| 3-2         | FR5.1                           | "post RO"     |
+| 4-1         |  -                              |             |
+| 4-2         | FR1.5, FR1.3, FR1.4             |             |
+| 4-3         | FR1.2                           |             |
+| 5-1-1       | FR5.7                           | "modify RO state"            |
+| 5-2-1       | FR3.2.1                         |             |
+| 5-2-2       | FR3.2.1                         |             |
+| 5-2-3       | FR3.2.1                         |             |
+| 5-3-1       | FR3.2.                          |             |
+| 5-3-2       | FR3.2                           |             |
+| 5-3-3       | FR3.2                           |             |
+| 6-1         | FR3.2                           |             |
+| 6-2         | FR3.2                           |             |
+| 7-1         | -                               |             |
+| 7-2         | -                               |             |
+| 9-1         | FR6.6                           | "post IO"            |
+| 9-2         | FR6.6                           |  "modify IO"           |
+| 9-3         | FR6.7                           |  "modify IO"           |
+| 10-1        | FR6.7, FR6.8                    |  "modify IO"           |
+| 11-1        | FR7                             |            |
+| 11-2        | FR7                             |            |
+| 12-1        | FR3.2.1                         |  "post TD"          |
+| 12-2        | FR3.2.2                         |  "modify TD"           |
+| 12-3        | FR3.2.3                         |  "delete TD by id"      |            
 
 
 

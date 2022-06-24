@@ -38,15 +38,15 @@ function RestockOrders_service(dao) {
         const date = dayjs(body.issueDate).format("YYYY-MM-DD HH:mm").toString();
         const supplierId = body.supplierId;
         const products = [...body.products];
-        var IDs = Array();
+        var productsInfo = Array();
         products.forEach(p => {
-            const pair = p.SKUId + ":" + p.qty;
-            IDs.push(pair)
+            const tuple = p.SKUId + "-" + p.itemId + ":" + p.qty;
+            productsInfo.push(tuple)
         });
         // console.log(IDs);
-        IDs = IDs.toString();
+        productsInfo = productsInfo.toString();
 
-        return dao.insertRO(date, IDs, supplierId);
+        return dao.insertRO(date, productsInfo, supplierId);
     }
 
     this.updateStateRO = (id, body) => {
@@ -66,13 +66,14 @@ function RestockOrders_service(dao) {
     }
 
     this.addSkuItems = (id, body) => {
-        const skuItems = body.skuItems;
-        var RFIDs = String();
-        for (let SkuItem of skuItems) {
-            RFIDs += SkuItem.rfid + ",";
-        }
-        RFIDs = RFIDs.slice(0, RFIDs.length - 1);
-
+        console.log(body);
+        const skuItems = [...body.skuItems]
+        var RFIDs = Array();
+        skuItems.forEach(p => {
+            const tuple = p.SKUId + "-" + p.itemId + ":" + p.rfid;
+            RFIDs.push(tuple)
+        });
+        RFIDs.toString();
         return new Promise(async (resolve, reject) => {
             const ro = await dao.ROexists(id);
             if (ro === undefined) {

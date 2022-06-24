@@ -38,6 +38,7 @@ routerRe.post(
   check("products.*.description").isString(),
   check("products.*.price").exists(),
   check("products.*.RFID").exists(),
+  check("products.*.itemId").exists(),
   body("restockOrderId").isInt(),
   (req, res) => {
     const errors = validationResult(req);

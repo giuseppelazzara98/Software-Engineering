@@ -149,7 +149,17 @@ function ReturnOrders_dao() {
     const items = await Promise.all(
       IDs.map(async (id) => {
         const item = this.getSKUItemByRFID(id)
-          .then((p) => p)
+          .then(async(p) =>{
+            const itemId = await this.getItemIdBySKUId(p.SKUId)
+             return {
+              SKUId: p.SKUId,
+              itemId: itemId,
+              description: p.description,
+              price: p.price,
+              RFID: p.RFID,
+            }
+
+          })
           .catch((e) => undefined);
         return item;
       })
@@ -158,9 +168,26 @@ function ReturnOrders_dao() {
       id: row.id,
       returnDate: dayjs(row.returnDate).format("YYYY/MM/DD HH:mm").toString(),
       products: items.filter((p) => p !== undefined),
+
       restockOrderId: row.restockOrderId,
     };
   };
+  this.getItemIdBySKUId= async(SKUId)=>{
+    return new Promise((resolve, reject) => {
+      const sql =
+        "SELECT * FROM items WHERE SKUid=?";
+      reDB.all(sql, [SKUId], (err, row) => {
+        if (err) {
+          reject(500);
+        } else if (row === undefined) {
+          reject(404);
+        } else {
+          resolve(row[0].id);
+        }
+      });
+    });
+
+  }
 }
 
 module.exports = ReturnOrders_dao;

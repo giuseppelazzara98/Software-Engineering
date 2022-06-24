@@ -35,7 +35,7 @@ describe('Integration Internal Orders', function (){
 })
 
 function testGETio(id, HTTPresponse) {
-    it('get by id', async () => {
+    it('get IO by id', async () => {
         var result = await agent.get('/api/internalOrders/' + id);
 
         result.should.have.status(HTTPresponse);
@@ -49,7 +49,7 @@ function testGETio(id, HTTPresponse) {
 
 
 function testPOSTio(HTTPresponse, issueDate, products, customerId) {
-    it('post', async () => {
+    it('post IO', async () => {
         const io = {
             'issueDate': issueDate,
             'products': products,
@@ -63,7 +63,7 @@ function testPOSTio(HTTPresponse, issueDate, products, customerId) {
 }
 
 function testDELETEio(id, HTTPresponse) {
-    it('delete by id', async () => {
+    it('delete IO by id', async () => {
         const res = await agent.delete('/api/internalOrders/' + id);
         res.should.have.status(HTTPresponse);
     })
@@ -73,7 +73,7 @@ function testDELETEio(id, HTTPresponse) {
 
 
 function testPUTio(HTTPresponse, id, newState, products) {
-    it('modify io', async () => {
+    it('modify IO', async () => {
         var res = await agent.put('/api/internalOrders/' + id)
             .set('content-type', 'application/json')
             .send({

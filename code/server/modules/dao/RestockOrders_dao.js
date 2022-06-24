@@ -27,15 +27,17 @@ function RestockOrders_dao() {
                             //each row must retrieve the products
                             const prods = row.products.split(',').map( e => {
                                 const prod = {
-                                    id : e.split(":")[0],
+                                    skuID : e.split("-")[0],
+                                    itemID: e.split("-")[1].split(":")[0],
                                     qty : e.split(":")[1]
                                 }
                                 return prod;
                             });
                             products = await Promise.all(prods.map(async (prod) => {
-                                const product = this.getProduct(prod.id).then(p => {
+                                const product = this.getProduct(prod.skuID, prod.itemID, row.supplierID).then(p => {
                                     const obj = {
-                                        SKUId: p.id,
+                                        SKUId: prod.skuID,
+                                        itemId: prod.itemID,
                                         description: p.description,
                                         price: p.price,
                                         qty: prod.qty
@@ -48,11 +50,19 @@ function RestockOrders_dao() {
 
                         var skuItems = [];
                         if (row.skuItems) {
-                            const SKUItemsIDs = row.skuItems.split(','); // array of strings with RFIDs 
-                            skuItems = await Promise.all(SKUItemsIDs.map(async (rfid) => {
-                                const skuItem = this.getSKUItem(rfid).then(i => {
+                            const skuitems = row.skuItems.split(',').map( e => {
+                                const skuitem = {
+                                    skuID : e.split("-")[0],
+                                    itemID: e.split("-")[1].split(":")[0],
+                                    rfid : e.split(":")[1]
+                                }
+                                return skuitem;
+                            });
+                            skuItems = await Promise.all(skuitems.map(async (s) => {
+                                const skuItem = this.getSKUItem(s.rfid, row.supplierID).then(i => {
                                     return {
-                                        "SKUId": i.SKUId,
+                                        "SKUId": s.skuID,
+                                        "itemId": s.itemID,
                                         "RFID": i.RFID
                                     };
                                 }).catch(e => undefined);
@@ -87,10 +97,10 @@ function RestockOrders_dao() {
         })
     };
 
-    this.getProduct = (id) => {
+    this.getProduct = (SKUid, itemID, supplierID) => {
         return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM SKUs WHERE id=?";
-            db.get(query, [id], (err, row) => {
+            const query = "SELECT * FROM items WHERE id=? AND SKUid=? AND supplierId=?";
+            db.get(query, [itemID, SKUid, supplierID], (err, row) => {
                 if (err) {
                     reject(500);
                 } else {
@@ -100,10 +110,10 @@ function RestockOrders_dao() {
         })
     }
 
-    this.getSKUItem = (rfid) => {
+    this.getSKUItem = (rfid, supplierID) => {
         return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM SKUItems WHERE RFID=?";
-            db.get(query, [rfid], (err, row) => {
+            const query = "SELECT * FROM items INNER JOIN SKUitems on items.SKUid=SKUItems.SKUId WHERE rfid=? AND supplierId=?";
+            db.get(query, [rfid, supplierID], (err, row) => {
                 if (err) {
                     reject(500);
                 } else {
@@ -139,20 +149,22 @@ function RestockOrders_dao() {
                             //each row must retrieve the products
                             const prods = row.products.split(',').map( e => {
                                 const prod = {
-                                    id : e.split(":")[0],
+                                    skuID : e.split("-")[0],
+                                    itemID: e.split("-")[1].split(":")[0],
                                     qty : e.split(":")[1]
                                 }
                                 return prod;
                             });
-                            //retrieve the array of products
                             products = await Promise.all(prods.map(async (prod) => {
-                                const product = this.getProduct(prod.id).then(p => {
-                                    return {
-                                        SKUId: p.id,
+                                const product = this.getProduct(prod.skuID, prod.itemID, row.supplierID).then(p => {
+                                    const obj = {
+                                        SKUId: prod.skuID,
+                                        itemId: prod.itemID,
                                         description: p.description,
                                         price: p.price,
                                         qty: prod.qty
-                                    };
+                                    }
+                                    return obj;
                                 }).catch(e => undefined);
                                 return product;
                             }));
@@ -200,20 +212,23 @@ function RestockOrders_dao() {
                         if (row.products) {
                             const prods = row.products.split(',').map( e => {
                                 const prod = {
-                                    id : e.split(":")[0],
+                                    skuID : e.split("-")[0],
+                                    itemID: e.split("-")[1].split(":")[0],
                                     qty : e.split(":")[1]
                                 }
                                 return prod;
                             });
                             //retrieve the array of products
                             products = await Promise.all(prods.map(async (prod) => {
-                                const product = this.getProduct(prod.id).then(p => {
-                                    return {
-                                        SKUId: p.id,
+                                const product = this.getProduct(prod.skuID, prod.itemID, row.supplierID).then(p => {
+                                    const obj = {
+                                        SKUId: prod.skuID,
+                                        itemId: prod.itemID,
                                         description: p.description,
                                         price: p.price,
                                         qty: prod.qty
-                                    };
+                                    }
+                                    return obj;
                                 }).catch(e => undefined);
                                 return product;
                             }));
@@ -221,16 +236,24 @@ function RestockOrders_dao() {
 
                         var skuItems = [];
                         if (row.skuItems) {
-                            const SKUItemsIDs = row.skuItems.split(',');
-                            skuItems = await Promise.all(SKUItemsIDs.map(async (rfid) => {
-                                const skuItem = this.getSKUItem(rfid).then(i => {
+                            const skuitems = row.skuItems.split(',').map( e => {
+                                const skuitem = {
+                                    skuID : e.split("-")[0],
+                                    itemID: e.split("-")[1].split(":")[0],
+                                    rfid : e.split(":")[1]
+                                }
+                                return skuitem;
+                            });
+                            skuItems = await Promise.all(skuitems.map(async (s) => {
+                                const skuItem = this.getSKUItem(s.rfid, row.supplierID).then(i => {
                                     return {
-                                        "SKUId": i.SKUId,
-                                        "RFID": i.RFID
-                                    }
+                                        "SKUId": s.skuID,
+                                        "itemId": s.itemID,
+                                        "RFID": i.rfid
+                                    };
                                 }).catch(e => undefined);
                                 return skuItem;
-                            }))
+                            }));
                         }
                         const transportNote = await this.getTransportNote(row.transportNoteID).catch(e => undefined);
                         resolve({
@@ -259,12 +282,20 @@ function RestockOrders_dao() {
                 } else {
                     var skuItems = [];
                     if (row.skuItems) {
-                        const SKUItemsIDs = row.skuItems.split(','); // array of strings with RFIDs 
-                        skuItems = await Promise.all(SKUItemsIDs.map(async (rfid) => {
-                            const skuItem = this.getDefectiveSKUitem(rfid).then(i => {
+                        const skuitems = row.skuItems.split(',').map( e => {
+                            const skuitem = {
+                                skuID : e.split("-")[0],
+                                itemID: e.split("-")[1].split(":")[0],
+                                rfid : e.split(":")[1]
+                            }
+                            return skuitem;
+                        });
+                        skuItems = await Promise.all(skuitems.map(async (s) => {
+                            const skuItem = this.getDefectiveSKUitem(s.rfid).then(i => {
                                 if(i === undefined) return;
                                 return {
-                                    "SKUId": i.SKUId,
+                                    "SKUId": s.skuID,
+                                    "itemId": s.itemID,
                                     "RFID": i.rfid
                                 }
                             }).catch(e => undefined);
@@ -280,7 +311,7 @@ function RestockOrders_dao() {
 
     this.getDefectiveSKUitem = async (rfid) => {
         return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM SKUItems INNER JOIN testResults on SKUItems.RFID=testResults.rfid WHERE SKUItems.RFID=? AND testResults.Result=0";
+            const query = "SELECT * FROM testResults WHERE rfid=? AND testResults.Result=0";
             db.get(query, [rfid], (err, row) => {
                 if(err){
                     reject(503)

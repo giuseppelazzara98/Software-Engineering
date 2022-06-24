@@ -2,513 +2,108 @@ const Io_service = require('../modules/services/InternalOrder_service');
 const dao = require('../modules/dao/InternalOrder_mockdao');
 const io_service = new Io_service(dao);
 
+const product1 = {
+    SKUId: 1,
+    description: "a new sku",
+    price: 10.99,
+    qty: 10
+}
+const product2 = {
+    SKUId: 2,
+    description: "a new sku",
+    price: 10.99,
+    qty: 1
+}
+const product3 = {
+    SKUId: 3,
+    description: "a new sku",
+    price: 14.99,
+    qty: 11
+}
+
+const product1_COMPLETED = {
+    SKUId: 1,
+    description: "a new sku",
+    price: 10.99,
+    RFID: "12345678901234567890123456789011"
+}
+const product2_COMPLETED = {
+    SKUId: 2,
+    description: "a new sku",
+    price: 10.99,
+    RFID: "12345678901234567890123456789012"
+}
+const product3_COMPLETED = {
+    SKUId: 3,
+    description: "a new sku",
+    price: 14.99,
+    RFID: "12345678901234567890123456789013"
+}
+
+const io1 = {
+    id: 1,
+    issueDate: "2021/11/29 09:11",
+    state: "ACCEPTED",
+    products: [product1, product2, product3],
+    customerID: 1
+}
+
+const io2 = {
+    id: 2,
+    issueDate: "2021/06/23 15:11",
+    state: "COMPLETED",
+    products: [product1_COMPLETED, product2_COMPLETED, product3_COMPLETED],
+    customerID: 1
+}
+
+const io3 = {
+    id: 3,
+    issueDate: "2022/02/11 12:11",
+    state: "ISSUED",
+    products: [product1, product3],
+    customerID: 3
+}
+
+const io4 = {
+    id: 4,
+    issueDate: "2022/10/11 13:21",
+    state: "REFUSED",
+    products: [product2, product3],
+    customerID: 2
+}
+
+const io5 = {
+    id: 5,
+    issueDate: "2022/12/11 12:21",
+    state: "CANCELED",
+    products: [product1],
+    customerID: 1
+}
+
 describe('get all internal orders', () => {
     beforeEach(() => {
         dao.getAllIO.mockReset();
         dao.getAllIO
-            .mockResolvedValueOnce([
-                {
-                    "id": 1,
-                    "issueDate": "2021/11/29 09:11",
-                    "state": "ACCEPTED",
-                    "products": [
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "qty": 50
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        }
-                    ],
-                    "customerID": 1
-                },
-                {
-                    "id": 2,
-                    "issueDate": "2021/11/30 19:11",
-                    "state": "COMPLETED",
-                    "products": [
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "RFID": "12345678901234567890123456789014"
-                        },
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "RFID": "12345678901234567890123456789011"
-                        }
-                    ],
-                    "customerID": 1
-                },
-                {
-                    "id": 3,
-                    "issueDate": "2022/02/11 12:02",
-                    "state": "ISSUED",
-                    "products": [
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "qty": 50
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        }
-                    ],
-                    "customerID": 3
-                },
-                {
-                    "id": 4,
-                    "issueDate": "2021/10/01 13:10",
-                    "state": "REFUSED",
-                    "products": [
-                        {
-                            "SKUId": 4,
-                            "description": "sku sku",
-                            "price": 19.99,
-                            "qty": 12
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        }
-                    ],
-                    "customerID": 2
-                },
-                {
-                    "id": 5,
-                    "issueDate": "2021/03/14 15:03",
-                    "state": "CANCELED",
-                    "products": [
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        },
-                        {
-                            "SKUId": 4,
-                            "description": "sku sku",
-                            "price": 19.99,
-                            "qty": 12
-                        }
-                    ],
-                    "customerID": 1
-                }
-            ])
+            .mockResolvedValueOnce([io1, io2, io3, io4, io5])
             .mockRejectedValueOnce(500)
-            .mockResolvedValue([
-                {
-                    "id": 1,
-                    "issueDate": "2021/11/29 09:11",
-                    "state": "ACCEPTED",
-                    "products": [
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "qty": 50
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        }
-                    ],
-                    "customerID": 1
-                },
-                {
-                    "id": 2,
-                    "issueDate": "2021/11/30 19:11",
-                    "state": "COMPLETED",
-                    "products": [
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "RFID": "12345678901234567890123456789014"
-                        },
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "RFID": "12345678901234567890123456789011"
-                        }
-                    ],
-                    "customerID": 1
-                },
-                {
-                    "id": 3,
-                    "issueDate": "2022/02/11 12:02",
-                    "state": "ISSUED",
-                    "products": [
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "qty": 50
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        }
-                    ],
-                    "customerID": 3
-                },
-                {
-                    "id": 4,
-                    "issueDate": "2021/10/01 13:10",
-                    "state": "REFUSED",
-                    "products": [
-                        {
-                            "SKUId": 4,
-                            "description": "sku sku",
-                            "price": 19.99,
-                            "qty": 12
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        }
-                    ],
-                    "customerID": 2
-                },
-                {
-                    "id": 5,
-                    "issueDate": "2021/03/14 15:03",
-                    "state": "CANCELED",
-                    "products": [
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        },
-                        {
-                            "SKUId": 4,
-                            "description": "sku sku",
-                            "price": 19.99,
-                            "qty": 12
-                        }
-                    ],
-                    "customerID": 1
-                }
-            ]);
+            .mockResolvedValue([io1, io2, io3, io4, io5]);
 
         dao.getAllIOIssued.mockReset();
         dao.getAllIOIssued
-            .mockResolvedValueOnce([
-                {
-                    "id": 3,
-                    "issueDate": "2022/02/11 12:02",
-                    "state": "ISSUED",
-                    "products": [
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "qty": 50
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        }
-                    ],
-                    "customerID": 3
-                }
-            ])
+            .mockResolvedValueOnce([io3])
             .mockRejectedValueOnce(500)
-            .mockResolvedValue([
-                {
-                    "id": 3,
-                    "issueDate": "2022/02/11 12:02",
-                    "state": "ISSUED",
-                    "products": [
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "qty": 50
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        }
-                    ],
-                    "customerID": 3
-                }
-            ]);
+            .mockResolvedValue([io3]);
 
         dao.getAllIOAccepted.mockReset();
         dao.getAllIOAccepted
-            .mockResolvedValueOnce([
-                {
-                    "id": 1,
-                    "issueDate": "2021/11/29 09:11",
-                    "state": "ACCEPTED",
-                    "products": [
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "qty": 50
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        }
-                    ],
-                    "customerID": 1
-                }
-            ])
+            .mockResolvedValueOnce([io1])
             .mockRejectedValueOnce(500)
-            .mockResolvedValue([
-                {
-                    "id": 1,
-                    "issueDate": "2021/11/29 09:11",
-                    "state": "ACCEPTED",
-                    "products": [
-                        {
-                            "SKUId": 1,
-                            "description": "a new sku",
-                            "price": 10.99,
-                            "qty": 50
-                        },
-                        {
-                            "SKUId": 2,
-                            "description": "another sku",
-                            "price": 10.99,
-                            "qty": 55
-                        },
-                        {
-                            "SKUId": 3,
-                            "description": "sku",
-                            "price": 10.99,
-                            "qty": 45
-                        }
-                    ],
-                    "customerID": 1
-                }
-            ]);
+            .mockResolvedValue([io1]);
     })
 
     test('get all internal orders', async () => {
         var res = await io_service.getAllIO();
-        expect(res).toEqual([
-            {
-                "id": 1,
-                "issueDate": "2021/11/29 09:11",
-                "state": "ACCEPTED",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    },
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    }
-                ],
-                "customerID": 1
-            },
-            {
-                "id": 2,
-                "issueDate": "2021/11/30 19:11",
-                "state": "COMPLETED",
-                "products": [
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "RFID": "12345678901234567890123456789014"
-                    },
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "RFID": "12345678901234567890123456789011"
-                    }
-                ],
-                "customerID": 1
-            },
-            {
-                "id": 3,
-                "issueDate": "2022/02/11 12:02",
-                "state": "ISSUED",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    },
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    }
-                ],
-                "customerID": 3
-            },
-            {
-                "id": 4,
-                "issueDate": "2021/10/01 13:10",
-                "state": "REFUSED",
-                "products": [
-                    {
-                        "SKUId": 4,
-                        "description": "sku sku",
-                        "price": 19.99,
-                        "qty": 12
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    },
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    }
-                ],
-                "customerID": 2
-            },
-            {
-                "id": 5,
-                "issueDate": "2021/03/14 15:03",
-                "state": "CANCELED",
-                "products": [
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    },
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    },
-                    {
-                        "SKUId": 4,
-                        "description": "sku sku",
-                        "price": 19.99,
-                        "qty": 12
-                    }
-                ],
-                "customerID": 1
-            }
-        ]);
+        expect(res).toEqual([io1, io2, io3, io4, io5]);
 
         try {
             await io_service.getAllIO();
@@ -519,34 +114,7 @@ describe('get all internal orders', () => {
 
     test('get issued internal orders', async () => {
         var res = await io_service.getAllIOIssued();
-        expect(res).toEqual([
-            {
-                "id": 3,
-                "issueDate": "2022/02/11 12:02",
-                "state": "ISSUED",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    },
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    }
-                ],
-                "customerID": 3
-            }
-        ]);
+        expect(res).toEqual([io3]);
 
         try {
             await io_service.getAllIOIssued();
@@ -557,34 +125,7 @@ describe('get all internal orders', () => {
 
     test('get accepted internal orders', async () => {
         var res = await io_service.getAllIOAccepted();
-        expect(res).toEqual([
-            {
-                "id": 1,
-                "issueDate": "2021/11/29 09:11",
-                "state": "ACCEPTED",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    },
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    }
-                ],
-                "customerID": 1
-            }
-        ]);
+        expect(res).toEqual([io1]);
 
         try {
             await io_service.getAllIOAccepted();
@@ -599,110 +140,16 @@ describe('get IO by ID', () => {
     beforeEach(() => {
         dao.getIO.mockReset();
         dao.getIO
-            .mockResolvedValueOnce({
-                "id": 1,
-                "issueDate": "2021/11/29 09:11",
-                "state": "ACCEPTED",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    },
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    }
-                ],
-                "customerID": 1
-            })
+            .mockResolvedValueOnce(io1)
             .mockRejectedValueOnce(404)
-            .mockResolvedValueOnce({
-                "id": 2,
-                "issueDate": "2021/11/30 19:11",
-                "state": "COMPLETED",
-                "products": [
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "RFID": "12345678901234567890123456789014"
-                    },
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "RFID": "12345678901234567890123456789011"
-                    }
-                ],
-                "customerID": 1
-            })
-            .mockResolvedValue({
-                "id": 1,
-                "issueDate": "2021/11/29 09:11",
-                "state": "ACCEPTED",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    },
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    }
-                ],
-                "customerID": 1
-            })
+            .mockResolvedValueOnce(io2)
+            .mockResolvedValue(io1)
     })
 
     test('getIO', async () => {
         let id = 1;
         var res = await io_service.getIO(id);
-        expect(res).toEqual({
-            "id": 1,
-            "issueDate": "2021/11/29 09:11",
-            "state": "ACCEPTED",
-            "products": [
-                {
-                    "SKUId": 1,
-                    "description": "a new sku",
-                    "price": 10.99,
-                    "qty": 50
-                },
-                {
-                    "SKUId": 2,
-                    "description": "another sku",
-                    "price": 10.99,
-                    "qty": 55
-                },
-                {
-                    "SKUId": 3,
-                    "description": "sku",
-                    "price": 10.99,
-                    "qty": 45
-                }
-            ],
-            "customerID": 1
-        })
+        expect(res).toEqual(io1)
 
         id = 9999;
         try {
@@ -713,57 +160,12 @@ describe('get IO by ID', () => {
 
         id = 2;
         res = await io_service.getIO(id);
-        expect(res).toEqual({
-            "id": 2,
-            "issueDate": "2021/11/30 19:11",
-            "state": "COMPLETED",
-            "products": [
-                {
-                    "SKUId": 2,
-                    "description": "another sku",
-                    "price": 10.99,
-                    "RFID": "12345678901234567890123456789014"
-                },
-                {
-                    "SKUId": 1,
-                    "description": "a new sku",
-                    "price": 10.99,
-                    "RFID": "12345678901234567890123456789011"
-                }
-            ],
-            "customerID": 1
-        })
+        expect(res).toEqual(io2)
 
         id = 1;
         try {
             res = await io_service.getIO(id);
-            expect(res).toEqual({
-                "id": 1,
-                "issueDate": "2021/11/29 09:11",
-                "state": "ACCEPTED",
-                "products": [
-                    {
-                        "SKUId": 1,
-                        "description": "a new sku",
-                        "price": 10.99,
-                        "qty": 50
-                    },
-                    {
-                        "SKUId": 2,
-                        "description": "another sku",
-                        "price": 10.99,
-                        "qty": 55
-                    },
-                    {
-                        "SKUId": 3,
-                        "description": "sku",
-                        "price": 10.99,
-                        "qty": 45
-                    }
-                ],
-                "customerID": 1
-            })
-
+            expect(res).toEqual(io1)
         } catch (e) {
             expect(e).toEqual(404);
         }
@@ -782,7 +184,15 @@ describe('insert new IO', () => {
     test('insert IO', async () => {
         var body = {
             "issueDate": '2022/11/04 08:23',
-            "products": [{ "SKUid": 1 }, { "SKUid": 4 }],
+            "products": [
+                {
+                    "SKUid": 1,
+                    "qty": 1,
+                },
+                {
+                    "SKUid": 4, "qty": 3
+                }
+            ],
             "customerId": 1
         }
         var res;
@@ -809,12 +219,11 @@ describe('insert new IO', () => {
         }
 
         body = {
-            "products": [{ "SKUid": 1 }, { "SKUid": 4 }],
+            "products": [{ "SKUid": 1, "qty": 1 }, { "SKUid": 4, "qty": 3 }],
             "customerId": 1
         }
         try {
             res = await io_service.addIO(body);
-            expect(res).toEqual(201);
         } catch (e) {
             expect(e).toEqual(422);
         }
@@ -828,7 +237,7 @@ describe('update IO', () => {
                 "id": 1,
                 "issueDate": "2021/11/29 09:11",
                 "state": "ACCEPTED",
-                "products": "1,2,3",
+                "products": "1-0:1,2-0:3,3-0:2",
                 "customerId": 1
             })
             .mockResolvedValueOnce(undefined)
@@ -836,10 +245,10 @@ describe('update IO', () => {
                 "id": 1,
                 "issueDate": "2021/11/29 09:11",
                 "state": "ACCEPTED",
-                "products": "1,2,3",
+                "products": "1-0:1,2-0:3,3-0:2",
                 "customerId": 1
             })
-            
+
 
         dao.updateStateIO.mockReset()
             .mockResolvedValue(200)
@@ -848,29 +257,39 @@ describe('update IO', () => {
     test('update', async () => {
         var body = {
             newState: "COMPLETED",
-            products: [{"SkuID": 1, RFID: "11222"}, {"SkuID": 2, RFID: "11222"}]
+            products: [
+                {
+                    "SkuID": 1,
+                    "RFID": "12345678901234567890123456789011",
+                    "qty": 1
+                },
+                {
+                    "SkuID": 2,
+                    "RFID": "12345678901234567890123456789012",
+                    "qty": 1
+                }]
         }
 
         let id = 1;
         var res;
 
-        try{
+        try {
             res = await io_service.updateStateIO(id, body);
             expect(res).toEqual(200);
-        } catch (e){
+        } catch (e) {
             expect(e).toEqual(500);
         }
 
-        try{
+        try {
             res = await io_service.updateStateIO(id, body);
             expect(res).toEqual(200);
-        } catch (e){
+        } catch (e) {
             expect(e).toEqual(404);
         }
 
 
     })
-    
+
 })
 
 describe('delete IO', () => {
